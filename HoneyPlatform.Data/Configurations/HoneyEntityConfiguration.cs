@@ -38,8 +38,7 @@
             ICollection<Honey> honeys = new HashSet<Honey>();
 
             Honey honey;
-
-            //TODO seed appropriate honeys
+            
             honey = new Honey()
             {
                 Title = "Asen's Linden Honey",

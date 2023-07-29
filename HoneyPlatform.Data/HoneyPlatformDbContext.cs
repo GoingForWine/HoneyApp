@@ -22,6 +22,8 @@
 
         public DbSet<Propolis> Propolises { get; set; } = null!;
 
+        public DbSet<Flavour> Flavours { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             Assembly configAssembly = Assembly.GetAssembly(typeof(HoneyPlatformDbContext)) ??

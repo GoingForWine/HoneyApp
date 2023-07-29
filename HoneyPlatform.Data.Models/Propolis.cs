@@ -4,6 +4,7 @@
 
     using static Common.EntityValidationConstants.Honey;
 
+    //todo enum with different tastes
     public class Propolis
     {
         public Propolis()
@@ -32,7 +33,11 @@
         public DateTime CreatedOn { get; set; }
 
         public bool IsActive { get; set; }
-        
+
+        public int FlavourId { get; set; }
+
+        public virtual Flavour Flavour { get; set; } = null!;
+
         public Guid BeekeeperId { get; set; }
 
         public virtual Beekeeper Beekeeper { get; set; } = null!;
