@@ -13,6 +13,7 @@ namespace HoneyPlatform.Data.Models
             Id = Guid.NewGuid();
             OwnedHoney = new HashSet<Honey>();
             OwnedPropolis = new HashSet<Propolis>();
+            OwnedBeePollen = new HashSet<BeePollen>();
         }
 
         [Key]
@@ -29,6 +30,10 @@ namespace HoneyPlatform.Data.Models
         public virtual ICollection<Honey> OwnedHoney { get; set; }
 
         public virtual ICollection<Propolis> OwnedPropolis { get; set; }
+
+        public virtual ICollection<BeePollen> OwnedBeePollen { get; set; }
+
+
 
     }
 }

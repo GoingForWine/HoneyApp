@@ -9,7 +9,6 @@
     {
         public void Configure(EntityTypeBuilder<Honey> builder)
         {
-            //TODO check these settings regularly; 
             builder
                 .Property(h => h.CreatedOn)
                 .HasDefaultValueSql("GETDATE()");
@@ -38,7 +37,7 @@
             ICollection<Honey> honeys = new HashSet<Honey>();
 
             Honey honey;
-            
+
             honey = new Honey()
             {
                 Title = "Asen's Linden Honey",
