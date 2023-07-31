@@ -27,12 +27,10 @@
     <ProjectReference Include="..\HoneyPlatform.Common\HoneyPlatform.Common.csproj" />
     <ProjectReference Include="..\HoneyPlatform.Data.Models\HoneyPlatform.Data.Models.csproj" />
     <ProjectReference Include="..\HoneyPlatform.Data\HoneyPlatform.Data.csproj" />
+    <ProjectReference Include="..\HoneyPlatform.Services.Mapping\HoneyPlatform.Services.Mapping.csproj" />
     <ProjectReference Include="..\HoneyPlatform.Web.Infrastructure\HoneyPlatform.Web.Infrastructure.csproj" />
-
     
-    <ProjectReference Include="..\HouseRentingSystem.Services.Mapping\HouseRentingSystem.Services.Mapping.csproj" />
     
-    <ProjectReference Include="..\HouseRentingSystem.Web.ViewModels\HouseRentingSystem.Web.ViewModels.csproj" />
 
   </ItemGroup>
 

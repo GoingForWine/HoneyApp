@@ -12,9 +12,13 @@ namespace HoneyPlatform.Web
     using Infrastructure.Extensions;
     using Infrastructure.ModelBinders;
 
-    using Services.Data.Interfaces;
-    using Services.Mapping;
-    using ViewModels.Home;
+    //using Services.Data.Interfaces;
+    //using Services.Mapping;
+    //using ViewModels.Home;
+
+    //TODO     <ProjectReference Include="..\HouseRentingSystem.Web.ViewModels\HouseRentingSystem.Web.ViewModels.csproj" />
+    //TODO ama posle kato dobavim viewmodels
+
 
     using static Common.GeneralApplicationConstants;
 
@@ -47,7 +51,7 @@ namespace HoneyPlatform.Web
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<HoneyPlatformDbContext>();
 
-            builder.Services.AddApplicationServices(typeof(IHouseService));
+            //builder.Services.AddApplicationServices(typeof(IHouseService));
 
             builder.Services.AddRecaptchaService();
 
@@ -66,7 +70,7 @@ namespace HoneyPlatform.Web
 
             WebApplication app = builder.Build();
 
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+            //AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             if (app.Environment.IsDevelopment())
             {

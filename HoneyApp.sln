@@ -19,9 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{4C06EF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyPlatform.Web", "HoneyPlatform.Web\HoneyPlatform.Web.csproj", "{F43E6DD4-8345-4D12-87E8-5F2E5008FB4E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrations", "Migrations", "{26710C61-A668-47F4-84C1-69B59BEA6A6C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyPlatform.Web.Infrastructure", "HoneyPlatform.Web.Infrastructure\HoneyPlatform.Web.Infrastructure.csproj", "{72CC0D5A-1707-4E30-AFE0-F0FF51190721}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyPlatform.Services.Mapping", "HoneyPlatform.Services.Mapping\HoneyPlatform.Services.Mapping.csproj", "{FC15640E-16F4-4C09-9153-9FE85AFA6318}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +49,10 @@ Global
 		{72CC0D5A-1707-4E30-AFE0-F0FF51190721}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72CC0D5A-1707-4E30-AFE0-F0FF51190721}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72CC0D5A-1707-4E30-AFE0-F0FF51190721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC15640E-16F4-4C09-9153-9FE85AFA6318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC15640E-16F4-4C09-9153-9FE85AFA6318}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC15640E-16F4-4C09-9153-9FE85AFA6318}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC15640E-16F4-4C09-9153-9FE85AFA6318}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,8 +62,8 @@ Global
 		{E654E7B8-519E-4E7A-951E-1F4DBA7FFFB6} = {F34AFA57-AB67-4036-AA73-D8CE43ECF203}
 		{170BCFAE-0E9F-49FA-B13E-B226E9EA2446} = {F34AFA57-AB67-4036-AA73-D8CE43ECF203}
 		{F43E6DD4-8345-4D12-87E8-5F2E5008FB4E} = {8DDC940E-AC14-4285-AD54-99540D6F7FAF}
-		{26710C61-A668-47F4-84C1-69B59BEA6A6C} = {F34AFA57-AB67-4036-AA73-D8CE43ECF203}
 		{72CC0D5A-1707-4E30-AFE0-F0FF51190721} = {8DDC940E-AC14-4285-AD54-99540D6F7FAF}
+		{FC15640E-16F4-4C09-9153-9FE85AFA6318} = {EEECD8FD-C37E-406B-9F65-AF490D18172E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A8BB3791-7FE4-42BE-9DF4-85E4CBC9C2FA}
