@@ -1,12 +1,12 @@
-﻿namespace HoneyPlatform.Web.Infrastructure.Extensions
-{
-    using ViewModels.Category.Interfaces;
+﻿//namespace HoneyPlatform.Web.Infrastructure.Extensions
+//{
+//    using ViewModels.Category.Interfaces;
 
-    public static class ViewModelsExtensions
-    {
-        public static string GetUrlInformation(this ICategoryDetailsModel model)
-        {
-            return model.Name.Replace(" ", "-");
-        }
-    }
-}
+//    public static class ViewModelsExtensions
+//    {
+//        public static string GetUrlInformation(this ICategoryDetailsModel model)
+//        {
+//            return model.Name.Replace(" ", "-");
+//        }
+//    }
+//}

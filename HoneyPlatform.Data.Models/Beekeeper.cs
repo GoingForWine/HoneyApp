@@ -1,6 +1,4 @@
-﻿using System.Security.AccessControl;
-
-namespace HoneyPlatform.Data.Models
+﻿namespace HoneyPlatform.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
 

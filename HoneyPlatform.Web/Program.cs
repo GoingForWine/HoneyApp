@@ -98,15 +98,15 @@ namespace HoneyPlatform.Web
                 app.SeedAdministrator(DevelopmentAdminEmail);
             }
             
-            app.UseEndpoints(config =>
-            {
-                config.MapControllerRoute(
-                    name: "ProtectingUrlRoute",
-                    pattern: "/{controller}/{action}/{id}/{information}",
-                    defaults: new { Controller = "Category", Action = "Details" });
-                config.MapDefaultControllerRoute();
-                config.MapRazorPages();
-            });
+            //app.UseEndpoints(config =>
+            //{
+            //    config.MapControllerRoute(
+            //        name: "ProtectingUrlRoute",
+            //        pattern: "/{controller}/{action}/{id}/{information}",
+            //        defaults: new { Controller = "Category", Action = "Details" });
+            //    config.MapDefaultControllerRoute();
+            //    config.MapRazorPages();
+            //});
 
             app.Run();
         }
