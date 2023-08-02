@@ -15,6 +15,7 @@
     <ProjectReference Include="..\HoneyWebPlatform.Common\HoneyWebPlatform.Common.csproj" />
     <ProjectReference Include="..\HoneyWebPlatform.Data.Models\HoneyWebPlatform.Data.Models.csproj" />
     <ProjectReference Include="..\HoneyWebPlatform.Data\HoneyWebPlatform.Data.csproj" />
+    <ProjectReference Include="..\HoneyWebPlatform.Web.ViewModels\HoneyWebPlatform.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HoneyWebPlatform.Common\HoneyWebPlatform.Common.csproj" />
+    <ProjectReference Include="..\HoneyWebPlatform.Services.Data.Models\HoneyWebPlatform.Services.Data.Models.csproj" />
+    <ProjectReference Include="..\HoneyWebPlatform.Services.Data\HoneyWebPlatform.Services.Data.csproj" />
+    <ProjectReference Include="..\HoneyWebPlatform.Web.Infrastructure\HoneyWebPlatform.Web.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

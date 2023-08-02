@@ -19,10 +19,11 @@
             public const int DescriptionMinLength = 50;
             public const int DescriptionMaxLength = 500;
 
-            public const int ImageUrlMaxLength = 2048;
+            public const string PriceMinValue = "5";
+            public const string PriceMaxValue = "25";
 
-            public const string PriceMinValue = "0";
-            public const string PriceMaxValue = "2000";
+
+            public const int ImageUrlMaxLength = 2048;
         }
 
         public static class Beekeeper
