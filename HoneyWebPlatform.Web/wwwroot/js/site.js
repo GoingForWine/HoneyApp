@@ -6,7 +6,7 @@
         // hasClass('d-none') -> Statistics are hidden
         if ($('#statistics_box').hasClass('d-none')) {
             $.get('https://localhost:7180/api/statistics', function (data) {
-                $('#total_honeys').text(data.totalHoneys + " Honeys");
+                $('#total_honeys').text("In total we have: " + data.totalHoneys + " Honeys");
                 
                 $('#statistics_box').removeClass('d-none');
 

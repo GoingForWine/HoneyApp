@@ -13,10 +13,10 @@
             public const int TitleMinLength = 10;
             public const int TitleMaxLength = 50;
 
-            public const int OriginMinLength = 30;
+            public const int OriginMinLength = 5;
             public const int OriginMaxLength = 150;
 
-            public const int DescriptionMinLength = 50;
+            public const int DescriptionMinLength = 30;
             public const int DescriptionMaxLength = 500;
 
             public const string PriceMinValue = "5";

@@ -5,8 +5,8 @@
     using Services.Data.Interfaces;
     using Services.Data.Models.Statistics;
 
-    [Route("api/statistics")]
     [ApiController]
+    [Route("api/statistics")]
     public class StatisticsApiController : ControllerBase
     {
         private readonly IHoneyService honeyService;

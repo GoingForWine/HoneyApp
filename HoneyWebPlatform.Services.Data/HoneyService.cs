@@ -232,7 +232,7 @@
 
             await dbContext.SaveChangesAsync();
         }
-        
+
         public async Task<StatisticsServiceModel> GetStatisticsAsync()
         {
             return new StatisticsServiceModel()

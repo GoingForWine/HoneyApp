@@ -25,10 +25,10 @@ namespace HoneyWebPlatform.WebApi
 
             builder.Services.AddCors(setup =>
             {
-                setup.AddPolicy("HoneyWebPlatform", policyBuilder => //TODO CHECK THIS NAME
+                setup.AddPolicy("HoneyWebPlatform", policyBuilder =>
                 {
                     policyBuilder
-                        .WithOrigins("https://localhost:7130") //TODO FIX THIS LINK
+                        .WithOrigins("https://localhost:7160")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
