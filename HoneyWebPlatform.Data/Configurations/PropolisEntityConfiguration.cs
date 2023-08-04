@@ -38,7 +38,6 @@
 
             Propolis propolis;
 
-            //TODO seed appropriate honeys
             propolis = new Propolis()
             {
                 Title = "Bee Propolis",

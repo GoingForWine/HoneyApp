@@ -11,7 +11,6 @@
 
     using static Common.GeneralApplicationConstants;
     using static Common.NotificationMessagesConstants;
-    using HoneyWebPlatform.Services.Data;
 
     [Authorize]
     public class HoneyController : Controller
@@ -19,19 +18,13 @@
         private readonly ICategoryService categoryService;
         private readonly IBeekeeperService beekeeperService;
         private readonly IHoneyService honeyService;
-        private readonly IUserService userService;
-
-        private readonly IMemoryCache memoryCache;
-
+        
         public HoneyController(ICategoryService categoryService, IBeekeeperService beekeeperService,
-            IHoneyService honeyService, IUserService userService, IMemoryCache memoryCache)
+            IHoneyService honeyService)
         {
             this.categoryService = categoryService;
             this.beekeeperService = beekeeperService;
             this.honeyService = honeyService;
-            this.userService = userService;
-
-            this.memoryCache = memoryCache;
         }
 
         [HttpGet]

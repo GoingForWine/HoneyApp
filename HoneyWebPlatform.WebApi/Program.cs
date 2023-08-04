@@ -25,7 +25,7 @@ namespace HoneyWebPlatform.WebApi
 
             builder.Services.AddCors(setup =>
             {
-                setup.AddPolicy("HoneyWebPlatform", policyBuilder =>
+                setup.AddPolicy("HoneyWebPlatform", policyBuilder => 
                 {
                     policyBuilder
                         .WithOrigins("https://localhost:7160")
