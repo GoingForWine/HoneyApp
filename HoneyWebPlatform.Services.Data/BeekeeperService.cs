@@ -25,6 +25,21 @@
             return result;
         }
 
+        public async Task<string> BeekeeperFullnameByHoneyIdAsync(string honeyId)
+        {
+            Honey? honey = await dbContext
+                .Honeys
+                .FirstOrDefaultAsync(h => h.Id.ToString() == honeyId);
+
+            Beekeeper beekeeper = honey!.Beekeeper;
+
+            ApplicationUser? user = await dbContext
+                .Users
+                .FirstOrDefaultAsync(a => a.Id.ToString() == beekeeper.UserId.ToString());
+
+            return $"{user!.FirstName} {user!.LastName}";
+        }
+
         public async Task<bool> BeekeeperExistsByPhoneNumberAsync(string phoneNumber)
         {
             bool result = await dbContext

@@ -8,6 +8,8 @@
 
         Task<bool> BeekeeperExistsByPhoneNumberAsync(string phoneNumber);
 
+        Task<string> BeekeeperFullnameByHoneyIdAsync(string honeyId);
+
         Task Create(string userId, BecomeBeekeeperFormModel model);
 
         Task<string?> GetBeekeeperIdByUserIdAsync(string userId);

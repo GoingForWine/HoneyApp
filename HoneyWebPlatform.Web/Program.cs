@@ -1,15 +1,19 @@
 namespace HoneyWebPlatform.Web
 {
+    using System.Reflection;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
     using Data;
     using Data.Models;
-    using static Common.GeneralApplicationConstants;
-
     using Infrastructure.Extensions;
     using Infrastructure.ModelBinders;
+    using Services.Data.Interfaces;
+    using Services.Mapping;
+    using ViewModels.Home;
+    using static Common.GeneralApplicationConstants;
 
     public class Program
     {
@@ -18,8 +22,9 @@ namespace HoneyWebPlatform.Web
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
             string connectionString =
-                builder.Configuration.GetConnectionString("DefaultConnection")
-                ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                builder.Configuration.GetConnectionString("DefaultConnection") 
+                    ?? throw new InvalidOperationException
+                    ("Connection string 'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<HoneyWebPlatformDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -40,13 +45,17 @@ namespace HoneyWebPlatform.Web
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<HoneyWebPlatformDbContext>();
 
-            //builder.Services.AddApplicationServices(typeof(IHouseService));
+            builder.Services.AddApplicationServices(typeof(IHoneyService));
 
             builder.Services.AddRecaptchaService();
+
+            builder.Services.AddMemoryCache();
+            builder.Services.AddResponseCaching();
 
             builder.Services.ConfigureApplicationCookie(cfg =>
             {
                 cfg.LoginPath = "/User/Login";
+                cfg.AccessDeniedPath = "/Home/Error/401";
             });
 
             builder.Services
@@ -59,7 +68,7 @@ namespace HoneyWebPlatform.Web
 
             WebApplication app = builder.Build();
 
-            //AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             if (app.Environment.IsDevelopment())
             {
@@ -79,23 +88,33 @@ namespace HoneyWebPlatform.Web
 
             app.UseRouting();
 
+            app.UseResponseCaching();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
-            //if (app.Environment.IsDevelopment())
-            //{
-            //    app.SeedAdministrator(DevelopmentAdminEmail);
-            //}
+            app.EnableOnlineUsersCheck();
 
-            //app.UseEndpoints(config =>
-            //{
-            //    config.MapControllerRoute(
-            //        name: "ProtectingUrlRoute",
-            //        pattern: "/{controller}/{action}/{id}/{information}",
-            //        defaults: new { Controller = "Category", Action = "Details" });
-            //    config.MapDefaultControllerRoute();
-            //    config.MapRazorPages();
-            //});
+            if (app.Environment.IsDevelopment())
+            {
+                app.SeedAdministrator(DevelopmentAdminEmail);
+            }
+
+            app.UseEndpoints(config =>
+            {
+                config.MapControllerRoute(
+                    name: "areas",
+                    pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
+                config.MapControllerRoute(
+                    name: "ProtectingUrlRoute",
+                    pattern: "/{controller}/{action}/{id}/{information}",
+                    defaults: new { Controller = "Category", Action = "Details" });
+
+                config.MapDefaultControllerRoute();
+                config.MapRazorPages();
+            });
 
             app.Run();
         }

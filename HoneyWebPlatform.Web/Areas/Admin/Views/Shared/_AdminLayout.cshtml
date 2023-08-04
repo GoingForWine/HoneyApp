@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-
     <header>
         <partial name="_NotificationsPartial" />
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -33,21 +32,23 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="All">All Honeys</a>
+                        <li class="nav-item dropdown">
+                            <div>
+                                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">All</a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li>
+                                        <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="All">All Honeys</a>
+                                        <a class="dropdown-item nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="All">All Users</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
-                        @if (User.Identity?.IsAuthenticated ?? false)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Mine">My Honeys</a>
-                            </li>
-                            @if (isUserBeekeeper)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Add">Add Honey</a>
-                                </li>
-                            }
-                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Mine">My Honeys</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Add">Add Honey</a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

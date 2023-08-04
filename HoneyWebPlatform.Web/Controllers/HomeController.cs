@@ -1,34 +1,48 @@
 ﻿namespace HoneyWebPlatform.Web.Controllers
 {
-    using System.Diagnostics;
-
     using Microsoft.AspNetCore.Mvc;
 
+    using Services.Data.Interfaces;
+
+    using static Common.GeneralApplicationConstants;
     using ViewModels.Home;
 
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IHoneyService honeyService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IHoneyService honeyService)
         {
-            _logger = logger;
+            this.honeyService = honeyService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            if (this.User.IsInRole(AdminRoleName))
+            {
+                return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+            }
 
-        public IActionResult Privacy()
-        {
-            return View();
+            IEnumerable<IndexViewModel> viewModel =
+                await honeyService.LastThreeHoneysAsync();
+
+            return View(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(int statusCode)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (statusCode == 400 || statusCode == 404)
+            {
+                return View("Error404");
+            }
+
+            if (statusCode == 401)
+            {
+                return View("Error401");
+            }
+
+            return View();
         }
     }
 }

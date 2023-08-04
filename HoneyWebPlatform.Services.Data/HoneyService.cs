@@ -90,7 +90,7 @@
                 {
                     Id = h.Id.ToString(),
                     Title = h.Title,
-                    Address = h.Origin,
+                    Origin = h.Origin,
                     ImageUrl = h.ImageUrl,
                     Price = h.Price,
                 })
@@ -114,7 +114,7 @@
                 {
                     Id = h.Id.ToString(),
                     Title = h.Title,
-                    Address = h.Origin,
+                    Origin = h.Origin,
                     ImageUrl = h.ImageUrl,
                     Price = h.Price,
                 })
@@ -147,7 +147,7 @@
             {
                 Id = honey.Id.ToString(),
                 Title = honey.Title,
-                Address = honey.Origin,
+                Origin = honey.Origin,
                 ImageUrl = honey.ImageUrl,
                 Price = honey.Price,
                 Description = honey.Description,

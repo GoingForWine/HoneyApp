@@ -34,6 +34,7 @@
             ApplicationUser? user = await this.dbContext
                 .Users
                 .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+            
             if (user == null)
             {
                 return string.Empty;

@@ -1,0 +1,22 @@
+﻿@model MyHoneysViewModel
+
+@{
+    ViewBag.Title = "My Honeys";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<h4>My Added Honeys</h4>
+
+@if (!Model.AddedHoneys.Any())
+{
+    <h2 class="text-center">You have no added honeys yet!</h2>
+}
+
+<div class="row">
+    @foreach (var honey in Model.AddedHoneys)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_HoneyPartial.cshtml", honey)
+    }
+</div>

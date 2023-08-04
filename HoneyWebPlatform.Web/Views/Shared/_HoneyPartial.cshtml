@@ -1,0 +1,39 @@
+﻿@using HoneyWebPlatform.Services.Data.Interfaces
+@using HoneyWebPlatform.Web.Infrastructure.Extensions
+@model HoneyAllViewModel
+
+@inject IBeekeeperService BeekeeperService
+@inject IHoneyService HoneyService
+@{
+    bool isUserBeekeeper = await BeekeeperService.BeekeeperExistsByUserIdAsync(User.GetId()!);
+    bool isBeekeeperOwnerOfTheHoney = await BeekeeperService.HasHoneyWithIdAsync(User.GetId(), Model.Id);
+}
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <img class="card-img-top" src="@Model.ImageUrl" alt="Honey Image">
+        <div class="card-body text-center">
+            <h4>@Model.Title</h4>
+            <h6>Address: <b>@Model.Origin</b></h6>
+            <h6>
+                Price Per Month:
+                <b>@($"{Model.Price:f2}") BGN</b>
+            </h6>
+            <br />
+            <a asp-area="" asp-controller="Honey" asp-action="Details" asp-route-id="@Model.Id"
+               class="btn btn-success">Details</a>
+
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                @if ((isUserBeekeeper && isBeekeeperOwnerOfTheHoney) || User.IsAdmin())
+                {
+                    <a asp-area="" asp-controller="Honey" asp-action="Edit" asp-route-id="@Model.Id"
+                       class="btn btn-warning">Edit</a>
+                    <a asp-area="" asp-controller="Honey" asp-action="Delete" asp-route-id="@Model.Id"
+                       class="btn btn-danger">Delete</a>
+                }
+                <p></p>
+            }
+        </div>
+    </div>
+</div>

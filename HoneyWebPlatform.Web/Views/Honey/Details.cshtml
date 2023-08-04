@@ -1,0 +1,57 @@
+﻿@using HoneyWebPlatform.Services.Data.Interfaces
+@using HoneyWebPlatform.Web.Infrastructure.Extensions
+@model HoneyDetailsViewModel
+
+@inject IBeekeeperService BeekeeperService
+@inject IHoneyService HoneyService
+@{
+    bool isUserBeekeeper = await BeekeeperService.BeekeeperExistsByUserIdAsync(User.GetId()!);
+    bool isBeekeperOwnerOfTheHoney = await BeekeeperService.HasHoneyWithIdAsync(User.GetId(), Model.Id);
+}
+
+@{
+    ViewBag.Title = "Honey Details";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="col-4">
+            <img class="card-img-top" style="width: 20rem;"
+                 src="@Model.ImageUrl" alt="Honey Image">
+        </div>
+        <div class="card col-8 border-0">
+            <p style="font-size:25px;"><u>@Model.Title</u></p>
+            <p>Located in: <b>@Model.Origin</b></p>
+            <p>
+                Price Per Month:
+                <b>@($"{Model.Price:f2}") BGN</b>
+            </p>
+            <p>@Model.Description</p>
+            <p>Category: <b>@Model.Category</b></p>
+            <div class="form-inline">
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    @if ((isUserBeekeeper && isBeekeperOwnerOfTheHoney) || User.IsAdmin())
+                    {
+                        <a class="btn btn-warning" asp-controller="Honey" asp-action="Edit"
+                           asp-route-id="@Model.Id">Edit</a>
+                        <a class="ml-2 btn btn-danger" asp-controller="Honey" asp-action="Delete"
+                           asp-route-id="@Model.Id">Delete</a>
+                    }
+                }
+            </div>
+            <p></p>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Beekeeper Info</h5>
+                    <p class="card-text">Full Name: @Model.Beekeeper.FullName</p>
+                    <p class="card-text">Email:  @Model.Beekeeper.Email</p>
+                    <p class="card-text">Phone Number: @Model.Beekeeper.PhoneNumber</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

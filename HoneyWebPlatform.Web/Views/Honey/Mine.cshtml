@@ -1,0 +1,21 @@
+﻿@model List<HoneyAllViewModel>
+@{
+    ViewData["Title"] = "My Honeys";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr/>
+
+@if (!Model.Any())
+{
+    <h2 class="text-center">You do not have any honeys yet!</h2>
+}
+else
+{
+    <div class="row">
+        @foreach (HoneyAllViewModel honey in Model)
+        {
+            <partial name="_HoneyPartial" model="honey"/>
+        }
+    </div>
+}
