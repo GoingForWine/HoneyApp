@@ -32,4 +32,8 @@
     <ProjectReference Include="..\HoneyWebPlatform.Web.ViewModels\HoneyWebPlatform.Web.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Pages\" />
+  </ItemGroup>
+
 </Project>
