@@ -25,15 +25,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyWebPlatform.Services.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyWebPlatform.Web.ViewModels", "HoneyWebPlatform.Web.ViewModels\HoneyWebPlatform.Web.ViewModels.csproj", "{8C50B75E-5537-4A92-9FA7-FF3ACBF21173}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoneyWebPlatform.Services.Data.Models", "HoneyWebPlatform.Services.Data.Models\HoneyWebPlatform.Services.Data.Models.csproj", "{236A6C1E-CB30-4B35-9867-4E77005145F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyWebPlatform.Services.Data.Models", "HoneyWebPlatform.Services.Data.Models\HoneyWebPlatform.Services.Data.Models.csproj", "{236A6C1E-CB30-4B35-9867-4E77005145F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoneyWebPlatform.Services.Data", "HoneyWebPlatform.Services.Data\HoneyWebPlatform.Services.Data.csproj", "{35C56753-CE04-491F-B852-675FE41FAC91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyWebPlatform.Services.Data", "HoneyWebPlatform.Services.Data\HoneyWebPlatform.Services.Data.csproj", "{35C56753-CE04-491F-B852-675FE41FAC91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoneyWebPlatform.WebApi", "HoneyWebPlatform.WebApi\HoneyWebPlatform.WebApi.csproj", "{51FB7AEA-23F7-430E-BE88-757D576CDEE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyWebPlatform.WebApi", "HoneyWebPlatform.WebApi\HoneyWebPlatform.WebApi.csproj", "{51FB7AEA-23F7-430E-BE88-757D576CDEE1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D88C64DC-985D-41E4-B229-C6386EFA1349}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoneyWebPlatform.Services.Tests", "HoneyWebPlatform.Services.Tests\HoneyWebPlatform.Services.Tests.csproj", "{A7C9DB04-DBE2-44E1-8925-82FC9714C46F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyWebPlatform.Services.Tests", "HoneyWebPlatform.Services.Tests\HoneyWebPlatform.Services.Tests.csproj", "{A7C9DB04-DBE2-44E1-8925-82FC9714C46F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoneyWebPlatform.Services.XUnitTests", "HoneyWebPlatform.Services.XUnitTests\HoneyWebPlatform.Services.XUnitTests.csproj", "{82E4F536-3CB0-47FC-99FE-FBC7427CE8DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +87,10 @@ Global
 		{A7C9DB04-DBE2-44E1-8925-82FC9714C46F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7C9DB04-DBE2-44E1-8925-82FC9714C46F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7C9DB04-DBE2-44E1-8925-82FC9714C46F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82E4F536-3CB0-47FC-99FE-FBC7427CE8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82E4F536-3CB0-47FC-99FE-FBC7427CE8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82E4F536-3CB0-47FC-99FE-FBC7427CE8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82E4F536-3CB0-47FC-99FE-FBC7427CE8DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,6 +107,7 @@ Global
 		{35C56753-CE04-491F-B852-675FE41FAC91} = {BF7563FF-A486-424C-8865-31BEBED1E270}
 		{51FB7AEA-23F7-430E-BE88-757D576CDEE1} = {EAA91C56-8822-4ABD-BA40-3422EA395FDD}
 		{A7C9DB04-DBE2-44E1-8925-82FC9714C46F} = {D88C64DC-985D-41E4-B229-C6386EFA1349}
+		{82E4F536-3CB0-47FC-99FE-FBC7427CE8DA} = {D88C64DC-985D-41E4-B229-C6386EFA1349}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C94D0919-2660-463F-9756-F9AA24506319}

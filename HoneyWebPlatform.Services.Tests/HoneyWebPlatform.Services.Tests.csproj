@@ -15,6 +15,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.20" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="Moq" Version="4.18.4" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Universe" Version="6.0.0" />
     <PackageReference Include="NUnit" Version="3.13.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
     <PackageReference Include="NUnit.Analyzers" Version="3.6.1" />
@@ -32,6 +33,12 @@
     <ProjectReference Include="..\HoneyWebPlatform.Services.Data.Models\HoneyWebPlatform.Services.Data.Models.csproj" />
     <ProjectReference Include="..\HoneyWebPlatform.Services.Data\HoneyWebPlatform.Services.Data.csproj" />
     <ProjectReference Include="..\HoneyWebPlatform.Web.ViewModels\HoneyWebPlatform.Web.ViewModels.csproj" />
+    <ProjectReference Include="..\HoneyWebPlatform.Web\HoneyWebPlatform.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ControllerTests\" />
+    <Folder Include="RoutingTests\" />
   </ItemGroup>
 
 </Project>
