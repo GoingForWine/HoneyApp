@@ -36,9 +36,4 @@
     <ProjectReference Include="..\HoneyWebPlatform.Web\HoneyWebPlatform.Web.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ControllerTests\" />
-    <Folder Include="RoutingTests\" />
-  </ItemGroup>
-
 </Project>
