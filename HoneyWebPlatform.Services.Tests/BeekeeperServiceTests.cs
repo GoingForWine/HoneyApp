@@ -26,7 +26,7 @@ namespace HoneyWebPlatform.Services.Tests
         public void OneTimeSetUp()
         {
             this.dbOptions = new DbContextOptionsBuilder<HoneyWebPlatformDbContext>()
-                .UseInMemoryDatabase("HouseRentingInMemory" + Guid.NewGuid().ToString())
+                .UseInMemoryDatabase("HoneyWebInMemory" + Guid.NewGuid().ToString())
                 .Options;
             this.dbContext = new HoneyWebPlatformDbContext(this.dbOptions, false);
 
@@ -52,6 +52,26 @@ namespace HoneyWebPlatform.Services.Tests
             string existingUserId = User.Id.ToString();
 
             bool result = await this.beekeeperService.BeekeeperExistsByUserIdAsync(existingUserId);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task BeekeeperExistsByPhoneNumberAsyncShouldReturnTrueWhenExists()
+        {
+            string existingBeekeeperNumber = BeekeeperUser.PhoneNumber.ToString();
+
+            bool result = await this.beekeeperService.BeekeeperExistsByPhoneNumberAsync(existingBeekeeperNumber);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task BeekeeperExistsByPhoneNumberAsyncShouldReturnFalseWhenNotExists()
+        {
+            string existingUserNumber = User.PhoneNumber.ToString();
+
+            bool result = await this.beekeeperService.BeekeeperExistsByPhoneNumberAsync(existingUserNumber);
 
             Assert.IsFalse(result);
         }
