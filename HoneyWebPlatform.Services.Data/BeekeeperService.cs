@@ -39,6 +39,20 @@
 
             return $"{user!.FirstName} {user!.LastName}";
         }
+        public async Task<string> BeekeeperFullnameByPropolisIdAsync(string propolisId)
+        {
+            Propolis? propolis = await dbContext
+                .Propolises
+                .FirstOrDefaultAsync(h => h.Id.ToString() == propolisId);
+
+            Beekeeper beekeeper = propolis!.Beekeeper;
+
+            ApplicationUser? user = await dbContext
+                .Users
+                .FirstOrDefaultAsync(a => a.Id.ToString() == beekeeper.UserId.ToString());
+
+            return $"{user!.FirstName} {user!.LastName}";
+        }
 
         public async Task<bool> BeekeeperExistsByPhoneNumberAsync(string phoneNumber)
         {

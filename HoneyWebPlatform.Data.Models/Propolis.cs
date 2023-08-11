@@ -2,9 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using static Common.EntityValidationConstants.Honey;
+    using static Common.EntityValidationConstants.Propolis;
 
-    //todo enum with different tastes
     public class Propolis
     {
         public Propolis()

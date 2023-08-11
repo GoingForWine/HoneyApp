@@ -36,6 +36,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Pages\" />
+    <Folder Include="Views\Flavour\" />
+    <Folder Include="Views\Propolis\" />
   </ItemGroup>
 
 </Project>

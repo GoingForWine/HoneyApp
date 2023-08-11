@@ -25,6 +25,19 @@
 
             public const int ImageUrlMaxLength = 2048;
         }
+        public static class Propolis
+        {
+            public const int TitleMinLength = 15;
+            public const int TitleMaxLength = 50;
+            
+            public const int DescriptionMinLength = 10;
+            public const int DescriptionMaxLength = 500;
+
+            public const string PriceMinValue = "2";
+            public const string PriceMaxValue = "10";
+
+            public const int ImageUrlMaxLength = 2048;
+        }
 
         public static class Beekeeper
         {

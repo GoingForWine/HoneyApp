@@ -13,7 +13,7 @@
 
         Task<AllHoneysFilteredAndPagedServiceModel> AllAsync(AllHoneysQueryModel queryModel);
 
-        Task<IEnumerable<HoneyAllViewModel>> AllByBeekeeperIdAsync(string agentId);
+        Task<IEnumerable<HoneyAllViewModel>> AllByBeekeeperIdAsync(string beekeeperId);
 
         Task<bool> ExistsByIdAsync(string honeyId);
 

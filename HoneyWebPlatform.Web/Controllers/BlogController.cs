@@ -1,6 +1,6 @@
 ﻿namespace HoneyWebPlatform.Web.Controllers
 {
-    using HoneyWebPlatform.Web.ViewModels.Blog;
+    using ViewModels.Blog;
     using Microsoft.AspNetCore.Mvc;
 
     public class BlogController : Controller

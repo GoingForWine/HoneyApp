@@ -10,6 +10,8 @@
 
         Task<string> BeekeeperFullnameByHoneyIdAsync(string honeyId);
 
+        Task<string> BeekeeperFullnameByPropolisIdAsync(string honeyId);
+
         Task Create(string userId, BecomeBeekeeperFormModel model);
 
         Task<string?> GetBeekeeperIdByUserIdAsync(string userId);
