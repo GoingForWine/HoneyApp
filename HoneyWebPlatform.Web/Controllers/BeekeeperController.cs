@@ -8,7 +8,6 @@
     using ViewModels.Beekeeper;
 
     using static Common.NotificationMessagesConstants;
-    using HoneyWebPlatform.Services.Data;
 
     [Authorize]
     public class BeekeeperController : Controller

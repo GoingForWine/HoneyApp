@@ -7,7 +7,7 @@
         if ($('#statistics_box').hasClass('d-none')) {
             $.get('https://localhost:7180/api/statistics', function (data) {
                 $('#total_honeys').text("In total we have: " + data.totalHoneys + " Honeys");
-                
+
                 $('#statistics_box').removeClass('d-none');
 
                 $('#statistics_btn').text('Hide Statistics');

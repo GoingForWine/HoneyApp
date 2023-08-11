@@ -1,0 +1,98 @@
+﻿@model HoneyWebPlatform.Web.ViewModels.Blog.BlogViewModel
+@*NORMAL CHAT*@
+<h3>Messages: </h3>
+<h4>Here you can try a basic chat that refreshes the page and keeps messages here temporarily: </h4>
+
+@if (Model.Messages != null)
+{
+    @foreach (var message in Model.Messages)
+    {
+        <div class="card .bg-light col-6">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>@message.MessageText</p>
+                    <footer class="blockquote-footer">@message.Sender</footer>
+                </blockquote>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p> No messages yet! </p>
+}
+
+<p></p>
+<form asp-controller="Blog" asp-action="Send" method="post">
+    <div class="form-group card—header row">
+        <div class="col-12">
+            <h5>Send a new message</h5>
+        </div>
+        <div class="col-8">
+            <label>Message: </label>
+            <textarea asp-for="CurrentMessage.MessageText"
+                      class="form-control" rows="3"></textarea>
+        </div>
+        <div class="col-4">
+            <label>Sender Name: </label>
+            <input asp-for="CurrentMessage.Sender" class="form-control">
+            <input class="btn—primary mt—2 float-lg-right" type="submit" value="Send" />
+        </div>
+    </div>
+</form>
+
+@*SignalR CHAT*@
+
+<div class="row">
+    <div class="col-12">
+        <hr />
+        <hr />
+        <hr />
+    </div>
+</div>
+<h4>Here you can try a live chat (signalR) that doesn't refresh the page and communicates with everyone currently on this website: </h4>
+
+<div class="mb-5"></div>
+
+<div class="container">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-2">User</div>
+        <div class="col-4"><input type="text" id="userInput" /></div>
+    </div>
+    <div class="row">
+        <div class="col-2">Message</div>
+        <div class="col-4"><input type="text" id="messageInput" /></div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input type="button" id="sendButton" value="Send Message" />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-6">
+        <ul id="messagesList"></ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="/js/chat.js" asp-append-version="true"></script>
+}

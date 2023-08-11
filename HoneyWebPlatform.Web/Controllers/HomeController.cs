@@ -3,9 +3,9 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Services.Data.Interfaces;
-
-    using static Common.GeneralApplicationConstants;
+    
     using ViewModels.Home;
+    using static Common.GeneralApplicationConstants;
 
     public class HomeController : Controller
     {

@@ -6,6 +6,7 @@ namespace HoneyWebPlatform.Web
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
+    using Hubs;
     using Data;
     using Data.Models;
     using Infrastructure.Extensions;
@@ -51,6 +52,8 @@ namespace HoneyWebPlatform.Web
 
             builder.Services.AddMemoryCache();
             builder.Services.AddResponseCaching();
+
+            builder.Services.AddSignalR();
 
             builder.Services.ConfigureApplicationCookie(cfg =>
             {
@@ -114,8 +117,10 @@ namespace HoneyWebPlatform.Web
 
                 config.MapDefaultControllerRoute();
                 config.MapRazorPages();
+                config.MapHub<ChatHub>("/chatHub");
             });
 
+           
             app.Run();
         }
     }

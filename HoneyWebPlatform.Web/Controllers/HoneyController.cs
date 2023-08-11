@@ -4,7 +4,6 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
-    using Microsoft.Extensions.Caching.Memory;
     using Services.Data.Interfaces;
     using Services.Data.Models.Honey;
     using ViewModels.Honey;

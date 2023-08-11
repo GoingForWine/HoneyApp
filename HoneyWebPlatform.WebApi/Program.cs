@@ -29,6 +29,7 @@ namespace HoneyWebPlatform.WebApi
                 {
                     policyBuilder
                         .WithOrigins("https://localhost:7160")
+                        //.WithOrigins("https://honeywebplatformwebapiazureapimanagement.azure-api.net")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
