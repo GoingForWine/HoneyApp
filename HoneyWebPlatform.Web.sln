@@ -35,7 +35,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D88C64DC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyWebPlatform.Services.Tests", "HoneyWebPlatform.Services.Tests\HoneyWebPlatform.Services.Tests.csproj", "{A7C9DB04-DBE2-44E1-8925-82FC9714C46F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoneyWebPlatform.Services.XUnitTests", "HoneyWebPlatform.Services.XUnitTests\HoneyWebPlatform.Services.XUnitTests.csproj", "{82E4F536-3CB0-47FC-99FE-FBC7427CE8DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyWebPlatform.Services.XUnitTests", "HoneyWebPlatform.Services.XUnitTests\HoneyWebPlatform.Services.XUnitTests.csproj", "{82E4F536-3CB0-47FC-99FE-FBC7427CE8DA}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C4A7B44B-9C3E-424F-99D9-C40456D61FEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,10 @@ Global
 		{82E4F536-3CB0-47FC-99FE-FBC7427CE8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82E4F536-3CB0-47FC-99FE-FBC7427CE8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82E4F536-3CB0-47FC-99FE-FBC7427CE8DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4A7B44B-9C3E-424F-99D9-C40456D61FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4A7B44B-9C3E-424F-99D9-C40456D61FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4A7B44B-9C3E-424F-99D9-C40456D61FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4A7B44B-9C3E-424F-99D9-C40456D61FEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

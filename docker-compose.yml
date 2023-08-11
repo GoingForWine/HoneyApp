@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+
+  honeywebplatform.web:
+    image: ${DOCKER_REGISTRY-}honeywebplatformweb
+    build:
+      context: .
+      dockerfile: HoneyWebPlatform.Web/Dockerfile
+
+  pgdb:
+    image: postgres
+    restart: always
+    environment: 
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    #ports:
+    # - "5432:5432" 
+    volumes: 
+     - c:/temp/pgdata:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
