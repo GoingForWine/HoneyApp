@@ -7,7 +7,7 @@
 
     public interface IPropolisService
     {
-        Task<IEnumerable<IndexViewModel>> LastThreePropolisеsAsync();
+        Task<IEnumerable<PropolisIndexViewModel>> LastThreePropolisеsAsync();
 
         Task<string> CreateAndReturnIdAsync(PropolisFormModel formModel, string beekeeperId);
 

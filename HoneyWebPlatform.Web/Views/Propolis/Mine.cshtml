@@ -1,0 +1,21 @@
+﻿@model List<PropolisAllViewModel>
+@{
+    ViewData["Title"] = "My Propolises";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr/>
+
+@if (!Model.Any())
+{
+    <h2 class="text-center">You do not have any Propolises yet!</h2>
+}
+else
+{
+    <div class="row">
+        @foreach (PropolisAllViewModel propolis in Model)
+        {
+            <partial name="_PropolisPartial" model="propolis"/>
+        }
+    </div>
+}

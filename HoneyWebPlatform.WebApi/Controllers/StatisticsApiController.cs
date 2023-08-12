@@ -10,10 +10,12 @@
     public class StatisticsApiController : ControllerBase
     {
         private readonly IHoneyService honeyService;
+        private readonly IPropolisService propolisService;
 
-        public StatisticsApiController(IHoneyService honeyService)
+        public StatisticsApiController(IHoneyService honeyService, IPropolisService propolisService)
         {
             this.honeyService = honeyService;
+            this.propolisService = propolisService;
         }
 
         [HttpGet]
@@ -26,6 +28,9 @@
             {
                 StatisticsServiceModel serviceModel =
                     await honeyService.GetStatisticsAsync();
+
+                serviceModel = 
+                    await propolisService.GetStatisticsAsync();
 
                 return Ok(serviceModel);
             }

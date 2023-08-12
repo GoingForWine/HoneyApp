@@ -102,5 +102,19 @@
             honeyId = honeyId.ToLower();
             return beekeeper.OwnedHoney.Any(h => h.Id.ToString() == honeyId);
         }
+        public async Task<bool> HasPropolisWithIdAsync(string? userId, string propolisId)
+        {
+            Beekeeper? beekeeper = await dbContext
+                .Beekeepers
+                .Include(a => a.OwnedPropolis)
+                .FirstOrDefaultAsync(a => a.UserId.ToString() == userId);
+            if (beekeeper == null)
+            {
+                return false;
+            }
+
+            propolisId = propolisId.ToLower();
+            return beekeeper.OwnedPropolis.Any(h => h.Id.ToString() == propolisId);
+        }
     }
 }

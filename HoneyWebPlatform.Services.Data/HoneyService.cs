@@ -22,14 +22,14 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<IndexViewModel>> LastThreeHoneysAsync()
+        public async Task<IEnumerable<HoneyIndexViewModel>> LastThreeHoneysAsync()
         {
-            IEnumerable<IndexViewModel> lastThreeHoneys = await dbContext
+            IEnumerable<HoneyIndexViewModel> lastThreeHoneys = await dbContext
                 .Honeys
                 .Where(h => h.IsActive)
                 .OrderByDescending(h => h.CreatedOn)
                 .Take(3)
-                .To<IndexViewModel>()
+                .To<HoneyIndexViewModel>()
                 .ToArrayAsync();
 
             return lastThreeHoneys;
@@ -237,7 +237,8 @@
         {
             return new StatisticsServiceModel()
             {
-                TotalHoneys = await dbContext.Honeys.CountAsync()
+                TotalHoneys = await dbContext.Honeys.CountAsync(),
+                TotalPropolises = await dbContext.Propolises.CountAsync()
             };
         }
     }

@@ -17,11 +17,21 @@
     <hr class="my-4">
     <a asp-area="" asp-controller="Honey" asp-action="All"
        class="btn btn-primary btn-lg">All Honeys</a>
+    <span>  |   </span>
     <a asp-area="" asp-controller="Honey" asp-action="Add"
        class="btn btn-primary btn-lg">Add Honey</a>
     <span>  |   </span>
     <a asp-area="Admin" asp-controller="Honey" asp-action="Mine"
        class="btn btn-primary btn-lg">My Honeys</a>
+    <span>  |   </span>
+    <a asp-area="" asp-controller="Propolis" asp-action="All"
+       class="btn btn-primary btn-lg">All Propolises</a>
+    <span>  |   </span>
+    <a asp-area="" asp-controller="Propolis" asp-action="Add"
+       class="btn btn-primary btn-lg">Add Propolis</a>
+    <span>  |   </span>
+    <a asp-area="Admin" asp-controller="Propolis" asp-action="Mine"
+       class="btn btn-primary btn-lg">My Propolises</a>
     <span>  |   </span>
     <a asp-area="Admin" asp-controller="User" asp-action="All"
        class="btn btn-primary btn-lg">All Users</a>
@@ -40,6 +50,7 @@
 <div class="mt-4 p-5 bg-light d-none" id="statistics_box">
     <div class="row">
         <h3 class="col-md-6 text-center" id="total_honeys"></h3>
+        <h3 class="col-md-6 text-center" id="total_propolises"></h3>
     </div>
 </div>
 

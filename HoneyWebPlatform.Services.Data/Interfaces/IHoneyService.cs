@@ -7,7 +7,7 @@
 
     public interface IHoneyService
     {
-        Task<IEnumerable<IndexViewModel>> LastThreeHoneysAsync();
+        Task<IEnumerable<HoneyIndexViewModel>> LastThreeHoneysAsync();
 
         Task<string> CreateAndReturnIdAsync(HoneyFormModel formModel, string beekeeperId);
 

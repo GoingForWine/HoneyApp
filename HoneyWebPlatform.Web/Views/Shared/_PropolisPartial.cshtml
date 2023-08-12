@@ -1,35 +1,34 @@
 ﻿@using HoneyWebPlatform.Services.Data.Interfaces
 @using HoneyWebPlatform.Web.Infrastructure.Extensions
-@model HoneyAllViewModel
+@model PropolisAllViewModel
 
 @inject IBeekeeperService BeekeeperService
-@inject IHoneyService HoneyService
+@inject IPropolisService PropolisService
 @{
     bool isUserBeekeeper = await BeekeeperService.BeekeeperExistsByUserIdAsync(User.GetId()!);
-    bool isBeekeeperOwnerOfTheHoney = await BeekeeperService.HasHoneyWithIdAsync(User.GetId(), Model.Id);
+    bool isBeekeeperOwnerOfThePropolis = await BeekeeperService.HasPropolisWithIdAsync(User.GetId(), Model.Id);
 }
 
 <div class="col-md-4">
     <div class="card mb-3">
-        <img class="card-img-top" src="@Model.ImageUrl" alt="Honey Image">
+        <img class="card-img-top" src="@Model.ImageUrl" alt="Propolis Image">
         <div class="card-body text-center">
             <h4>@Model.Title</h4>
-            <h6>Address: <b>@Model.Origin</b></h6>
             <h6>
                 Price:
                 <b>@($"{Model.Price:f2}") BGN</b>
             </h6>
             <br />
-            <a asp-area="" asp-controller="Honey" asp-action="Details" asp-route-id="@Model.Id"
+            <a asp-area="" asp-controller="Propolis" asp-action="Details" asp-route-id="@Model.Id"
                class="btn btn-success">Details</a>
 
             @if (User.Identity?.IsAuthenticated ?? false)
             {
-                @if ((isUserBeekeeper && isBeekeeperOwnerOfTheHoney) || User.IsAdmin())
+                @if ((isUserBeekeeper && isBeekeeperOwnerOfThePropolis) || User.IsAdmin())
                 {
-                    <a asp-area="" asp-controller="Honey" asp-action="Edit" asp-route-id="@Model.Id"
+                    <a asp-area="" asp-controller="Propolis" asp-action="Edit" asp-route-id="@Model.Id"
                        class="btn btn-warning">Edit</a>
-                    <a asp-area="" asp-controller="Honey" asp-action="Delete" asp-route-id="@Model.Id"
+                    <a asp-area="" asp-controller="Propolis" asp-action="Delete" asp-route-id="@Model.Id"
                        class="btn btn-danger">Delete</a>
                 }
                 <p></p>

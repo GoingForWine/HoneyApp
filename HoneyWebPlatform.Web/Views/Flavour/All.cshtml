@@ -1,0 +1,16 @@
+﻿@using HoneyWebPlatform.Web.Infrastructure.Extensions
+@model IEnumerable<AllFlavoursViewModel>
+
+@{
+    ViewData["Title"] = "All Flavours";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<div class="list-group">
+    @foreach (AllFlavoursViewModel flavour in Model)
+    {
+        <a class="list-group-item list-group-item-action" asp-controller="Flavour" asp-action="Details" asp-route-id="@flavour.Id" asp-route-information="@flavour.GetUrlInformation()">@flavour.Name</a>
+    }
+</div>

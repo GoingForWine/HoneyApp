@@ -3,17 +3,19 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Services.Data.Interfaces;
-    
+
     using ViewModels.Home;
     using static Common.GeneralApplicationConstants;
 
     public class HomeController : Controller
     {
         private readonly IHoneyService honeyService;
+        private readonly IPropolisService propolisService;
 
-        public HomeController(IHoneyService honeyService)
+        public HomeController(IHoneyService honeyService, IPropolisService propolisService)
         {
             this.honeyService = honeyService;
+            this.propolisService = propolisService;
         }
 
         public async Task<IActionResult> Index()
@@ -23,8 +25,19 @@
                 return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
             }
 
-            IEnumerable<IndexViewModel> viewModel =
+            IEnumerable<HoneyIndexViewModel> honeyIndexViewModel =
                 await honeyService.LastThreeHoneysAsync();
+
+            IEnumerable<PropolisIndexViewModel> propolisIndexViewModel =
+               await propolisService.LastThreePropolisеsAsync();
+
+
+            var viewModel = new IndexViewModel
+            {
+                Honeys = honeyIndexViewModel,
+                Propolises = propolisIndexViewModel
+            };
+
 
             return View(viewModel);
         }

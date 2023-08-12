@@ -17,5 +17,7 @@
         Task<string?> GetBeekeeperIdByUserIdAsync(string userId);
 
         Task<bool> HasHoneyWithIdAsync(string? userId, string honeyId);
+
+        Task<bool> HasPropolisWithIdAsync(string? userId, string propolisId);
     }
 }

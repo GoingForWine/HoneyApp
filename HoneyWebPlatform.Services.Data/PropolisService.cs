@@ -22,14 +22,14 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<IndexViewModel>> LastThreePropolisеsAsync()
+        public async Task<IEnumerable<PropolisIndexViewModel>> LastThreePropolisеsAsync()
         {
-            IEnumerable<IndexViewModel> lastThreePropolises = await dbContext
+            IEnumerable<PropolisIndexViewModel> lastThreePropolises = await dbContext
                 .Propolises
                 .Where(h => h.IsActive)
                 .OrderByDescending(h => h.CreatedOn)
                 .Take(3)
-                .To<IndexViewModel>()
+                .To<PropolisIndexViewModel>()
                 .ToArrayAsync();
 
             return lastThreePropolises;

@@ -1,16 +1,16 @@
 ﻿@using HoneyWebPlatform.Services.Data.Interfaces
 @using HoneyWebPlatform.Web.Infrastructure.Extensions
-@model HoneyDetailsViewModel
+@model PropolisDetailsViewModel
 
 @inject IBeekeeperService BeekeeperService
-@inject IHoneyService HoneyService
+@inject IPropolisService PropolisService
 @{
     bool isUserBeekeeper = await BeekeeperService.BeekeeperExistsByUserIdAsync(User.GetId()!);
-    bool isBeekeperOwnerOfTheHoney = await BeekeeperService.HasHoneyWithIdAsync(User.GetId(), Model.Id);
+    bool isBeekeperOwnerOfThePropolis = await BeekeeperService.HasPropolisWithIdAsync(User.GetId(), Model.Id);
 }
 
 @{
-    ViewBag.Title = "Honey Details";
+    ViewBag.Title = "Propolis Details";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -20,25 +20,24 @@
     <div class="row">
         <div class="col-4">
             <img class="card-img-top" style="width: 20rem;"
-                 src="@Model.ImageUrl" alt="Honey Image">
+                 src="@Model.ImageUrl" alt="Propolis Image">
         </div>
         <div class="card col-8 border-0">
             <p style="font-size:25px;"><u>@Model.Title</u></p>
-            <p>Located in: <b>@Model.Origin</b></p>
             <p>
                 Price:
                 <b>@($"{Model.Price:f2}") BGN</b>
             </p>
             <p>@Model.Description</p>
-            <p>Category: <b>@Model.Category</b></p>
+            <p>Flavour: <b>@Model.Flavour</b></p>
             <div class="form-inline">
                 @if (User.Identity?.IsAuthenticated ?? false)
                 {
-                    @if ((isUserBeekeeper && isBeekeperOwnerOfTheHoney) || User.IsAdmin())
+                    @if ((isUserBeekeeper && isBeekeperOwnerOfThePropolis) || User.IsAdmin())
                     {
-                        <a class="btn btn-warning" asp-controller="Honey" asp-action="Edit"
+                        <a class="btn btn-warning" asp-controller="Propolis" asp-action="Edit"
                            asp-route-id="@Model.Id">Edit</a>
-                        <a class="ml-2 btn btn-danger" asp-controller="Honey" asp-action="Delete"
+                        <a class="ml-2 btn btn-danger" asp-controller="Propolis" asp-action="Delete"
                            asp-route-id="@Model.Id">Delete</a>
                     }
                 }

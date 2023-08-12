@@ -1,0 +1,22 @@
+﻿@model HoneyWebPlatform.Web.Areas.Admin.ViewModels.Propolis.MyPropolisesViewModel
+
+@{
+    ViewBag.Title = "My Propolises";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<h4>My Added Propolises</h4>
+
+@if (!Model.AddedPropolises.Any())
+{
+    <h2 class="text-center">You have no added Propolises yet!</h2>
+}
+
+<div class="row">
+    @foreach (var propolis in Model.AddedPropolises)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_PropolisPartial.cshtml", propolis)
+    }
+</div>

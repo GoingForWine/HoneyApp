@@ -38,11 +38,13 @@ namespace HoneyWebPlatform.Data
         {
             builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
             builder.ApplyConfiguration(new HoneyEntityConfiguration());
+            builder.ApplyConfiguration(new PropolisEntityConfiguration());
 
             if (this.seedDb)
             {
                 builder.ApplyConfiguration(new CategoryEntityConfiguration());
                 builder.ApplyConfiguration(new HoneyEntityConfiguration());
+                builder.ApplyConfiguration(new PropolisEntityConfiguration());
             }
 
             //Assembly configAssembly = Assembly.GetAssembly(typeof(HoneyWebPlatformDbContext)) ??

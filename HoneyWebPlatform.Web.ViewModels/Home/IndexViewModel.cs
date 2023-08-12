@@ -1,14 +1,9 @@
 ﻿namespace HoneyWebPlatform.Web.ViewModels.Home
 {
-    using Data.Models;
-    using Services.Mapping;
-
-    public class IndexViewModel : IMapFrom<Honey>
+    public class IndexViewModel
     {
-        public string Id { get; set; } = null!;
+        public IEnumerable<HoneyIndexViewModel> Honeys { get; set; } = null!;
+        public IEnumerable<PropolisIndexViewModel> Propolises { get; set; } = null!;
 
-        public string Title { get; set; } = null!;
-
-        public string ImageUrl { get; set; } = null!;
     }
 }

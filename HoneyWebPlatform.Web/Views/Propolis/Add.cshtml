@@ -1,0 +1,14 @@
+﻿@model PropolisFormModel
+@{
+    ViewData["Title"] = "Add Propolis";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<partial name="_PropolisFormPartial" model="@Model"/>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+}
