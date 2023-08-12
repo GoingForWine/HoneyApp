@@ -34,6 +34,8 @@ namespace HoneyWebPlatform.Services.Tests
             SeedDatabase(this.dbContext);
 
             this.beekeeperService = new BeekeeperService(this.dbContext);
+
+            var h = dbContext.Honeys.ToList();
         }
 
         [Test]
@@ -75,5 +77,17 @@ namespace HoneyWebPlatform.Services.Tests
 
             Assert.IsFalse(result);
         }
+
+        [Test]
+        public async Task BeekeeperFullnameByHoneyIdAsyncShouldReturnCorrectNameWhenExists()
+        {
+            string existingHoneyId = dbContext.Honeys.First().Id.ToString();
+
+            string result = await this.beekeeperService.BeekeeperFullnameByHoneyIdAsync(existingHoneyId);
+
+            Assert.AreEqual("FirstName LastName", result);
+        }
+
+
     }
 }
