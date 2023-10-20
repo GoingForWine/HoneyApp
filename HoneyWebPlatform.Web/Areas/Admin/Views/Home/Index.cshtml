@@ -1,40 +1,40 @@
 ﻿@model HoneyWebPlatform.Web.ViewModels.Honey.HoneyDetailsViewModel
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Начална Страница";
 }
 
 <div class="mt-4 p-5 bg-light text-center">
-    <h2 class="display-4">Hello, Admin!</h2>
+    <h2 class="display-4">Здравей, Админе!</h2>
     <p class="lead mb-1 mt-3">
-        This is your administrator area - you can <b>read</b>, <b>create</b>,
-        <b>delete</b> and <b>edit</b> honeys.
+        Това е администраторската ти област - тук можеш да <b>четеш</b>, <b>създаваш</b>,
+        <b>изтриваш</b> и <b>променяш</b> медове и прополиси.
         <br />
     </p>
     <p class="lead mt-1">
-        You can also see <b>all users and beekeepers</b> in the system.
+        Също така можеш да видиш <b>всички потребители и пчелари</b> регистрирани в системата.
     </p>
     <hr class="my-4">
     <a asp-area="" asp-controller="Honey" asp-action="All"
-       class="btn btn-primary btn-lg">All Honeys</a>
+       class="btn btn-primary btn-lg">Всички Медове</a>
     <span>  |   </span>
     <a asp-area="" asp-controller="Honey" asp-action="Add"
-       class="btn btn-primary btn-lg">Add Honey</a>
+       class="btn btn-primary btn-lg">Добави Мед</a>
     <span>  |   </span>
     <a asp-area="Admin" asp-controller="Honey" asp-action="Mine"
-       class="btn btn-primary btn-lg">My Honeys</a>
+       class="btn btn-primary btn-lg">Моите Медове</a>
     <span>  |   </span>
     <a asp-area="" asp-controller="Propolis" asp-action="All"
-       class="btn btn-primary btn-lg">All Propolises</a>
+       class="btn btn-primary btn-lg">Всички Прополиси</a>
     <span>  |   </span>
     <a asp-area="" asp-controller="Propolis" asp-action="Add"
-       class="btn btn-primary btn-lg">Add Propolis</a>
+       class="btn btn-primary btn-lg">Добави Прополис</a>
     <span>  |   </span>
     <a asp-area="Admin" asp-controller="Propolis" asp-action="Mine"
-       class="btn btn-primary btn-lg">My Propolises</a>
+       class="btn btn-primary btn-lg">Моите Прополиси</a>
     <span>  |   </span>
     <a asp-area="Admin" asp-controller="User" asp-action="All"
-       class="btn btn-primary btn-lg">All Users</a>
+       class="btn btn-primary btn-lg">Всички Потребители</a>
 </div>
 
 
@@ -43,7 +43,7 @@
 
 <div class="row">
     <div class="col-12 text-center">
-        <button class="btn btn-primary" id="statistics_btn">Show Statistics</button>
+        <button class="btn btn-primary" id="statistics_btn">Покажи статистиката</button>
     </div>
 </div>
 

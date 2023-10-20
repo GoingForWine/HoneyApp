@@ -1,7 +1,7 @@
 ﻿@model AllHoneysQueryModel
 
 @{
-    ViewBag.Title = "All Honeys";
+    ViewBag.Title = "Всички Медове";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -11,9 +11,9 @@
     <div class="row">
         <div class="form-group col-md-3 d-flex justify-content-between">
             <div class="form-group">
-                <label asp-for="Category"></label>
+                <label asp-for="Category"> Категория</label>
                 <select asp-for="Category" class="form-control">
-                    <option value="">All</option>
+                    <option value="">Всички</option>
                     @foreach (var category in Model.Categories)
                     {
                         <option value="@category">@category</option>
@@ -22,7 +22,7 @@
             </div>
             
             <div class="form-group">
-                <label asp-for="HoneysPerPage"></label>
+                <label asp-for="HoneysPerPage">Медове на Страница</label>
                 <select asp-for="HoneysPerPage" class="form-control">
                     <option value="3">3</option>
                     <option value="6">6</option>
@@ -32,25 +32,25 @@
         </div>
 
         <div class="form-group col-md-3">
-            <label asp-for="SearchString"></label>
+            <label asp-for="SearchString"> Търси</label>
             <input asp-for="SearchString" class="form-control" placeholder="...">
         </div>
 
         <div class="form-group col-md-3">
             <div class="form-group">
-                <label asp-for="HoneySorting"></label>
+                <label asp-for="HoneySorting">Подреди първо да е</label>
                 <select asp-for="HoneySorting" class="form-control">
-                    <option value="0">Newest</option>
-                    <option value="1">Oldest</option>
-                    <option value="2">Price (Ascending)</option>
-                    <option value="3">Price (Descending)</option>
+                    <option value="0">Новия</option>
+                    <option value="1">Стария</option>
+                    <option value="2">Евтиния</option>
+                    <option value="3">Скъпия</option>
                 </select>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="form-group mt-4 p-2">
-                <input type="submit" value="Search" class="btn btn-primary" />
+                <input type="submit" value="Търси" class="btn btn-primary" />
             </div>
         </div>
     </div>
@@ -98,7 +98,7 @@
 
 @if (!Model.Honeys.Any())
 {
-    <h2 class="text-center">No honeys found by the given criteria!</h2>
+    <h2 class="text-center">Няма намерени медове с този критерии!</h2>
 }
 
 <div class="row">

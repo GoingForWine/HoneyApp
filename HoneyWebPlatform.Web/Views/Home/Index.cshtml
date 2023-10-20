@@ -4,7 +4,7 @@
 
 @inject IBeekeeperService BeekeeperService
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Начална Страница";
 
     var honeys = Model.Honeys.ToList();
     var propolises = Model.Propolises.ToList();
@@ -14,10 +14,10 @@
 @if (!honeys.Any())
 {
     <div class="mt-4 p-5 bg-light">
-        <h1 class="display-4">Welcome to the best place for beekeepers!</h1>
+        <h1 class="display-4">Добре дошли на най-хубавото място за Пчелари!</h1>
         <p class="lead">
-            There are no honeys or propolises in the system currently available
-            so why don't you just add some?
+            В момента няма налични медове и прополиси. 
+            Защо не добавите някой?
         </p>
         <hr class="my-4">
         <p class="lead">
@@ -26,9 +26,9 @@
                 @if (isUserBeekeeper)
                 {
                     <a asp-controller="Honey" asp-action="Add" class="btn btn-primary btn-lg"
-                       role="button">Add Honey</a>
+                       role="button">Добави Мед</a>
                     <a asp-controller="Propolis" asp-action="Add" class="btn btn-primary btn-lg"
-                       role="button">Add Propolis</a>
+                       role="button">Добави Прополис</a>
                 }
             }
         </p>
@@ -39,7 +39,7 @@
 
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
-        <h1 class="display-4">Available Honeys:</h1>
+        <h1 class="display-4">Налични Медове:</h1>
         @for (int i = 0; i < honeys.Count(); i++)
         {
             var honey = honeys[i];
@@ -57,17 +57,17 @@
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+        <span class="visually-hidden">Предишен</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+        <span class="visually-hidden">Следващ</span>
     </button>
 </div>
 
 <div id="carouselExampleControls2" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
-        <h1 class="display-4">Available Propolises:</h1>
+        <h1 class="display-4">Налични Прополиси:</h1>
         @for (int i = 0; i < propolises.Count(); i++)
         {
             var propolis = propolises[i];
@@ -85,11 +85,11 @@
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+        <span class="visually-hidden">Предишен</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+        <span class="visually-hidden">Следващ</span>
     </button>
 </div>
 
@@ -97,7 +97,7 @@
 
 <div class="row">
     <div class="col-12 text-center">
-        <button class="btn btn-primary" id="statistics_btn">Show Statistics</button>
+        <button class="btn btn-primary" id="statistics_btn">Покажи Статистиката</button>
     </div>
 </div>
 

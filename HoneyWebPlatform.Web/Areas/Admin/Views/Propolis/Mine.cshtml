@@ -1,17 +1,17 @@
 ﻿@model HoneyWebPlatform.Web.Areas.Admin.ViewModels.Propolis.MyPropolisesViewModel
 
 @{
-    ViewBag.Title = "My Propolises";
+    ViewBag.Title = "Моите Прополиси";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-<h4>My Added Propolises</h4>
+<h4>Моите добавени Прополиси</h4>
 
 @if (!Model.AddedPropolises.Any())
 {
-    <h2 class="text-center">You have no added Propolises yet!</h2>
+    <h2 class="text-center">Все още нямате добавени Прополиси!</h2>
 }
 
 <div class="row">

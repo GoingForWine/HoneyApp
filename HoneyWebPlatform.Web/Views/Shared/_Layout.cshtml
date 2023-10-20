@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Honey Web Platform</title>
+    <title>@ViewData["Title"] - Пчелен Кошер</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HoneyWebPlatform.Web.styles.css" asp-append-version="true" />
@@ -26,7 +26,7 @@
         <partial name="_NotificationsPartial" />
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Honey Web Platform</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Пчелен Кошер</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -34,29 +34,29 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="All">All Honeys</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="All">Всички медове</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="All">All Propolises</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="All">Всички Прополиси</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Show">Blog</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Show">Блог</a>
                         </li>
                         @if (User.Identity?.IsAuthenticated ?? false)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Mine">My Honeys</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Mine">Моите Медове</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Mine">My Propolises</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Mine">Моите Прополиси</a>
                             </li>
                             @if (isUserBeekeeper)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Add">Add Honey</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Add">Добави Мед</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Add">Add Propolis</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Add">Добави Прополис</a>
                                 </li>
                             }
                         }
@@ -74,7 +74,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; Honey Web Platform @ReleaseYear
+            &copy; Пчелен Кошер @ReleaseYear
             @if (DateTime.UtcNow.Year != ReleaseYear)
             {
                 @Html.Raw($" - {DateTime.UtcNow.Year}")

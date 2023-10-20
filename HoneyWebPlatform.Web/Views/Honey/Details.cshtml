@@ -10,7 +10,7 @@
 }
 
 @{
-    ViewBag.Title = "Honey Details";
+    ViewBag.Title = "Детайли на Меда";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -24,32 +24,32 @@
         </div>
         <div class="card col-8 border-0">
             <p style="font-size:25px;"><u>@Model.Title</u></p>
-            <p>Located in: <b>@Model.Origin</b></p>
+            <p>Намиращ се в: <b>@Model.Origin</b></p>
             <p>
-                Price:
-                <b>@($"{Model.Price:f2}") BGN</b>
+                Цена:
+                <b>@($"{Model.Price:f2}") лева</b>
             </p>
             <p>@Model.Description</p>
-            <p>Category: <b>@Model.Category</b></p>
+            <p>Категория: <b>@Model.Category</b></p>
             <div class="form-inline">
                 @if (User.Identity?.IsAuthenticated ?? false)
                 {
                     @if ((isUserBeekeeper && isBeekeperOwnerOfTheHoney) || User.IsAdmin())
                     {
                         <a class="btn btn-warning" asp-controller="Honey" asp-action="Edit"
-                           asp-route-id="@Model.Id">Edit</a>
+                           asp-route-id="@Model.Id"> Редактирай</a>
                         <a class="ml-2 btn btn-danger" asp-controller="Honey" asp-action="Delete"
-                           asp-route-id="@Model.Id">Delete</a>
+                           asp-route-id="@Model.Id"> Изтрий</a>
                     }
                 }
             </div>
             <p></p>
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Beekeeper Info</h5>
-                    <p class="card-text">Full Name: @Model.Beekeeper.FullName</p>
-                    <p class="card-text">Email:  @Model.Beekeeper.Email</p>
-                    <p class="card-text">Phone Number: @Model.Beekeeper.PhoneNumber</p>
+                    <h5 class="card-title">Информация на Пчеларя</h5>
+                    <p class="card-text">Пълно Име: @Model.Beekeeper.FullName</p>
+                    <p class="card-text">Имейл:  @Model.Beekeeper.Email</p>
+                    <p class="card-text">Телефонен Номер: @Model.Beekeeper.PhoneNumber</p>
                 </div>
             </div>
         </div>

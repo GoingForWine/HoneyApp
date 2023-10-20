@@ -1,17 +1,17 @@
 ﻿@model MyHoneysViewModel
 
 @{
-    ViewBag.Title = "My Honeys";
+    ViewBag.Title = "Моите Медове";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-<h4>My Added Honeys</h4>
+<h4>Моите добавени Медове</h4>
 
 @if (!Model.AddedHoneys.Any())
 {
-    <h2 class="text-center">You have no added honeys yet!</h2>
+    <h2 class="text-center">Все още нямате добавени Медове!</h2>
 }
 
 <div class="row">

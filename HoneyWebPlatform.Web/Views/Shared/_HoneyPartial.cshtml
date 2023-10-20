@@ -14,14 +14,14 @@
         <img class="card-img-top" src="@Model.ImageUrl" alt="Honey Image">
         <div class="card-body text-center">
             <h4>@Model.Title</h4>
-            <h6>Address: <b>@Model.Origin</b></h6>
+            <h6>Адрес: <b>@Model.Origin</b></h6>
             <h6>
-                Price:
-                <b>@($"{Model.Price:f2}") BGN</b>
+                Цена:
+                <b>@($"{Model.Price:f2}") лева</b>
             </h6>
             <br />
             <a asp-area="" asp-controller="Honey" asp-action="Details" asp-route-id="@Model.Id"
-               class="btn btn-success">Details</a>
+               class="btn btn-success">Детайли</a>
 
             @if (User.Identity?.IsAuthenticated ?? false)
             {

@@ -23,8 +23,8 @@ namespace HoneyWebPlatform.Web
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
             string connectionString =
-                //builder.Configuration.GetConnectionString("DefaultConnection")
-                builder.Configuration.GetConnectionString("AzureConnection") 
+                builder.Configuration.GetConnectionString("DefaultConnection")
+                //builder.Configuration.GetConnectionString("AzureConnection") 
                     ?? throw new InvalidOperationException
                     ("Connection string 'DefaultConnection' not found.");
 
