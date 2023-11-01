@@ -4,19 +4,67 @@
     ViewBag.Title = "Моите Прополиси";
 }
 
-<h2 class="text-center">@ViewBag.Title</h2>
-<hr />
+@*<h2 class="text-center">@ViewBag.Title</h2>
+    <hr />
 
-<h4>Моите добавени Прополиси</h4>
+    <h4>Моите добавени Прополиси</h4>*@
 
 @if (!Model.AddedPropolises.Any())
 {
     <h2 class="text-center">Все още нямате добавени Прополиси!</h2>
 }
 
-<div class="row">
-    @foreach (var propolis in Model.AddedPropolises)
-    {
-        @await Html.PartialAsync("~/Views/Shared/_PropolisPartial.cshtml", propolis)
-    }
-</div>
+@*<div class="row">
+        @foreach (var propolis in Model.AddedPropolises)
+        {
+            @await Html.PartialAsync("~/Views/Shared/_PropolisPartial.cshtml", propolis)
+        }
+    </div>*@
+
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner text-center">
+                    <div class="breadcrumb_iner_item">
+                        <h2>@ViewBag.Title</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb start-->
+<!--::chefs_part start::-->
+<!-- food_menu start-->
+<section class="food_menu gray_bg">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="section_tittle">
+                    <p>Моят Домашно произведен</p>
+                    <h2>Прополис</h2>
+                </div>
+            </div>
+            <div class="col-lg-6">
+            </div>
+            <div class="col-lg-12">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active single-member">
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-6">
+                                @foreach (var propolis in Model.AddedPropolises)
+                                {
+                                    @await Html.PartialAsync("~/Views/Shared/_PropolisPartial.cshtml", propolis)
+                                }
+                            </div>
+                            @*<div class="col-sm-6 col-lg-6">
+
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

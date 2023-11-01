@@ -9,30 +9,52 @@
     bool isBeekeeperOwnerOfThePropolis = await BeekeeperService.HasPropolisWithIdAsync(User.GetId(), Model.Id);
 }
 
-<div class="col-md-4">
-    <div class="card mb-3">
-        <img class="card-img-top" src="@Model.ImageUrl" alt="Propolis Image">
-        <div class="card-body text-center">
-            <h4>@Model.Title</h4>
-            <h6>
-                Цена:
-                <b>@($"{Model.Price:f2}") лева</b>
-            </h6>
-            <br />
-            <a asp-area="" asp-controller="Propolis" asp-action="Details" asp-route-id="@Model.Id"
-               class="btn btn-success">Детайли</a>
+@*<div class="col-md-4">
+        <div class="card mb-3">
+            <img class="card-img-top" src="@Model.ImageUrl" alt="Propolis Image">
+            <div class="card-body text-center">
+                <h4>@Model.Title</h4>
+                <h6>
+                    Цена:
+                    <b>@($"{Model.Price:f2}") лева</b>
+                </h6>
+                <br />
+                <a asp-area="" asp-controller="Propolis" asp-action="Details" asp-route-id="@Model.Id"
+                   class="btn btn-success">Детайли</a>
 
-            @if (User.Identity?.IsAuthenticated ?? false)
-            {
-                @if ((isUserBeekeeper && isBeekeeperOwnerOfThePropolis) || User.IsAdmin())
+                @if (User.Identity?.IsAuthenticated ?? false)
                 {
-                    <a asp-area="" asp-controller="Propolis" asp-action="Edit" asp-route-id="@Model.Id"
-                       class="btn btn-warning">Редактирай</a>
-                    <a asp-area="" asp-controller="Propolis" asp-action="Delete" asp-route-id="@Model.Id"
-                       class="btn btn-danger">Изтрий</a>
+                    @if ((isUserBeekeeper && isBeekeeperOwnerOfThePropolis) || User.IsAdmin())
+                    {
+                        <a asp-area="" asp-controller="Propolis" asp-action="Edit" asp-route-id="@Model.Id"
+                           class="btn btn-warning">Редактирай</a>
+                        <a asp-area="" asp-controller="Propolis" asp-action="Delete" asp-route-id="@Model.Id"
+                           class="btn btn-danger">Изтрий</a>
+                    }
+                    <p></p>
                 }
-                <p></p>
-            }
+            </div>
         </div>
+    </div>*@
+
+@*b4*@
+<div class="single_food_item media" asp-area="" asp-controller="Propolis" asp-action="Details" asp-route-id="@Model.Id">
+    <div class="crop-img mr-3">
+        <img src="@Model.ImageUrl" alt="Propolis Image">
+    </div>
+    <div class="media-body align-self-center">
+        <h3>@Model.Title</h3>
+        <h5><b>@($"{Model.Price:f2}") лв</b></h5>
+        @if (User.Identity?.IsAuthenticated ?? false)
+        {
+            @if ((isUserBeekeeper && isBeekeeperOwnerOfThePropolis) || User.IsAdmin())
+            {
+                <a asp-area="" asp-controller="Propolis" asp-action="Edit" asp-route-id="@Model.Id"
+                   class="btn btn-warning">Редактирай</a>
+                <a asp-area="" asp-controller="Propolis" asp-action="Delete" asp-route-id="@Model.Id"
+                   class="btn btn-danger">Изтрий</a>
+            }
+            <p></p>
+        }
     </div>
 </div>

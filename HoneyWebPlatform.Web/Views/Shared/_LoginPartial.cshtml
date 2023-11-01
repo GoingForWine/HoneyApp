@@ -16,28 +16,29 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравей, @userFullName</a>
+        <li class="menu_btn">
+            <a  class="btn_1 d-none d-sm-block" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравей, @userFullName</a>
         </li>
         @if (!isUserAgent)
         {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Beekeeper" asp-action="Become">Стани Пчелар</a>
+            <li class="menu_btn">
+                <a class="btn_1 d-none d-sm-block" asp-area="" asp-controller="Beekeeper" asp-action="Become">Стани Пчелар</a>
             </li>
         }
-        <li class="nav-item">
-            <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button  type="submit" class="nav-link btn btn-link text-dark">Излез</button>
+        <li class="menu_btn">
+            <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" 
+                   asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button  type="submit" class="btn_1 d-none d-sm-block">Излез</button>
             </form>
         </li>
     }
     else
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Register">Регистрирай</a>
+        <li class="menu_btn">
+            <a class="btn_1 d-none d-sm-block" asp-area="" asp-controller="User" asp-action="Register">Регистрирай</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Влез</a>
+        <li class="menu_btn">
+            <a class="btn_1 d-none d-sm-block" asp-area="" asp-controller="User" asp-action="Login">Влез</a>
         </li>
     }
 </ul>

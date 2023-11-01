@@ -9,7 +9,8 @@
     bool isBeekeeperOwnerOfTheHoney = await BeekeeperService.HasHoneyWithIdAsync(User.GetId(), Model.Id);
 }
 
-<div class="col-md-4">
+@*b5*@
+<!--<div class="col-md-4">
     <div class="card mb-3">
         <img class="card-img-top" src="@Model.ImageUrl" alt="Honey Image">
         <div class="card-body text-center">
@@ -28,12 +29,34 @@
                 @if ((isUserBeekeeper && isBeekeeperOwnerOfTheHoney) || User.IsAdmin())
                 {
                     <a asp-area="" asp-controller="Honey" asp-action="Edit" asp-route-id="@Model.Id"
-                       class="btn btn-warning">Edit</a>
+                       class="btn btn-warning">Редактирай</a>
                     <a asp-area="" asp-controller="Honey" asp-action="Delete" asp-route-id="@Model.Id"
-                       class="btn btn-danger">Delete</a>
+                       class="btn btn-danger">Изтрий</a>
                 }
                 <p></p>
             }
         </div>
+    </div>
+</div>-->
+@*b4*@
+<div class="single_food_item media" asp-area="" asp-controller="Honey" asp-action="Details" asp-route-id="@Model.Id">
+    <div class="crop-img mr-3">
+        <img src="@Model.ImageUrl" alt="Honey Image">
+    </div>
+    <div class="media-body align-self-center">
+        <h3>@Model.Title</h3>
+        <p>Адрес: <b>@Model.Origin</b></p>
+        <h5><b>@($"{Model.Price:f2}") лв</b></h5>
+        @if (User.Identity?.IsAuthenticated ?? false)
+        {
+            @if ((isUserBeekeeper && isBeekeeperOwnerOfTheHoney) || User.IsAdmin())
+            {
+                <a asp-area="" asp-controller="Honey" asp-action="Edit" asp-route-id="@Model.Id"
+                   class="btn btn-warning">Редактирай</a>
+                <a asp-area="" asp-controller="Honey" asp-action="Delete" asp-route-id="@Model.Id"
+                   class="btn btn-danger">Изтрий</a>
+            }
+            <p></p>
+        }
     </div>
 </div>
