@@ -1,41 +1,35 @@
 ﻿namespace HoneyWebPlatform.Data.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     using static Common.EntityValidationConstants.Post;
 
-    public class Post
+    public class Comment
     {
-        public Post()
+        public Comment()
         {
             Id = Guid.NewGuid();
-            Comments = new HashSet<Comment>();
         }
 
         [Key]
         public Guid Id { get; set; }
 
-        [Required]
-        [MaxLength(TitleMaxLength)]
-        public string Title { get; set; } = null!;
-
-        [Required]
-        [MaxLength(ContentMaxLength)]
-        public string Content { get; set; } = null!;
-
         public DateTime CreatedOn { get; set; }
-
-        public string ImageUrl { get; set; } = null!;
 
         public bool IsActive { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; set; }
+        [Required]
+        [MaxLength(ContentMaxLength)]
+        public string Content { get; set; } = null!; 
+
+        public Guid ParentPostId { get; set; }
+
+        public virtual Post ParentPost { get; set; } = null!;
 
         public Guid AuthorId { get; set; }
-
+        
         public virtual ApplicationUser Author { get; set; } = null!;
     }
 }

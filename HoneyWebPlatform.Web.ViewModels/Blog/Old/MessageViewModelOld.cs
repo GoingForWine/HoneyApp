@@ -1,6 +1,6 @@
-﻿namespace HoneyWebPlatform.Web.ViewModels.Blog
+﻿namespace HoneyWebPlatform.Web.ViewModels.Blog.Old
 {
-    public class MessageViewModel
+    public class MessageViewModelOld
     {
         public string Sender { get; set; }
 

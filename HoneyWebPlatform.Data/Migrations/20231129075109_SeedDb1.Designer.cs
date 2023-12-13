@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HoneyWebPlatform.Data.Migrations
 {
     [DbContext(typeof(HoneyWebPlatformDbContext))]
-    [Migration("20230801112324_InitializeDb")]
-    partial class InitializeDb
+    [Migration("20231129075109_SeedDb1")]
+    partial class SeedDb1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -135,9 +135,7 @@ namespace HoneyWebPlatform.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -150,9 +148,7 @@ namespace HoneyWebPlatform.Data.Migrations
                         .HasColumnType("nvarchar(2048)");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<int>("NetWeight")
                         .HasColumnType("int");
@@ -215,6 +211,38 @@ namespace HoneyWebPlatform.Data.Migrations
                             Id = 5,
                             Name = "Honeydew"
                         });
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Comment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ParentPostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("ParentPostId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Flavour", b =>
@@ -310,6 +338,58 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Honeys");
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Post", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("Posts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("7b55a828-68be-45e8-9991-0f19cee32622"),
+                            AuthorId = new Guid("bd56fe08-bd10-4384-89be-63a211fbbc61"),
+                            Content = "Welcome to this new site, I am the first beekeeper hereenjoy your stay.",
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrl = "https://th.bing.com/th/id/OIP.eYhgoQcmVrOQG4mTZWpdLwHaE6?rs=1&pid=ImgDetMain",
+                            IsActive = true,
+                            Title = "The site's first post"
+                        });
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Propolis", b =>
@@ -512,10 +592,29 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasOne("HoneyWebPlatform.Data.Models.Beekeeper", "Beekeeper")
                         .WithMany("OwnedBeePollen")
                         .HasForeignKey("BeekeeperId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Beekeeper");
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Comment", b =>
+                {
+                    b.HasOne("HoneyWebPlatform.Data.Models.ApplicationUser", "Author")
+                        .WithMany("OwnedComments")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HoneyWebPlatform.Data.Models.Post", "ParentPost")
+                        .WithMany("Comments")
+                        .HasForeignKey("ParentPostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("ParentPost");
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Honey", b =>
@@ -535,6 +634,17 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.Navigation("Beekeeper");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Post", b =>
+                {
+                    b.HasOne("HoneyWebPlatform.Data.Models.ApplicationUser", "Author")
+                        .WithMany("OwnedPosts")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Propolis", b =>
@@ -607,6 +717,13 @@ namespace HoneyWebPlatform.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("OwnedComments");
+
+                    b.Navigation("OwnedPosts");
+                });
+
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Beekeeper", b =>
                 {
                     b.Navigation("OwnedBeePollen");
@@ -624,6 +741,11 @@ namespace HoneyWebPlatform.Data.Migrations
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Flavour", b =>
                 {
                     b.Navigation("Propolises");
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Post", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

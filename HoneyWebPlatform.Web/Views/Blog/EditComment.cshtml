@@ -1,0 +1,28 @@
+﻿@model HoneyWebPlatform.Web.ViewModels.Blog.CommentFormModel
+@{
+    ViewData["Title"] = "Редактирай Коментара";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Content"> Съдържание</label>
+                <textarea asp-for="Content" rows="4" class="form-control" placeholder="Здравейте! Днес искам да ви разкажа за..."></textarea>
+                <span asp-validation-for="Content" class="small text-danger"></span>
+            </div>
+            
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Запази" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

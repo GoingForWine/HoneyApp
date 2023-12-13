@@ -48,7 +48,7 @@
                 NetWeight = 450,
                 YearMade = 2022,
                 CategoryId = 1,
-                BeekeeperId = Guid.Parse("A38F5E91-11FF-40B2-9987-317C60FEC5A5"), //BeekeeperId//UserId
+                BeekeeperId = Guid.Parse("7ADAF90E-FEC8-492E-8760-FE3190F1D689"), //BeekeeperId not userID
             };
             honeys.Add(honey);
 

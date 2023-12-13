@@ -108,8 +108,7 @@
         {
             IEnumerable<HoneyAllViewModel> allBeekeeperHoneys = await dbContext
                 .Honeys
-                .Where(h => h.IsActive &&
-                            h.BeekeeperId.ToString() == beekeeperId)
+                .Where(h => h.IsActive && h.BeekeeperId.ToString() == beekeeperId)
                 .Select(h => new HoneyAllViewModel()
                 {
                     Id = h.Id.ToString(),

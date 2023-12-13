@@ -77,7 +77,7 @@
                 ApplicationUser adminUser =
                     await userManager.FindByEmailAsync(email);
 
-                await userManager.AddToRoleAsync(adminUser, AdminRoleName);
+                await userManager.AddToRoleAsync(adminUser, AdminRoleName); 
             })
             .GetAwaiter()
             .GetResult();

@@ -2231,7 +2231,7 @@ ul {
 }
 
 /* line 7, E:/169 Dingo Restaurant/169 Dingo Restaurant/169_Dingo_Restautent_html/sass/_menu.scss */
-.home_menu .menu_btn:hover a {
+.menu_btn:hover a {
     color: #fff !important;
 }
 
@@ -2318,13 +2318,13 @@ ul {
     }
 
     /* line 71, E:/169 Dingo Restaurant/169 Dingo Restaurant/169_Dingo_Restautent_html/sass/_menu.scss */
-    .menu_fixed .btn_1 {
+    .btn_1 {
         border: 2px solid #ff6426;
     }
 
         /* line 73, E:/169 Dingo Restaurant/169 Dingo Restaurant/169_Dingo_Restautent_html/sass/_menu.scss */
-        .menu_fixed .btn_1:hover {
-            border: 2px solid transparent;
+        .btn_1:hover {
+            color: #fff !important;
         }
 
     /* line 77, E:/169 Dingo Restaurant/169 Dingo Restaurant/169_Dingo_Restautent_html/sass/_menu.scss */

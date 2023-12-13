@@ -3,68 +3,54 @@
     ViewData["Title"] = "Моите Медове";
 }
 
-<h2 class="text-center">@ViewData["Title"]</h2>
-<hr />
-
 @if (!Model.Any())
 {
     <h2 class="text-center">Все още нямате Ваши Медове!</h2>
 }
 else
 {
-    <div class="row">
-        @foreach (HoneyAllViewModel honey in Model)
-        {
-            <partial name="_HoneyPartial" model="honey" />
-        }
-    </div>
-}
-
-
-<section class="breadcrumb breadcrumb_bg">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="breadcrumb_iner text-center">
-                    <div class="breadcrumb_iner_item">
-                        <h2>Моите Медове</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- breadcrumb start-->
-<!--::chefs_part start::-->
-<!-- food_menu start-->
-<section class="food_menu gray_bg">
-    <div class="container">
-        <div class="row justify-content-between">
-            <div class="col-lg-5">
-                <div class="section_tittle">
-                    <p>моят Домашно произведен</p>
-                    <h2>Медд</h2>
-                </div>
-            </div>
-            <div class="col-lg-6">
-            </div>
-            <div class="col-lg-12">
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active single-member">
-                        <div class="row">
-                            <div class="col-sm-6 col-lg-6">
-                                @foreach (HoneyAllViewModel honey in Model)
-                                {
-                                    <partial name="_HoneyPartial" model="honey" />
-                                }
-                            </div>
-                            @*<div class="col-sm-6 col-lg-6">
-
-                                </div>*@
+    <section class="breadcrumb breadcrumb_bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner text-center">
+                        <div class="breadcrumb_iner_item">
+                            <h2>Моите Медове</h2>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+    <!-- breadcrumb start-->
+    <!--::chefs_part start::-->
+    <!-- food_menu start-->
+    <section class="food_menu gray_bg">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-5">
+                    <div class="section_tittle">
+                        <p>Домашно произведен</p>
+                        <h2>Мед</h2>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                </div>
+                <div class="col-lg-12">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active single-member">
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-6">
+                                    @foreach (HoneyAllViewModel honey in Model)
+                                    {
+                                        <partial name="_HoneyPartial" model="honey" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

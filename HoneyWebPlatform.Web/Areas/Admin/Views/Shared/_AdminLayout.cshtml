@@ -11,17 +11,17 @@
 <html lang="en">
 <head>
     @*b5
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - Пчелен Кошер</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/HoneyWebPlatform.Web.styles.css" asp-append-version="true"/>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    
-    b4*@
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>@ViewData["Title"] - Пчелен Кошер</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/HoneyWebPlatform.Web.styles.css" asp-append-version="true"/>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+        b4*@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -46,6 +46,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/all.css">
     <!-- style CSS -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/style.css">
+    
+    <!--tstr-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css"
+          integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
 </head>
 <body>
@@ -61,31 +66,35 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item dropdown">
-                            <div>
-                                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Всичко</a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <li>
-                                        <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="All">Всички Медове</a>
-                                        <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="All">Всички Прополиси</a>
-                                        <a class="dropdown-item nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="All">Всички Потребители</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Всички</a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="All">Медове</a>
+                                    <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="All">Прополиси</a>
+                                    <a class="dropdown-item nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="All">Потребители</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Моите</a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Mine">Медове</a>
+                                    <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Mine">Прополиси</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Добави</a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Add">Мед</a>
+                                    <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Add">Прополис</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Mine">Моите Медове</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Add">Добави Мед</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Mine">Моите Прополиси</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Add">Добави Прополис</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Show">Блог</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="All">Блог</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -93,8 +102,9 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <div>
+        <main>
             @RenderBody()
         </main>
     </div>
@@ -108,32 +118,38 @@
             }
         </div>
     </footer>
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- jquery plugins here-->
+    <!-- jquery -->
+    <script src="~/lib/bootstrap/dist/js/jquery-1.12.1.min.js"></script>
+    <!-- popper js -->
+    <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- easing js -->
+    <script src="~/lib/bootstrap/dist/js/jquery.magnific-popup.js"></script>
+    <!-- swiper js -->
+    <script src="~/lib/bootstrap/dist/js/swiper.min.js"></script>
+    <!-- swiper js -->
+    <script src="~/lib/bootstrap/dist/js/masonry.pkgd.js"></script>
+    <!-- particles js -->
+    <script src="~/lib/bootstrap/dist/js/owl.carousel.min.js"></script>
+    <!-- swiper js -->
+    <script src="~/lib/bootstrap/dist/js/slick.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/gijgo.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/jquery.nice-select.min.js"></script>
+    <!-- custom js -->
+    <script src="~/lib/bootstrap/dist/js/custom.js"></script>
     
+<!--tstr-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"
+        integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-
-<!-- jquery plugins here-->
-<!-- jquery -->
-<script src="~/lib/bootstrap/dist/js/jquery-1.12.1.min.js"></script>
-<!-- popper js -->
-<script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
-<!-- bootstrap js -->
-<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- easing js -->
-<script src="~/lib/bootstrap/dist/js/jquery.magnific-popup.js"></script>
-<!-- swiper js -->
-<script src="~/lib/bootstrap/dist/js/swiper.min.js"></script>
-<!-- swiper js -->
-<script src="~/lib/bootstrap/dist/js/masonry.pkgd.js"></script>
-<!-- particles js -->
-<script src="~/lib/bootstrap/dist/js/owl.carousel.min.js"></script>
-<!-- swiper js -->
-<script src="~/lib/bootstrap/dist/js/slick.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/gijgo.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/jquery.nice-select.min.js"></script>
-<!-- custom js -->
-<script src="~/lib/bootstrap/dist/js/custom.js"></script>
+<partial name="_NotificationsPartial" />
 
 @await RenderSectionAsync("Scripts", required: false)
 </body>

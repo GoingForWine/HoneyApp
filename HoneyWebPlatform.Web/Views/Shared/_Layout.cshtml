@@ -13,24 +13,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @*b5*@
-    @*<meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <title>@ViewData["Title"] - Пчелен Кошер</title>
-
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />*@
-
-    @*b4*@
-
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -55,62 +37,18 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/all.css">
     <!-- style CSS -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/style.css">
+    <!--tstr-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css"
+          integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
 </head>
 <body>
-
-    <!--<header>
-        <partial name="_NotificationsPartial" />
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">-->
-    @*Пчелен Кошер*@
-    <!--</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="All">Всички медове</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="All">Всички Прополиси</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Show">Блог</a>
-                        </li>
-                        @if (User.Identity?.IsAuthenticated ?? false)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Mine">Моите Медове</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Mine">Моите Прополиси</a>
-                            </li>
-                            @if (isUserBeekeeper)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Add">Добави Мед</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Add">Добави Прополис</a>
-                                </li>
-                            }
-                        }
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>-->
     <!--::header part start::-->
     <header class="main_menu @(controller.ToString() == "Home" && action.ToString() == "Index" ? "home_menu" : "")">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-12">
-                    <partial name="_NotificationsPartial" />
                     <nav class="navbar navbar-expand-lg navbar-light">
                         @*<a class="navbar-brand" href="index.html"> <img src="dingo-master/dingo-master/img/logo.png" alt="logo"> </a>*@
                         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Пчелен Кошер <img src="~/dingo-master/dingo-master/img/logo.png" alt="logo" /></a>
@@ -124,59 +62,46 @@
 
                         <div class="collapse navbar-collapse main-menu-item justify-content-end"
                              id="navbarSupportedContent">
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    @*<a class="nav-link" href="index.html">Home</a>*@
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="All">Mедове</a>
-                                </li>
-                                <li class="nav-item">
-                                    @*<a class="nav-link" href="about.html">About</a>*@
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="All">Прополиси</a>
-                                </li>
-                                <li class="nav-item">
-                                    @*<a class="nav-link" href="food_menu.html">Menu</a>*@
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Show">Блог</a>
-                                </li>
 
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                    <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Всички</a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li>
+                                            <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="All">Медове</a>
+                                            <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="All">Прополиси</a>
+                                        </li>
+                                    </ul>
+                                </li>
                                 @if (User.Identity?.IsAuthenticated ?? false)
                                 {
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Honey" asp-action="Mine">Моите Медове</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Propolis" asp-action="Mine">Моите Прополиси</a>
+                                    <li class="nav-item dropdown">
+                                        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Моите</a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <li>
+                                                <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Mine">Медове</a>
+                                                <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Mine">Прополиси</a>
+                                            </li>
+                                        </ul>
                                     </li>
                                     @if (isUserBeekeeper)
                                     {
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Add">Добави Мед</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Add">Добави Прополис</a>
+                                        <li class="nav-item dropdown">
+                                            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Добави</a>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <li>
+                                                    <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Add">Мед</a>
+                                                    <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Add">Прополис</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                     }
                                 }
-                                @*<li class="nav-item">
-                                        <a class="nav-link" href="chefs.html">Chefs</a>
-                                    </li>*@
-                                @*<li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Blog
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <a class="dropdown-item" href="blog.html">Blog</a>
-                                            <a class="dropdown-item" href="single-blog.html">Single blog</a>
-                                            <a class="dropdown-item" href="elements.html">Elements</a>
-                                        </div>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="contact.html">Contact</a>
-                                    </li>*@
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="All">Блог</a>
+                                </li>
                             </ul>
                         </div>
-                        @*<div class="menu_btn">
-                                <a href="#" class="btn_1 d-none d-sm-block">Контакт</a>
-                            </div>*@
                         <partial name="_LoginPartial" />
                     </nav>
                 </div>
@@ -187,9 +112,7 @@
 
 
     <div>
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        @RenderBody()
     </div>
 
 
@@ -255,9 +178,9 @@
                         <p class="footer-text m-0">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             Пчелен Кошер &copy;
-                            <script>document.write(new Date().getFullYear());</script> 
-                            All rights reserved | This template is made with 
-                            <i class="ti-heart" aria-hidden="true"></i> by 
+                            <script>document.write(new Date().getFullYear());</script>
+                            All rights reserved | This template is made with
+                            <i class="ti-heart" aria-hidden="true"></i> by
                             <a href="https://colorlib.com" target="_blank">Colorlib</a>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </p>
@@ -275,27 +198,10 @@
         </div>
     </footer>
     <!-- footer part end-->
-
-
-    @*<footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; Пчелен Кошер @ReleaseYear
-            @if (DateTime.UtcNow.Year != ReleaseYear)
-            {
-                @Html.Raw($" - {DateTime.UtcNow.Year}")
-            }
-        </div>
-    </footer>*@
-
-    @*b5*@
-    @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>*@
-
-    @*b4*@
-
     <!-- jquery plugins here-->
     <!-- jquery -->
     <script src="~/lib/bootstrap/dist/js/jquery-1.12.1.min.js"></script>
+
     <!-- popper js -->
     <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
     <!-- bootstrap js -->
@@ -314,6 +220,12 @@
     <script src="~/lib/bootstrap/dist/js/jquery.nice-select.min.js"></script>
     <!-- custom js -->
     <script src="~/lib/bootstrap/dist/js/custom.js"></script>
+
+    <!--tstr-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"
+            integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <partial name="_NotificationsPartial" />
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

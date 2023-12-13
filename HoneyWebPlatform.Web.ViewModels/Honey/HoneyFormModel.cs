@@ -17,28 +17,36 @@
             Categories = new HashSet<HoneySelectCategoryFormModel>();
         }
 
-        [Required]
-        [StringLength(TitleMaxLength, MinimumLength = TitleMinLength)]
+        [Required(ErrorMessage = "Моля напишете наименованието.")]
+        [StringLength(TitleMaxLength, MinimumLength = TitleMinLength, 
+            ErrorMessage = "Наименованието трябва да е текст с поне {2} символа и най-много {1}.")]
+
         public string Title { get; set; } = null!;
 
-        [Required]
-        [StringLength(OriginMaxLength, MinimumLength = OriginMinLength)]
+        [Required(ErrorMessage = "Моля напишете произхода.")]
+        [StringLength(OriginMaxLength, MinimumLength = OriginMinLength,
+            ErrorMessage = "Произходът трябва да е текст с поне {2} символа и най-много {1}.")]
         public string Origin { get; set; } = null!;
 
-        [Required]
-        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
+        [Required(ErrorMessage = "Моля опишете меда.")]
+        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength,
+            ErrorMessage = "Описанието трябва да е текст с поне {2} символа и най-много {1}.")]
         public string Description { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = "Моля добавете линк към снимка.")]
         [StringLength(ImageUrlMaxLength)]
-        [Display(Name = "Image Link")]
+        [Display(Name = "Линк към снимка")]
         public string ImageUrl { get; set; } = null!;
 
-        [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
-        [Display(Name = "Price")]
+        [Required(ErrorMessage = "Полето Цена е задължително.")]
+        [RegularExpression(@"^\d+(\.\d{1,2})?$", 
+            ErrorMessage = "Цената трябва да бъде число и може да включва до две десетични цифри, разделени с точка.")]
+        [Range(typeof(decimal), PriceMinValue, PriceMaxValue, 
+            ErrorMessage = "Цената трябва да е между 5 и 25 лева.")]
+        [Display(Name = "Цена")]
         public decimal Price { get; set; }
 
-        [Display(Name = "Category")]
+        [Display(Name = "Категория")]
         public int CategoryId { get; set; }
 
         public IEnumerable<HoneySelectCategoryFormModel> Categories { get; set; }

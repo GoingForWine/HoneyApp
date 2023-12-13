@@ -16,6 +16,7 @@
         {
             Id = Guid.NewGuid();
             OwnedPosts = new HashSet<Post>();
+            OwnedComments = new HashSet<Comment>();
         }
 
         [Required]
@@ -27,5 +28,7 @@
         public string LastName { get; set; } = null!;
 
         public virtual ICollection<Post> OwnedPosts { get; set; }
+        
+        public virtual ICollection<Comment> OwnedComments { get; set; }
     }
 }

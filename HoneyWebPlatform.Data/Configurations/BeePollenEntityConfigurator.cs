@@ -39,7 +39,9 @@
                 ImageUrl = "https://naturalvita.co.uk/wp-content/uploads/2018/03/bee-pollen-natruralvita-1024x1024.jpg",
                 Price = 9.00M,
                 NetWeight = 100,
-                BeekeeperId = Guid.Parse("A38F5E91-11FF-40B2-9987-317C60FEC5A5"), 
+                BeekeeperId = Guid.Parse("7ADAF90E-FEC8-492E-8760-FE3190F1D689"), 
+                CreatedOn = DateTime.UtcNow,
+                IsActive = true
             };
             beePollens.Add(beePollen);
 

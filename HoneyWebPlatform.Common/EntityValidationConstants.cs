@@ -13,7 +13,7 @@
             public const int TitleMinLength = 10;
             public const int TitleMaxLength = 50;
 
-            public const int OriginMinLength = 5;
+            public const int OriginMinLength = 3;
             public const int OriginMaxLength = 150;
 
             public const int DescriptionMinLength = 30;
@@ -63,7 +63,9 @@
             public const int TitleMinLength = 10;
 
             public const int ContentMaxLength = 1500;
-            public const int ContentMinLength = 30;
+            public const int ContentMinLength = 20;
+
+            public const int ImageUrlMaxLength = 2048;
         }
     }
 }

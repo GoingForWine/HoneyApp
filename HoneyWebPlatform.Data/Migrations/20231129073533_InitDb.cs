@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HoneyWebPlatform.Data.Migrations
 {
-    public partial class InitializeDb : Migration
+    public partial class InitDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -202,6 +202,29 @@ namespace HoneyWebPlatform.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Posts_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BeePollens",
                 columns: table => new
                 {
@@ -211,8 +234,8 @@ namespace HoneyWebPlatform.Data.Migrations
                     ImageUrl = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     NetWeight = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     BeekeeperId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -223,7 +246,7 @@ namespace HoneyWebPlatform.Data.Migrations
                         column: x => x.BeekeeperId,
                         principalTable: "Beekeepers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -291,26 +314,32 @@ namespace HoneyWebPlatform.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
                 {
-                    { 1, "Linden" },
-                    { 2, "Bio" },
-                    { 3, "Sunflower" },
-                    { 4, "Bouquet" },
-                    { 5, "Honeydew" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Flavours",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false),
+                    ParentPostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
                 {
-                    { 1, "Natural" },
-                    { 2, "Strawberry" },
-                    { 3, "Mint and Ginger" }
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comments_Posts_ParentPostId",
+                        column: x => x.ParentPostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -363,6 +392,16 @@ namespace HoneyWebPlatform.Data.Migrations
                 column: "BeekeeperId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_AuthorId",
+                table: "Comments",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_ParentPostId",
+                table: "Comments",
+                column: "ParentPostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Honeys_BeekeeperId",
                 table: "Honeys",
                 column: "BeekeeperId");
@@ -371,6 +410,11 @@ namespace HoneyWebPlatform.Data.Migrations
                 name: "IX_Honeys_CategoryId",
                 table: "Honeys",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_AuthorId",
+                table: "Posts",
+                column: "AuthorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Propolises_BeekeeperId",
@@ -404,6 +448,9 @@ namespace HoneyWebPlatform.Data.Migrations
                 name: "BeePollens");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
                 name: "Honeys");
 
             migrationBuilder.DropTable(
@@ -411,6 +458,9 @@ namespace HoneyWebPlatform.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "Categories");

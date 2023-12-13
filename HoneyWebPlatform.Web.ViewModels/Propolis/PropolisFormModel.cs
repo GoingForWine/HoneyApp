@@ -17,24 +17,30 @@
             Flavours = new HashSet<PropolisSelectFlavourFormModel>();
         }
 
-        [Required]
-        [StringLength(TitleMaxLength, MinimumLength = TitleMinLength)]
+        [Required(ErrorMessage = "Моля напишете наименованието.")]
+        [StringLength(TitleMaxLength, MinimumLength = TitleMinLength,
+            ErrorMessage = "Наименованието трябва да е текст с поне {2} символа и най-много {1}.")]
         public string Title { get; set; } = null!;
-        
-        [Required]
-        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
+
+        [Required(ErrorMessage = "Моля опишете прополиса.")]
+        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength,
+            ErrorMessage = "Описанието трябва да е текст с поне {2} символа и най-много {1}.")]
         public string Description { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = "Моля добавете линк към снимка.")]
         [StringLength(ImageUrlMaxLength)]
-        [Display(Name = "Image Link")]
+        [Display(Name = "Линк към снимка")]
         public string ImageUrl { get; set; } = null!;
 
-        [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
-        [Display(Name = "Price")]
+        [Required(ErrorMessage = "Полето Цена е задължително.")]
+        [RegularExpression(@"^\d+(\.\d{1,2})?$",
+            ErrorMessage = "Цената трябва да бъде число и може да включва до две десетични цифри, разделени с точка.")]
+        [Range(typeof(decimal), PriceMinValue, PriceMaxValue,
+            ErrorMessage = "Цената трябва да е между 2 и 10 лева.")]
+        [Display(Name = "Цена")]
         public decimal Price { get; set; }
 
-        [Display(Name = "Flavour")]
+        [Display(Name = "Вкус")]
         public int FlavourId { get; set; }
 
         public IEnumerable<PropolisSelectFlavourFormModel> Flavours { get; set; }

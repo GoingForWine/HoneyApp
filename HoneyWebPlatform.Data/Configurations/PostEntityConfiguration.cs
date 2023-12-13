@@ -15,9 +15,13 @@
                 .HasDefaultValue(true);
 
             builder
-                .HasOne(h => h.User)
+                .Property(h => h.CreatedOn)
+                .HasDefaultValueSql("GETDATE()");
+
+            builder
+                .HasOne(h => h.Author)
                 .WithMany(a => a.OwnedPosts)
-                .HasForeignKey(h => h.UserId)
+                .HasForeignKey(h => h.AuthorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasData(SeedPosts());
@@ -31,12 +35,12 @@
 
             post = new Post()
             {
-                Id = 1,
                 Title = "The site's first post",
                 Content = "Welcome to this new site, I am the first beekeeper here" +
                           "enjoy your stay.",
                 IsActive = true,
-                UserId = Guid.Parse("29A205B5-19C1-4DBB-A318-0235F51AF7C7"),
+                AuthorId = Guid.Parse("BD56FE08-BD10-4384-89BE-63A211FBBC61"),
+                ImageUrl = "https://th.bing.com/th/id/OIP.eYhgoQcmVrOQG4mTZWpdLwHaE6?rs=1&pid=ImgDetMain",
             };
 
             posts.Add(post);

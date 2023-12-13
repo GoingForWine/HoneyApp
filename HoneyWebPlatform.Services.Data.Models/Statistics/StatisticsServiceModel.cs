@@ -4,5 +4,7 @@
     {
         public int TotalHoneys { get; set; }
         public int TotalPropolises { get; set; }
+
+        public int TotalPosts { get; set; }
     }
 }

@@ -1,0 +1,178 @@
+﻿@using HoneyWebPlatform.Web.ViewModels.Blog
+@using HoneyWebPlatform.Web.Infrastructure.Extensions
+@using HoneyWebPlatform.Services.Data.Interfaces
+@model HoneyWebPlatform.Web.ViewModels.Blog.PostDetailsViewModel
+
+@inject IPostService postService
+
+
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner text-center">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Пчелния Блог</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<body>
+    <section class="blog_area single-post-area section_padding">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8 posts-list">
+                    <div class="single-post">
+                        <div class="feature-img">
+                            <img class="img-fluid" src=@Model.ImageUrl>
+                        </div>
+                        <div class="blog_details">
+                            <h2>
+                                @Model.Title
+                            </h2>
+                            <ul class="blog-info-link mt-3 mb-4">
+                                <li><i class="far fa-user"></i> Автор: @Model.Author.FirstName @Model.Author.LastName </li>
+                                <li>
+                                    <i class="far fa-comments">
+                                        @if (Model.Comments.Count(c => c.IsActive) == 1)
+                                        {
+                                            <i>1 коментар</i>
+                                        }
+                                        else
+                                        {
+                                            <i>@Model.Comments.Count(c => c.IsActive).ToString() коментара</i>
+                                        }
+
+                                    </i>
+                            </ul>
+                            <p class="excert">
+                                @Model.Content
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="navigation-top">
+                        <div class="d-sm-flex justify-content-between text-center">
+                            <ul class="social-icons">
+                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fab fa-behance"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="comments-area">
+                        @if (Model.Comments.Count(c => c.IsActive) == 1)
+                        {
+                            <h4>1 коментар</h4>
+                        }
+                        else
+                        {
+                            <h4>@Model.Comments.Count(c => c.IsActive).ToString() коментара</h4>
+                        }
+
+
+
+                        @foreach (var comment in Model.Comments.Where(c => c.IsActive).OrderBy(c => c.CreatedOn))
+                        {
+                            <div class="comment-list">
+                                <div class="single-comment justify-content-between d-flex">
+                                    <div class="user justify-content-between d-flex">
+                                        <div class="thumb">
+                                            <img src="~/dingo-master/dingo-master/img/comment/comment_1.png" alt="">
+                                        </div>
+                                        <div class="desc">
+                                            <p class="comment">
+                                                @comment.Content
+                                            </p>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="d-flex align-items-center">
+                                                    <h5>
+                                                        <p>Автор: @comment.Author.FirstName @comment.Author.LastName</p>
+                                                    </h5>
+                                                    <p class="date">Създаден на: @comment.CreatedOn</p>
+
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        @if (User.IsAdmin() || await postService.IsCommentAuthorWithIdOwnerOfCommentWithIdAsync(comment.Id.ToString(), User.GetId()))
+                                                        {
+                                                            <div class="reply-btn">
+                                                                <form asp-controller="Blog" asp-action="DeleteComment" method="post"
+                                                                      onsubmit="return confirm('Сигурни ли сте, че искате да изтриете коментара?');">
+                                                                    <input type="hidden" name="commentId" value="@comment.Id" />
+                                                                    <button type="submit" class="btn-reply genric-btn danger-border circle">Изтрий</button>
+                                                                </form>
+                                                            </div>
+
+                                                            <div class="reply-btn">
+                                                                <form asp-controller="Blog" asp-action="EditComment" method="get">
+                                                                    <input type="hidden" name="commentId" value="@comment.Id" />
+                                                                    <button type="submit" class="btn-reply genric-btn danger-border circle">Промени</button>
+                                                                </form>
+                                                            </div>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="comment-form">
+                                <h4>Сподели мнение</h4>
+                                <form asp-controller="Blog" asp-action="AddComment" method="post" class="form-contact comment_form" id="commentForm">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="hidden" name="postId" value="@Model.Id" />
+                                                <partial name="_CommentFormPartial" model="new CommentFormModel { }" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="button button-contactForm">Изпрати</button>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                @if (User.IsAdmin() || await postService.IsAuthorWithIdOwnerOfPostWithIdAsync(Model.Id, User.GetId()))
+                {
+                    <div class="col-lg-4">
+                        <div class="blog_right_sidebar">
+                            <aside class="single_sidebar_widget newsletter_widget">
+                                <form asp-controller="Blog" asp-action="Edit" method="get">
+                                    <input type="hidden" name="id" value="@Model.Id" />
+                                    <button class="button rounded-0 primary-bg text-white w-100 btn_4" type="submit"> Редактирай Пост </button>
+                                </form>
+                                <form asp-controller="Blog" asp-action="Delete" method="get">
+                                    <input type="hidden" name="id" value="@Model.Id" />
+                                    <button class="button rounded-0 primary-bg text-white w-100 btn_4" type="submit"> Изтрий Пост </button>
+                                </form>
+                            </aside>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </section>
+</body>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+}

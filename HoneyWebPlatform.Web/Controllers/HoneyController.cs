@@ -17,7 +17,7 @@
         private readonly ICategoryService categoryService;
         private readonly IBeekeeperService beekeeperService;
         private readonly IHoneyService honeyService;
-        
+
         public HoneyController(ICategoryService categoryService, IBeekeeperService beekeeperService,
             IHoneyService honeyService)
         {
@@ -74,7 +74,7 @@
                 await beekeeperService.BeekeeperExistsByUserIdAsync(User.GetId()!);
             if (!isBeekeeper)
             {
-                TempData[ErrorMessage] = "You must become a Beekeeper in order to add new honeys!";
+                TempData[ErrorMessage] = "Трябва да станеш пчелар за да създадеш мед!";
 
                 return RedirectToAction("Become", "Beekeeper");
             }
@@ -84,7 +84,7 @@
             if (!categoryExists)
             {
                 // Adding model error to ModelState automatically makes ModelState Invalid
-                ModelState.AddModelError(nameof(model.CategoryId), "Selected category does not exist!");
+                ModelState.AddModelError(nameof(model.CategoryId), "Тази категория не съществува!");
             }
 
             if (!ModelState.IsValid)
@@ -102,12 +102,13 @@
                 string honeyId =
                     await honeyService.CreateAndReturnIdAsync(model, beekeeperId!);
 
-                TempData[SuccessMessage] = "The Honey was added successfully!";
+                TempData[SuccessMessage] = "Успешно добавихте мед!";
+
                 return RedirectToAction("Details", "Honey", new { id = honeyId });
             }
             catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add your new honey! Please try again later or contact administrator!");
+                ModelState.AddModelError(string.Empty, "Неочакван проблем стана докато опитвахме да добавим Вашия мед! Моля опитайте пак след малко или се свържете с администратор!");
                 model.Categories = await categoryService.AllCategoriesAsync();
 
                 return View(model);
@@ -122,7 +123,7 @@
                 .ExistsByIdAsync(id);
             if (!honeyExists)
             {
-                TempData[ErrorMessage] = "Honey with the provided id does not exist!";
+                TempData[ErrorMessage] = "Няма такъв мед!";
 
                 return RedirectToAction("All", "Honey");
             }
@@ -149,7 +150,7 @@
                 .ExistsByIdAsync(id);
             if (!honeyExists)
             {
-                TempData[ErrorMessage] = "Honey with the provided id does not exist!";
+                TempData[ErrorMessage] = "Мед с такова ИД няма!";
 
                 return RedirectToAction("All", "Honey");
 
@@ -158,9 +159,10 @@
 
             bool isUserBeekeeper = await beekeeperService
                 .BeekeeperExistsByUserIdAsync(User.GetId()!);
+
             if (!isUserBeekeeper && !User.IsAdmin())
             {
-                TempData[ErrorMessage] = "You must become a Beekeeper in order to edit honey info!";
+                TempData[ErrorMessage] = "Нямате право да променяте този мед!";
 
                 return RedirectToAction("Become", "Beekeeper");
             }
@@ -169,9 +171,10 @@
                 await beekeeperService.GetBeekeeperIdByUserIdAsync(User.GetId()!);
             bool isBeekeeperOwner = await honeyService
                 .IsBeekeeperWithIdOwnerOfHoneyWithIdAsync(id, beekeeperId!);
+
             if (!isBeekeeperOwner && !User.IsAdmin())
             {
-                TempData[ErrorMessage] = "You must be the Beekeeper owner of the honey you want to edit!";
+                TempData[ErrorMessage] = "Този мед трябва да е ваш, за да го променяте!";
 
                 return RedirectToAction("Mine", "Honey");
             }
@@ -202,18 +205,20 @@
 
             bool honeyExists = await honeyService
                 .ExistsByIdAsync(id);
+
             if (!honeyExists)
             {
-                TempData[ErrorMessage] = "Honey with the provided id does not exist!";
+                TempData[ErrorMessage] = "Няма такъв мед!";
 
                 return RedirectToAction("All", "Honey");
             }
 
             bool isUserBeekeeper = await beekeeperService
                 .BeekeeperExistsByUserIdAsync(User.GetId()!);
+
             if (!isUserBeekeeper && !User.IsAdmin())
             {
-                TempData[ErrorMessage] = "You must become a Beekeeper in order to edit honey info!";
+                TempData[ErrorMessage] = "Нямате право да променяте меда!";
 
                 return RedirectToAction("Become", "Beekeeper");
             }
@@ -224,7 +229,7 @@
                 .IsBeekeeperWithIdOwnerOfHoneyWithIdAsync(id, beekeeperId!);
             if (!isBeekeeperOwner && !User.IsAdmin())
             {
-                TempData[ErrorMessage] = "You must be the Beekeeper owner of the honey if you want to edit!";
+                TempData[ErrorMessage] = "Трябва да сте собственик, за да променяте меда!";
 
                 return RedirectToAction("Mine", "Honey");
             }
@@ -236,13 +241,13 @@
             catch (Exception)
             {
                 ModelState.AddModelError(string.Empty,
-                    "Unexpected error occurred while trying to update the honey. Please try again later or contact administrator!");
+                    "Неочакван проблем стана докато опитвахме да добавим Вашия мед! Моля опитайте пак след малко или се свържете с администратор!");
                 model.Categories = await categoryService.AllCategoriesAsync();
 
                 return View(model);
             }
 
-            TempData[SuccessMessage] = "Honey was edited successfully!";
+            TempData[SuccessMessage] = "Медът беше успешно променен!";
             return RedirectToAction("Details", "Honey", new { id });
         }
 
@@ -253,7 +258,7 @@
                 .ExistsByIdAsync(id);
             if (!honeyExists)
             {
-                TempData[ErrorMessage] = "Honey with the provided id does not exist!";
+                TempData[ErrorMessage] = "Няма такъв мед!";
 
                 return RedirectToAction("All", "Honey");
             }
@@ -262,7 +267,7 @@
                 .BeekeeperExistsByUserIdAsync(User.GetId()!);
             if (!isUserBeekeeper && !User.IsAdmin())
             {
-                TempData[ErrorMessage] = "You must become a Beekeeper in order to edit honey info!";
+                TempData[ErrorMessage] = "Нямате право да променяте меда!";
 
                 return RedirectToAction("Become", "Beekeeper");
             }
@@ -273,7 +278,7 @@
                 .IsBeekeeperWithIdOwnerOfHoneyWithIdAsync(id, beekeeperId!);
             if (!isBeekeeperOwner && !User.IsAdmin())
             {
-                TempData[ErrorMessage] = "You must be the Beekeeper owner of the honey if you want to edit!";
+                TempData[ErrorMessage] = "Трябва да сте собственик, за да променяте меда!";
 
                 return RedirectToAction("Mine", "Honey");
             }
@@ -298,7 +303,7 @@
                 .ExistsByIdAsync(id);
             if (!honeyExists)
             {
-                TempData[ErrorMessage] = "The Honey with the provided id does not exist!";
+                TempData[ErrorMessage] = "Няма такъв мед!";
 
                 return RedirectToAction("All", "Honey");
             }
@@ -307,7 +312,7 @@
                 .BeekeeperExistsByUserIdAsync(User.GetId()!);
             if (!isUserBeekeeper && !User.IsAdmin())
             {
-                TempData[ErrorMessage] = "You must become a Beekeeper in order to edit honey info!";
+                TempData[ErrorMessage] = "Нямате право да променяте меда";
 
                 return RedirectToAction("Become", "Beekeeper");
             }
@@ -318,7 +323,7 @@
                 .IsBeekeeperWithIdOwnerOfHoneyWithIdAsync(id, beekeeperId!);
             if (!isBeekeeperOwner && !User.IsAdmin())
             {
-                TempData[ErrorMessage] = "You must be the Beekeeper owner of the honey you want to edit!";
+                TempData[ErrorMessage] = "Трябва да сте собственик, за да променяте меда!";
 
                 return RedirectToAction("Mine", "Honey");
             }
@@ -327,7 +332,7 @@
             {
                 await honeyService.DeleteHoneyByIdAsync(id);
 
-                TempData[WarningMessage] = "The honey was successfully deleted!";
+                TempData[WarningMessage] = "Медът беше успешно изтрит!";
                 return RedirectToAction("Mine", "Honey");
             }
             catch (Exception)
@@ -358,9 +363,10 @@
                     string? beekeeperId =
                         await beekeeperService.GetBeekeeperIdByUserIdAsync(userId);
 
-                    // Added houses as an Agent
+                    // Added houses as a Beekeeper
                     myHoneys.AddRange(await honeyService.AllByBeekeeperIdAsync(beekeeperId!));
 
+                    //this checks the admins honeys and removes the duplicates
                     myHoneys = myHoneys
                         .DistinctBy(h => h.Id)
                         .ToList();
@@ -384,7 +390,7 @@
                 return GeneralError();
             }
         }
-        
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] =

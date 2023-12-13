@@ -45,7 +45,7 @@
                 ImageUrl = "https://www.apihealth.co.nz/wp-content/uploads/2019/07/Propolis-Tincture.jpg",
                 Price = 3.00M,
                 FlavourId = 1,
-                BeekeeperId = Guid.Parse("A38F5E91-11FF-40B2-9987-317C60FEC5A5"), //BeekeeperId//UserId
+                BeekeeperId = Guid.Parse("7ADAF90E-FEC8-492E-8760-FE3190F1D689"), //BeekeeperId not UserId!
             };
             propolises.Add(propolis);
 

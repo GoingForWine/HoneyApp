@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HoneyWebPlatform.Data.Migrations
 {
     [DbContext(typeof(HoneyWebPlatformDbContext))]
-    [Migration("20230801115139_InitialRelationalSeedToDb")]
-    partial class InitialRelationalSeedToDb
+    [Migration("20231129073533_InitDb")]
+    partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -135,9 +135,7 @@ namespace HoneyWebPlatform.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -150,9 +148,7 @@ namespace HoneyWebPlatform.Data.Migrations
                         .HasColumnType("nvarchar(2048)");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<int>("NetWeight")
                         .HasColumnType("int");
@@ -170,20 +166,6 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasIndex("BeekeeperId");
 
                     b.ToTable("BeePollens");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("e08d70b3-0f2b-4c21-b4f7-46a69713f8a1"),
-                            BeekeeperId = new Guid("a38f5e91-11ff-40b2-9987-317c60fec5a5"),
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Asen Asenev's rich in vitamins and minerals bee pollen. It has the riches of bulgarian nature",
-                            ImageUrl = "https://naturalvita.co.uk/wp-content/uploads/2018/03/bee-pollen-natruralvita-1024x1024.jpg",
-                            IsActive = false,
-                            NetWeight = 100,
-                            Price = 9.00m,
-                            Title = "Asen's Bee Pollen"
-                        });
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Category", b =>
@@ -202,33 +184,38 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Linden"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Bio"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Sunflower"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Bouquet"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Honeydew"
-                        });
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Comment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ParentPostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("ParentPostId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Flavour", b =>
@@ -247,23 +234,6 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Flavours");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Natural"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Strawberry"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Mint and Ginger"
-                        });
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Honey", b =>
@@ -324,23 +294,46 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Honeys");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("5e337878-8e69-48d8-ab74-3df44f357401"),
-                            BeekeeperId = new Guid("a38f5e91-11ff-40b2-9987-317c60fec5a5"),
-                            CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "High quality linden honey from Asen Asenev.",
-                            ImageUrl = "https://beehoneyportal.com/wp-content/uploads/2014/10/burkan-s-med-3.jpg",
-                            IsActive = false,
-                            NetWeight = 450,
-                            Origin = "Vratsa",
-                            Price = 12.00m,
-                            Title = "Asen's Linden Honey",
-                            YearMade = 2022
-                        });
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Post", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Propolis", b =>
@@ -390,20 +383,6 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasIndex("FlavourId");
 
                     b.ToTable("Propolises");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("5af6b804-167f-4873-8571-aa242022a45c"),
-                            BeekeeperId = new Guid("a38f5e91-11ff-40b2-9987-317c60fec5a5"),
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "30% tincture that is good for the immune system with anti-inflammatory properties.",
-                            FlavourId = 1,
-                            ImageUrl = "https://www.apihealth.co.nz/wp-content/uploads/2019/07/Propolis-Tincture.jpg",
-                            IsActive = false,
-                            Price = 3.00m,
-                            Title = "Bee Propolis"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -557,10 +536,29 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasOne("HoneyWebPlatform.Data.Models.Beekeeper", "Beekeeper")
                         .WithMany("OwnedBeePollen")
                         .HasForeignKey("BeekeeperId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Beekeeper");
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Comment", b =>
+                {
+                    b.HasOne("HoneyWebPlatform.Data.Models.ApplicationUser", "Author")
+                        .WithMany("OwnedComments")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HoneyWebPlatform.Data.Models.Post", "ParentPost")
+                        .WithMany("Comments")
+                        .HasForeignKey("ParentPostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("ParentPost");
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Honey", b =>
@@ -580,6 +578,17 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.Navigation("Beekeeper");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Post", b =>
+                {
+                    b.HasOne("HoneyWebPlatform.Data.Models.ApplicationUser", "Author")
+                        .WithMany("OwnedPosts")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Propolis", b =>
@@ -652,6 +661,13 @@ namespace HoneyWebPlatform.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("OwnedComments");
+
+                    b.Navigation("OwnedPosts");
+                });
+
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Beekeeper", b =>
                 {
                     b.Navigation("OwnedBeePollen");
@@ -669,6 +685,11 @@ namespace HoneyWebPlatform.Data.Migrations
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Flavour", b =>
                 {
                     b.Navigation("Propolises");
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Post", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

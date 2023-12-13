@@ -45,6 +45,8 @@
     <div class="media-body align-self-center">
         <h3>@Model.Title</h3>
         <h5><b>@($"{Model.Price:f2}") лв</b></h5>
+        <a asp-area="" asp-controller="Propolis" asp-action="Details" asp-route-id="@Model.Id"
+           class="btn btn-success">Детайли</a>
         @if (User.Identity?.IsAuthenticated ?? false)
         {
             @if ((isUserBeekeeper && isBeekeeperOwnerOfThePropolis) || User.IsAdmin())

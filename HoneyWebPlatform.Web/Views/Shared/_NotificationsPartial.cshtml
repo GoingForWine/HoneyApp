@@ -2,20 +2,32 @@
 
 @if (TempData.ContainsKey(ErrorMessage))
 {
-    <script>toastr.error('@TempData[ErrorMessage]');</script>
+    <script>
+        console.log('Error Message:', '@Html.Raw(TempData[ErrorMessage])');
+        toastr.error('@Html.Raw(TempData[ErrorMessage])');
+    </script>
 }
 
 @if (TempData.ContainsKey(WarningMessage))
 {
-    <script>toastr.warning('@TempData[WarningMessage]');</script>
+    <script>
+        console.log('Warning Message:', '@Html.Raw(TempData[WarningMessage])');
+        toastr.warning('@Html.Raw(TempData[WarningMessage])');
+    </script>
 }
 
 @if (TempData.ContainsKey(InformationMessage))
 {
-    <script>toastr.info('@TempData[InformationMessage]');</script>
+    <script>
+        console.log('Information Message:', '@Html.Raw(TempData[InformationMessage])');
+        toastr.info('@Html.Raw(TempData[InformationMessage])');
+    </script>
 }
 
 @if (TempData.ContainsKey(SuccessMessage))
 {
-    <script>toastr.success('@TempData[SuccessMessage]');</script>
+    <script>
+        console.log('Success Message:', '@Html.Raw(TempData[SuccessMessage])');
+        toastr.success('@Html.Raw(TempData[SuccessMessage])');
+    </script>
 }

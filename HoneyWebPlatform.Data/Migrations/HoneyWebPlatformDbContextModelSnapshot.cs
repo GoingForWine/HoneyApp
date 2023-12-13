@@ -172,8 +172,8 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a1522dbb-5d38-4345-b816-19ef380ab57e"),
-                            BeekeeperId = new Guid("a38f5e91-11ff-40b2-9987-317c60fec5a5"),
+                            Id = new Guid("88f4ae54-7e7e-4074-a777-0385b3239291"),
+                            BeekeeperId = new Guid("7adaf90e-fec8-492e-8760-fe3190f1d689"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Asen Asenev's rich in vitamins and minerals bee pollen. It has the riches of bulgarian nature",
                             ImageUrl = "https://naturalvita.co.uk/wp-content/uploads/2018/03/bee-pollen-natruralvita-1024x1024.jpg",
@@ -226,6 +226,49 @@ namespace HoneyWebPlatform.Data.Migrations
                         {
                             Id = 5,
                             Name = "Honeydew"
+                        });
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Comment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ParentPostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("ParentPostId");
+
+                    b.ToTable("Comments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("9ba2104b-2411-4f38-b77e-42d16751aa0d"),
+                            AuthorId = new Guid("bd56fe08-bd10-4384-89be-63a211fbbc61"),
+                            Content = "This is the first comment on the first post!",
+                            CreatedOn = new DateTime(2023, 11, 29, 10, 37, 10, 569, DateTimeKind.Local).AddTicks(162),
+                            IsActive = true,
+                            ParentPostId = new Guid("7b55a828-68be-45e8-9991-0f19cee32622")
                         });
                 });
 
@@ -326,8 +369,8 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("eb344c41-6baf-40d3-8daa-897ca2d945b2"),
-                            BeekeeperId = new Guid("a38f5e91-11ff-40b2-9987-317c60fec5a5"),
+                            Id = new Guid("dddb10e0-c846-4068-87b8-ecca083f63c8"),
+                            BeekeeperId = new Guid("7adaf90e-fec8-492e-8760-fe3190f1d689"),
                             CategoryId = 1,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "High quality linden honey from Asen Asenev.",
@@ -343,16 +386,26 @@ namespace HoneyWebPlatform.Data.Migrations
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Post", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(1500)
                         .HasColumnType("nvarchar(1500)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
@@ -364,23 +417,22 @@ namespace HoneyWebPlatform.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Posts");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("fba257f2-5da6-4eed-ae0b-236942c3c97b"),
+                            AuthorId = new Guid("bd56fe08-bd10-4384-89be-63a211fbbc61"),
                             Content = "Welcome to this new site, I am the first beekeeper hereenjoy your stay.",
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrl = "https://th.bing.com/th/id/OIP.eYhgoQcmVrOQG4mTZWpdLwHaE6?rs=1&pid=ImgDetMain",
                             IsActive = true,
-                            Title = "The site's first post",
-                            UserId = new Guid("29a205b5-19c1-4dbb-a318-0235f51af7c7")
+                            Title = "The site's first post"
                         });
                 });
 
@@ -435,8 +487,8 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b49b7061-ad27-42cd-b46d-56b528499dae"),
-                            BeekeeperId = new Guid("a38f5e91-11ff-40b2-9987-317c60fec5a5"),
+                            Id = new Guid("26cdb5a8-97dc-458f-ad25-00f1c7052bac"),
+                            BeekeeperId = new Guid("7adaf90e-fec8-492e-8760-fe3190f1d689"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "30% tincture that is good for the immune system with anti-inflammatory properties.",
                             FlavourId = 1,
@@ -604,6 +656,25 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.Navigation("Beekeeper");
                 });
 
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Comment", b =>
+                {
+                    b.HasOne("HoneyWebPlatform.Data.Models.ApplicationUser", "Author")
+                        .WithMany("OwnedComments")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HoneyWebPlatform.Data.Models.Post", "ParentPost")
+                        .WithMany("Comments")
+                        .HasForeignKey("ParentPostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("ParentPost");
+                });
+
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Honey", b =>
                 {
                     b.HasOne("HoneyWebPlatform.Data.Models.Beekeeper", "Beekeeper")
@@ -625,13 +696,13 @@ namespace HoneyWebPlatform.Data.Migrations
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Post", b =>
                 {
-                    b.HasOne("HoneyWebPlatform.Data.Models.ApplicationUser", "User")
+                    b.HasOne("HoneyWebPlatform.Data.Models.ApplicationUser", "Author")
                         .WithMany("OwnedPosts")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Propolis", b =>
@@ -706,6 +777,8 @@ namespace HoneyWebPlatform.Data.Migrations
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("OwnedComments");
+
                     b.Navigation("OwnedPosts");
                 });
 
@@ -726,6 +799,11 @@ namespace HoneyWebPlatform.Data.Migrations
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Flavour", b =>
                 {
                     b.Navigation("Propolises");
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Post", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

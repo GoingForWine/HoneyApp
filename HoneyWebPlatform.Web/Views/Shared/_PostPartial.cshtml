@@ -1,0 +1,40 @@
+﻿@model HoneyWebPlatform.Web.ViewModels.Blog.PostAllViewModel
+
+@{
+    ViewData["Title"] = "Блог";
+}
+
+<article class="blog_item">
+    <div class="blog_item_img">
+        <img class="card-img rounded-0" src="@Model.ImageUrl" alt="@Model.Title">
+        <div href="#" class="blog_item_date">
+            <h3>@Model.CreatedOn.Day</h3>
+            <p>@Model.CreatedOn.ToString("MMM")</p>
+        </div>
+    </div>
+
+    <div class="blog_details">
+        <a asp-area="" asp-controller="Blog" asp-action="Details" asp-route-id="@Model.Id" class="d-inline-block">
+            <h2>@Model.Title</h2>
+        </a>
+        @*<p>  contenttuka</p>*@
+        <ul class="blog-info-link">
+            <li><i class="far fa-user"></i> Автор: @Model.Author.FirstName @Model.Author.LastName</li>
+            <li>
+                @if (@Model.CommentsCount == 1)
+                {
+                    <i class="far fa-comments">
+                        1 коментар
+                    </i>
+                }
+                else
+                {
+                    <i class="far fa-comments">
+                        @Model.CommentsCount.ToString() коментара
+                    </i>
+                }
+
+            </li>
+        </ul>
+    </div>
+</article>
