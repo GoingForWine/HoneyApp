@@ -1,0 +1,154 @@
+﻿@model CartViewModel
+
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner text-center">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Вашата Количка</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cart_area section_padding">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+
+                @if (Model.Honeys.Any() || Model.Propolises.Any())
+                {
+                    <form asp-controller="User" asp-action="ClearCart" method="post" class="text-center">
+                        <button class="genric-btn danger radius" type="submit">Изчисти Количката</button>
+                    </form>
+                }
+
+                <table class="table mt-10">
+
+                    <tbody>
+
+                        @if (Model.Honeys.Any() || Model.Propolises.Any())
+                        {
+                            int counter = 1;
+
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Продукт</th>
+                                <th scope="col">Цена</th>
+                                <th scope="col">Количество</th>
+                                <th scope="col">Общо</th>
+                                <th scope="col" style="width: 175px;">Всичко е <b class="cart-total">@Model.TotalPrice лева</b></th>
+                            </tr>
+                        </thead>
+
+
+                        foreach (var honey in Model.Honeys)
+                        {
+
+                            <tr class="product-row" data-product-id ="@honey.ProductId">
+                                <th scope="row">@counter</th>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img class="cart-image" src="@honey.ImageUrl" alt="product image" />
+                                        </div>
+                                        <div class="media-body">
+                                            <p>@honey.ProductName</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>@honey.Price лв</td>
+                                <td>
+                                    <div class="product_count">
+                                        <input type="number" min="1" max="20" value="@honey.Quantity" title="Quantity"
+                                               class="single-input input-text qty product-quantity" data-product-id="@honey.ProductId"
+                                               onchange="updateCartItemQuantity(this)" />
+                                    </div>
+                                </td>
+                                <td class="total-price" data-product-id="@honey.ProductId" style="width: 110px"
+                                    data-price="@honey.Price">
+                                    @honey.TotalPrice лева
+                                </td>
+                                <td>
+                                    <form asp-controller="User" asp-action="RemoveFromCart" method="post">
+                                        <input type="hidden" name="cartItemId" value="@honey.ProductId" />
+                                        <button class="genric-btn danger radius" type="submit">Премахни</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            counter++;
+                        }
+
+                        foreach (var propolis in Model.Propolises)
+                        {
+                            <tr class="product-row" data-product-id ="@propolis.ProductId">
+                                <th scope="row">@counter</th>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img class="cart-image" src="@propolis.ImageUrl" alt="product image" />
+                                        </div>
+                                        <div class="media-body">
+                                            <p>@propolis.ProductName</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>@propolis.Price лв</td>
+                                <td>
+                                    <div class="product_count">
+                                        <input type="number" min="1" max="20" value="@propolis.Quantity" title="Quantity"
+                                               class="single-input input-text qty product-quantity" data-product-id="@propolis.ProductId"
+                                               onchange="updateCartItemQuantity(this)" />
+                                    </div>
+                                </td>
+                                <td class="total-price" data-product-id="@propolis.ProductId" style="width: 110px"
+                                    data-price="@propolis.Price">
+                                    @propolis.TotalPrice лева
+                                </td>
+                                <td>
+                                    <form asp-controller="User" asp-action="RemoveFromCart" method="post">
+                                        <input type="hidden" name="cartItemId" value="@propolis.ProductId" />
+                                        <button class="genric-btn danger radius" type="submit">Премахни</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            counter++;
+                        }
+
+
+                    }
+                    else
+                    {
+                        <p>Количката ви е празна.</p>
+                    }
+
+                        </tbody>
+                    </table>
+
+
+                    @if (Model.Honeys.Any() || Model.Propolises.Any())
+                    {
+
+                        <partial name="_OrderFormPartial" model="@Model.UserInformation" />
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    @section scripts {
+        
+
+        <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+        <script src="~/js/cart.js" asp-append-version="true"></script>
+
+        <partial name="_ValidationScriptsPartial" />
+    }

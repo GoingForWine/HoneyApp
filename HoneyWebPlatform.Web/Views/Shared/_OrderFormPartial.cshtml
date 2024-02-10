@@ -1,0 +1,42 @@
+﻿@model UserViewModel
+
+<!-- Add the Place Order button here -->
+<form asp-controller="User" asp-action="PlaceOrder" method="post">
+    <div class="mt-10">
+        <input asp-for="FullName" placeholder="Пълно Име" class="single-input" readonly style="cursor: not-allowed;" />
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.PhoneNumber))
+    {
+        <div class="mt-10">
+            <input asp-for="PhoneNumber" placeholder="Телефонен номер" class="single-input" readonly />
+            <span asp-validation-for="PhoneNumber" class="small text-danger"></span>
+        </div>
+    }
+    else
+    {
+        <div class="mt-10">
+            <input asp-for="PhoneNumber" type="number" placeholder="Телефонен номер" class="single-input" />
+            <span asp-validation-for="PhoneNumber" class="small text-danger"></span>
+        </div>
+    }
+
+    <div class="mt-10">
+        <input asp-for="Email" placeholder="Имейл" class="single-input" readonly style="cursor: not-allowed;" />
+    </div>
+
+    <div class="mt-10">
+        <input asp-for="Address" placeholder="Адрес за доставка" class="single-input" />
+        <span asp-validation-for="Address" class="small text-danger"></span>
+    </div>
+
+    <!-- Add the dropdown for община here -->
+    <!-- fitnesdobavki.net have a nice checkout page -->
+
+    
+    <div class="text-center">
+        <button class="genric-btn primary radius mt-10" type="submit">Поръчай</button>
+    </div>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+</form>

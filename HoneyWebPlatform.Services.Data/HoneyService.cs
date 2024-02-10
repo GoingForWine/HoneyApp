@@ -237,7 +237,11 @@
             return new StatisticsServiceModel()
             {
                 TotalHoneys = await dbContext.Honeys.CountAsync(),
-                TotalPropolises = await dbContext.Propolises.CountAsync()
+                TotalActiveHoneys = await dbContext.Honeys.Where(h => h.IsActive).CountAsync(),
+                TotalPropolises = await dbContext.Propolises.CountAsync(),
+                TotalActivePropolises = await dbContext.Propolises.Where(p => p.IsActive).CountAsync(),
+                TotalPosts = await dbContext.Posts.CountAsync(),
+                TotalActivePosts = await dbContext.Posts.Where(p => p.IsActive).CountAsync(),
             };
         }
     }

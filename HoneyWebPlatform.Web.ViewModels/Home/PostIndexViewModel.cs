@@ -12,5 +12,8 @@ namespace HoneyWebPlatform.Web.ViewModels.Home
 
         public string ImageUrl { get; set; } = null!;
 
+        public DateTime CreatedOn { get; set; }
+
+        public ApplicationUser Author { get; set; } = null!;
     }
 }

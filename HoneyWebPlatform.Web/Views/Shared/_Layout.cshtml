@@ -1,8 +1,11 @@
 ﻿@using static HoneyWebPlatform.Common.GeneralApplicationConstants;
 @using HoneyWebPlatform.Services.Data.Interfaces
 @using HoneyWebPlatform.Web.Infrastructure.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using System.Security.Claims
 
 @inject IBeekeeperService BeekeeperService
+@inject IOrderService orderService
 
 @{
     bool isUserBeekeeper = await BeekeeperService.BeekeeperExistsByUserIdAsync(User.GetId()!);
@@ -51,7 +54,7 @@
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
                         @*<a class="navbar-brand" href="index.html"> <img src="dingo-master/dingo-master/img/logo.png" alt="logo"> </a>*@
-                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Пчелен Кошер <img src="~/dingo-master/dingo-master/img/logo.png" alt="logo" /></a>
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Пчелен Кошер @*<img src="~/dingo-master/dingo-master/img/logo.png" alt="logo" />*@</a>
 
                         @* тоя бутон може би да се махне???*@
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -70,22 +73,27 @@
                                         <li>
                                             <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="All">Медове</a>
                                             <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="All">Прополиси</a>
+                                            @if (User.Identity?.IsAuthenticated ?? false && await orderService.HasOrdersForUserAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                                            {
+                                                <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="User" asp-action="Orders">Поръчки</a>
+                                            }
                                         </li>
                                     </ul>
                                 </li>
                                 @if (User.Identity?.IsAuthenticated ?? false)
                                 {
-                                    <li class="nav-item dropdown">
-                                        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Моите</a>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li>
-                                                <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Mine">Медове</a>
-                                                <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Mine">Прополиси</a>
-                                            </li>
-                                        </ul>
-                                    </li>
                                     @if (isUserBeekeeper)
                                     {
+                                        <li class="nav-item dropdown">
+                                            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Моите</a>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <li>
+                                                    <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Honey" asp-action="Mine">Медове</a>
+                                                    <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Propolis" asp-action="Mine">Прополиси</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
                                         <li class="nav-item dropdown">
                                             <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Добави</a>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -99,6 +107,9 @@
                                 }
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="All">Блог</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Контакти</a>
                                 </li>
                             </ul>
                         </div>
@@ -157,20 +168,34 @@
                 <div class="col-xl-3 col-sm-6 col-md-4 col-lg-3">
                     <div class="single-footer-widget footer_3">
                         <h4>Newsletter</h4>
-                        <p>Heaven fruitful doesn't over lesser in days. Appear creeping seas</p>
-                        <form action="#">
+                        <p>Heaven fruitful doesn't over lesser in days. Appear creeping seas      sub</p>
+                        <form asp-controller="User" asp-action="SubscribeNewsletter" method="post">
                             <div class="form-group">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder='Email Address'
+                                    <input type="text" name="email" class="form-control" placeholder='Email Address'
                                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'">
                                     <div class="input-group-append">
-                                        <button class="btn" type="button"><i class="fas fa-paper-plane"></i></button>
+                                        <button type="submit" class="btn"><i class="fas fa-paper-plane"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <h4>Newsletter</h4>
+                        <p>unsub</p>
+                        <form asp-controller="User" asp-action="UnsubscribeNewsletter" method="post">
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" name="email" placeholder='Email Address'
+                                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'">
+                                    <div class="input-group-append">
+                                        <button class="btn" type="submit"><i class="fas fa-times"></i></button>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
+
             </div>
             <div class="copyright_part_text">
                 <div class="row">
@@ -179,9 +204,9 @@
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             Пчелен Кошер &copy;
                             <script>document.write(new Date().getFullYear());</script>
-                            All rights reserved | This template is made with
+                            All rights reserved | This website is made with
                             <i class="ti-heart" aria-hidden="true"></i> by
-                            <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <a href="https://colorlib.com" target="_blank">kosher</a>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </p>
                     </div>
@@ -226,6 +251,7 @@
             integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <partial name="_NotificationsPartial" />
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

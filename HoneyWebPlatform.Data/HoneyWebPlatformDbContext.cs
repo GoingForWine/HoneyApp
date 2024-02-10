@@ -36,12 +36,24 @@ namespace HoneyWebPlatform.Data
 
         public DbSet<Comment> Comments { get; set; } = null!;
 
+        public DbSet<SubscribedEmail> SubscribedEmails { get; set; } = null!;
+
+        public DbSet<Cart> Carts { get; set; } = null!;
+
+        public DbSet<CartItem> CartItems { get; set; } = null!;
+
+        public DbSet<OrderItem> OrderItems { get; set; } = null!;
+
+        public DbSet<Order> Orders { get; set; } = null!;
+
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //initdb
             builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
             //after creating two users through the app - continue with seeding these 4
-            builder.ApplyConfiguration(new CategoryEntityConfiguration()); 
+            builder.ApplyConfiguration(new CategoryEntityConfiguration());
             builder.ApplyConfiguration(new FlavourEntityConfiguration());
             builder.ApplyConfiguration(new PostEntityConfiguration());
             builder.ApplyConfiguration(new BeePollenEntityConfigurator());
@@ -49,6 +61,10 @@ namespace HoneyWebPlatform.Data
             builder.ApplyConfiguration(new HoneyEntityConfiguration());
             builder.ApplyConfiguration(new PropolisEntityConfiguration());
             builder.ApplyConfiguration(new CommentEntityConfiguration());
+
+            builder.ApplyConfiguration(new CartEntityConfiguration());
+
+            builder.ApplyConfiguration(new OrderEntityConfiguration());
 
             //if (this.seedDb)
             //{
@@ -59,8 +75,9 @@ namespace HoneyWebPlatform.Data
 
             //Assembly configAssembly = Assembly.GetAssembly(typeof(HoneyWebPlatformDbContext)) ??
             //                          Assembly.GetExecutingAssembly();
-            
+
             //builder.ApplyConfigurationsFromAssembly(configAssembly);
+
 
             base.OnModelCreating(builder);
         }

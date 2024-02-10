@@ -4,19 +4,25 @@
     using Microsoft.Extensions.Caching.Memory;
 
     using Services.Data.Interfaces;
+
     using Web.ViewModels.User;
 
     using static Common.GeneralApplicationConstants;
+    using static Common.NotificationMessagesConstants;
+
 
     public class UserController : BaseAdminController
     {
         private readonly IUserService userService;
         private readonly IMemoryCache memoryCache;
+        private readonly ISubscribedEmailService subscribedEmailService;
 
-        public UserController(IUserService userService, IMemoryCache memoryCache)
+
+        public UserController(IUserService userService, IMemoryCache memoryCache, ISubscribedEmailService subscribedEmailService)
         {
             this.userService = userService;
             this.memoryCache = memoryCache;
+            this.subscribedEmailService = subscribedEmailService;
         }
 
         [Route("User/All")]
@@ -37,6 +43,28 @@
             }
 
             return View(users);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> ExportSubscribedEmails()
+        {
+            try
+            {
+                var subscribedEmails = await subscribedEmailService.GetSubscribedEmailsAsync();
+                var emails = string.Join(", ", subscribedEmails.Select(email => email.Email));
+
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/exports", "SubscribedEmails.txt");
+                System.IO.File.WriteAllText(filePath, emails);
+
+                return File(System.IO.File.ReadAllBytes(filePath), "text/plain", "SubscribedEmails.txt");
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                TempData[ErrorMessage] = "Error exporting subscribed emails.";
+                return RedirectToAction("All");
+            }
         }
     }
 }

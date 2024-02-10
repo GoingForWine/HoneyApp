@@ -1,0 +1,16 @@
+﻿@model HoneyWebPlatform.Web.ViewModels.Home.PostIndexViewModel
+
+<div class="single_blog_item">
+    <div class="single_blog_img">
+        <img src="@Model.ImageUrl" alt="">
+    </div>
+    <div class="single_blog_text">
+        <div class="date">
+            <a class="date_item">@Model.CreatedOn </a>
+            <a class="date_item"> <span>#</span> @Model.Author.FirstName @Model.Author.LastName </a>
+        </div>
+        <h3><a asp-area="" asp-controller="Blog" asp-action="Details" asp-route-id="@Model.Id">@Model.Title</a></h3>
+
+        <a asp-area="" asp-controller="Blog" asp-action="Details" asp-route-id="@Model.Id" class="btn_3">Прочети повече <img src="dingo-master/dingo-master/img/icon/left_1.svg" alt=""></a>
+    </div>
+</div>

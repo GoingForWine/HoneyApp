@@ -8,6 +8,8 @@
 
     var honeys = Model.Honeys.ToList();
     var propolises = Model.Propolises.ToList();
+    var posts = Model.Posts.ToList();
+
     bool isUserBeekeeper = await BeekeeperService.BeekeeperExistsByUserIdAsync(User.GetId()!);
 }
 
@@ -34,80 +36,6 @@
         </p>
     </div>
 }
-
-@*<div class="mb-5"></div>
-    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <h1 class="display-4">Налични Медове:</h1>
-            @for (int i = 0; i < honeys.Count(); i++)
-            {
-                var honey = honeys[i];
-                <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
-                    <img class="d-block w-100" style="height:500px"
-                         src="@honey.ImageUrl" alt="@honey.Title">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>
-                            <a class="btn btn-primary" asp-controller="Honey" asp-action="Details"
-                               asp-route-id="@honey.Id"> @honey.Title</a>
-                        </h5>
-                    </div>
-                </div>
-            }
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Предишен</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Следващ</span>
-        </button>
-    </div>
-
-    <div id="carouselExampleControls2" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <h1 class="display-4">Налични Прополиси:</h1>
-            @for (int i = 0; i < propolises.Count(); i++)
-            {
-                var propolis = propolises[i];
-                <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
-                    <img class="d-block w-100" style="height:500px"
-                         src="@propolis.ImageUrl" alt="@propolis.Title">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>
-                            <a class="btn btn-primary" asp-controller="Propolis" asp-action="Details"
-                               asp-route-id="@propolis.Id"> @propolis.Title</a>
-                        </h5>
-                    </div>
-                </div>
-            }
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Предишен</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Следващ</span>
-        </button>
-    </div>
-
-    <div class="mb-5"></div>
-
-    <div class="row">
-        <div class="col-12 text-center">
-            <button class="btn btn-primary" id="statistics_btn">Покажи Статистиката</button>
-        </div>
-    </div>
-
-    <div class="mt-4 p-5 bg-light d-none" id="statistics_box">
-        <div class="row">
-            <h3 class="col-md-6 text-center" id="total_honeys"></h3>
-            <h3 class="col-md-6 text-center" id="total_propolises"></h3>
-        </div>
-    </div>*@
-
-
 
 
 <!-- banner part start-->
@@ -795,72 +723,21 @@
         <div class="row">
             <div class="col-xl-5">
                 <div class="section_tittle">
-                    <p>Recent News</p>
-                    <h2>Latest From Blog</h2>
+                    <p>Последни Новини</p>
+                    <h2>Най-новите постове от нашия Блог</h2>
                 </div>
             </div>
         </div>
+
         <div class="row">
-            <div class="col-sm-6 col-lg-4">
-                <div class="single_blog_item">
-                    <div class="single_blog_img">
-                        <img src="dingo-master/dingo-master/img/blog/blog_1.png" alt="">
-                    </div>
-                    <div class="single_blog_text">
-                        <div class="date">
-                            <a href="#" class="date_item">Apr 06, 2019 </a>
-                            <a href="#" class="date_item"> <span>#</span> Food News </a>
-                        </div>
-                        <h3><a href="blog.html">Adama kind deep gatherin first over fter his great</a></h3>
-                        <a href="#" class="btn_3">Read More <img src="dingo-master/dingo-master/img/icon/left_1.svg" alt=""></a>
-                    </div>
+
+            @foreach (var post in posts)
+            {
+                <div class="col-sm-6 col-lg-4">
+                    <partial name="_HomePostPartial" model="post"/>
                 </div>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <div class="single_blog_item">
-                    <div class="single_blog_img">
-                        <img src="dingo-master/dingo-master/img/blog/blog_2.png" alt="">
-                    </div>
-                    <div class="single_blog_text">
-                        <div class="date">
-                            <a href="#" class="date_item">Apr 06, 2019 </a>
-                            <a href="#" class="date_item"> <span>#</span> Food News </a>
-                        </div>
-                        <h3><a href="blog.html">Adama kind deep gatherin first over fter his great</a></h3>
-                        <a href="#" class="btn_3">Read More <img src="dingo-master/dingo-master/img/icon/left_1.svg" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <div class="single_blog_item">
-                    <div class="single_blog_img">
-                        <img src="dingo-master/dingo-master/img/blog/blog_3.png" alt="">
-                    </div>
-                    <div class="single_blog_text">
-                        <div class="date">
-                            <a href="#" class="date_item">Apr 06, 2019 </a>
-                            <a href="#" class="date_item"> <span>#</span> Food News </a>
-                        </div>
-                        <h3><a href="blog.html">Adama kind deep gatherin first over fter his great</a></h3>
-                        <a href="#" class="btn_3">Read More <img src="dingo-master/dingo-master/img/icon/left_1.svg" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-4 d-none d-sm-block d-lg-none">
-                <div class="single_blog_item">
-                    <div class="single_blog_img">
-                        <img src="dingo-master/dingo-master/img/blog/blog_1.png" alt="">
-                    </div>
-                    <div class="single_blog_text">
-                        <div class="date">
-                            <a href="#" class="date_item">Apr 06, 2019 </a>
-                            <a href="#" class="date_item"> <span>#</span> Food News </a>
-                        </div>
-                        <h3><a href="blog.html">Adama kind deep gatherin first over fter his great</a></h3>
-                        <a href="#" class="btn_3">Read More <img src="dingo-master/dingo-master/img/icon/left_1.svg" alt=""></a>
-                    </div>
-                </div>
-            </div>
+            }
+
         </div>
     </div>
 </section>

@@ -49,6 +49,9 @@ namespace HoneyWebPlatform.Data.Migrations
                         .HasColumnType("nvarchar(15)")
                         .HasDefaultValue("Test");
 
+                    b.Property<bool>("IsSubscribed")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
@@ -172,16 +175,60 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("88f4ae54-7e7e-4074-a777-0385b3239291"),
+                            Id = new Guid("88f5b64f-aaaf-40de-92c3-04d4a5ca0d36"),
                             BeekeeperId = new Guid("7adaf90e-fec8-492e-8760-fe3190f1d689"),
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2024, 1, 26, 12, 13, 59, 732, DateTimeKind.Utc).AddTicks(8430),
                             Description = "Asen Asenev's rich in vitamins and minerals bee pollen. It has the riches of bulgarian nature",
                             ImageUrl = "https://naturalvita.co.uk/wp-content/uploads/2018/03/bee-pollen-natruralvita-1024x1024.jpg",
-                            IsActive = false,
+                            IsActive = true,
                             NetWeight = 100,
                             Price = 9.00m,
                             Title = "Asen's Bee Pollen"
                         });
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Cart", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.CartItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CartId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("HoneyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PropolisId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("HoneyId");
+
+                    b.HasIndex("PropolisId");
+
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Category", b =>
@@ -263,10 +310,10 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9ba2104b-2411-4f38-b77e-42d16751aa0d"),
+                            Id = new Guid("e6cf62f3-2136-4fda-9652-8e2b44f24d8b"),
                             AuthorId = new Guid("bd56fe08-bd10-4384-89be-63a211fbbc61"),
                             Content = "This is the first comment on the first post!",
-                            CreatedOn = new DateTime(2023, 11, 29, 10, 37, 10, 569, DateTimeKind.Local).AddTicks(162),
+                            CreatedOn = new DateTime(2024, 1, 26, 14, 13, 59, 733, DateTimeKind.Local).AddTicks(3526),
                             IsActive = true,
                             ParentPostId = new Guid("7b55a828-68be-45e8-9991-0f19cee32622")
                         });
@@ -369,7 +416,7 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("dddb10e0-c846-4068-87b8-ecca083f63c8"),
+                            Id = new Guid("5b27ec71-8159-4b90-aed2-c107f1057d1c"),
                             BeekeeperId = new Guid("7adaf90e-fec8-492e-8760-fe3190f1d689"),
                             CategoryId = 1,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -382,6 +429,74 @@ namespace HoneyWebPlatform.Data.Migrations
                             Title = "Asen's Linden Honey",
                             YearMade = 2022
                         });
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.OrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Post", b =>
@@ -426,7 +541,7 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("fba257f2-5da6-4eed-ae0b-236942c3c97b"),
+                            Id = new Guid("9567f545-15a2-4bde-843d-f1734f96c1f8"),
                             AuthorId = new Guid("bd56fe08-bd10-4384-89be-63a211fbbc61"),
                             Content = "Welcome to this new site, I am the first beekeeper hereenjoy your stay.",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -487,7 +602,7 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("26cdb5a8-97dc-458f-ad25-00f1c7052bac"),
+                            Id = new Guid("fd00237d-d0cd-41e6-9270-ebbcc50c79bd"),
                             BeekeeperId = new Guid("7adaf90e-fec8-492e-8760-fe3190f1d689"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "30% tincture that is good for the immune system with anti-inflammatory properties.",
@@ -497,6 +612,23 @@ namespace HoneyWebPlatform.Data.Migrations
                             Price = 3.00m,
                             Title = "Bee Propolis"
                         });
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.SubscribedEmail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SubscribedEmails");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -656,6 +788,29 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.Navigation("Beekeeper");
                 });
 
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.CartItem", b =>
+                {
+                    b.HasOne("HoneyWebPlatform.Data.Models.Cart", "Cart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HoneyWebPlatform.Data.Models.Honey", "Honey")
+                        .WithMany()
+                        .HasForeignKey("HoneyId");
+
+                    b.HasOne("HoneyWebPlatform.Data.Models.Propolis", "Propolis")
+                        .WithMany()
+                        .HasForeignKey("PropolisId");
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Honey");
+
+                    b.Navigation("Propolis");
+                });
+
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Comment", b =>
                 {
                     b.HasOne("HoneyWebPlatform.Data.Models.ApplicationUser", "Author")
@@ -692,6 +847,17 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.Navigation("Beekeeper");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.OrderItem", b =>
+                {
+                    b.HasOne("HoneyWebPlatform.Data.Models.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Post", b =>
@@ -791,6 +957,11 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.Navigation("OwnedPropolis");
                 });
 
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Cart", b =>
+                {
+                    b.Navigation("CartItems");
+                });
+
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Category", b =>
                 {
                     b.Navigation("Honeys");
@@ -799,6 +970,11 @@ namespace HoneyWebPlatform.Data.Migrations
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Flavour", b =>
                 {
                     b.Navigation("Propolises");
+                });
+
+            modelBuilder.Entity("HoneyWebPlatform.Data.Models.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("HoneyWebPlatform.Data.Models.Post", b =>

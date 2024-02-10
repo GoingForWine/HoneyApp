@@ -51,6 +51,6 @@ namespace HoneyWebPlatform.Services.Data.Interfaces
 
         Task<string> GetPostIdByCommentIdAsync(string commentId);
 
-        Task<StatisticsServiceModel> GetStatisticsAsync();
+        //Task<StatisticsServiceModel> GetStatisticsAsync();
     }
 }

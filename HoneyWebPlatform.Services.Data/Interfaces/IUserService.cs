@@ -9,5 +9,8 @@
         Task<string> GetFullNameByIdAsync(string userId);
 
         Task<IEnumerable<UserViewModel>> AllAsync();
+
+        Task<IEnumerable<UserViewModel>> GetSubscribedUsersAsync();
+
     }
 }

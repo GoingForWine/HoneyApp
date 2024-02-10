@@ -1,0 +1,89 @@
+﻿@model List<OrderViewModel>
+
+@{
+    ViewData["Title"] = "Поръчки";
+}
+
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner text-center">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Вашите Поръчки</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cart_area section_padding">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+
+                @if (Model != null && Model.Any())
+                {
+                    byte i = 1;
+                    <table class="table mt-10">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Номер на Поръчка</th>
+                                <th scope="col">Създаден на</th>
+                                <th scope="col">Обща Стойност</th>
+                                <th scope="col">Статус</th>
+                                <!-- Add other columns as needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.OrderBy(o => o.OrderDate))
+                            {
+                                <tr data-order-id="@order.OrderId" class="order-row">
+                                    <th scope="row">@i</th>
+                                    <td>@order.OrderId</td>
+                                    <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                                    <td>@order.TotalPrice лева</td>
+                                    <td>@order.Status</td>
+                                    <!-- Add other columns as needed -->
+                                </tr>
+                                <tr class="order-details" style="display: none;">
+                                    <td colspan="5">
+                                        <table class="table">
+                                            <partial name="_OrderDetailsPartial" model="@order.OrderItems" />
+                                            <p> За адрес: @order.Address</p>
+                                        </table>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>Все още нямате направени поръчки.</p>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts {
+    <!-- Include any scripts if needed -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var orderRows = document.querySelectorAll('.order-row');
+            orderRows.forEach(function (row) {
+                row.addEventListener('click', function () {
+                    var detailsRow = row.nextElementSibling;
+                    if (detailsRow.classList.contains('order-details')) {
+                        detailsRow.style.display = detailsRow.style.display === 'none' ? '' : 'none';
+                    }
+                });
+            });
+        });
+    </script>
+}

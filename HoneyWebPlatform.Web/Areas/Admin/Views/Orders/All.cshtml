@@ -1,0 +1,172 @@
+﻿@using HoneyWebPlatform.Services.Data.Interfaces
+
+@inject IUserService UserService
+
+@model List<OrderViewModel>
+
+@{
+    ViewBag.Title = "Всички Поръчки";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+@if (Model != null && Model.Any())
+{
+    byte i = 1;
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Номер на Поръчка</th>
+                <th scope="col">Създаден на</th>
+                <th scope="col">Обща Стойност</th>
+                <th scope="col">Статус</th>
+                <!-- Add other columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.OrderBy(o => o.OrderDate))
+            {
+                <tr data-order-id="@order.OrderId" class="order-row">
+                    <th scope="row">@i</th>
+                    <td>@order.OrderId</td>
+                    <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                    <td>@order.TotalPrice лева</td>
+                    <td>@order.Status</td>
+                    <!-- Add other columns as needed -->
+                </tr>
+
+                <!-- Add a details row that is initially hidden -->
+                <tr class="order-details" style="display: none;">
+                    <td colspan="5">
+                        <table class="table">
+                            <partial name="_OrderDetailsPartial" model="@order.OrderItems" />
+                        </table>
+                        <p>
+                            Поръчани за адрес: @order.Address,
+                            <br />
+                            С телефонен номер: @order.PhoneNumber,
+                            <br />
+                            От потребител: @order.UserName
+                            <br />
+                        </p>
+
+                        <div class="form-group col-md-3">
+                            <div class="form-group">
+                                <label asp-for="@order.Status">Смени статус</label>
+                                <select asp-for="@order.Status" class="form-control" onchange="updateOrderStatus('@order.OrderId', this.value)">
+                                    <option value="0">Обработван</option>
+                                    <option value="1">Приготвен</option>
+                                    <option value="2">Изпратен</option>
+                                    <option value="3">Приключен</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                i++;
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Все още няма направени поръчки.</p>
+}
+
+
+
+@section scripts {
+    <!-- Include any scripts if needed -->
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/orderHub").build();
+        
+        connection.start().then(function() {
+            console.log('SignalR connection established');
+        }).catch(function(err) {
+            console.error('Error establishing SignalR connection:', err.toString());
+        });
+
+        connection.on("OrderStatusUpdated",
+            function(orderId, newStatus) {
+                // Update the UI with the new order status
+                updateOrderStatusUI(orderId, newStatus);
+            });
+
+        connection.onclose(function(e) {
+            console.error('Connection closed:', e);
+        });
+
+
+        function updateOrderStatusUI(orderId, newStatus) {
+
+            // Find the table row by order ID
+            var tableRow = document.querySelector(`.order-row[data-order-id="${orderId}"]`);
+           
+            if (!tableRow) {
+                console.error(`Table row not found for Order ID: ${orderId}`);
+                return;
+            }
+
+            // Update the status cell
+            var statusCell = tableRow.querySelector('td:nth-child(5)'); // Assuming the status is in the 5th column
+            if (!statusCell) {
+                console.error(`Status cell not found for Order ID: ${orderId}`);
+                return;
+            }
+
+            // Convert numerical status to text
+            var statusText = convertStatusToText(newStatus);
+
+            // Manually update the status cell text immediately
+            statusCell.textContent = statusText;
+
+            console.log(`Updated status for Order ID: ${orderId}, New Status: ${statusText}`);
+        }
+
+
+        function updateOrderStatus(orderId, newStatus) {
+            // Call the server method to update the order status
+            connection.invoke("UpdateOrderStatus", orderId, parseInt(newStatus)).then(function() {
+                console.log('UpdateOrderStatus invoked successfully');
+            }).catch(function(err) {
+                console.error(err.toString());
+            });
+        }
+
+        function convertStatusToText(status) {
+            switch (status) {
+            case 0:
+                return "Обработван";
+            case 1:
+                return "Приготвен";
+            case 2:
+                return "Изпратен";
+            case 3:
+                return "Приключен";
+            default:
+                return "Unknown";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded',
+            function() {
+                var orderRows = document.querySelectorAll('.order-row');
+                orderRows.forEach(function(row) {
+                    row.addEventListener('click',
+                        function() {
+                            var detailsRow = row.nextElementSibling;
+                            if (detailsRow.classList.contains('order-details')) {
+                                detailsRow.style.display = detailsRow.style.display === 'none' ? '' : 'none';
+                            }
+                        });
+                });
+            });
+    </script>
+}

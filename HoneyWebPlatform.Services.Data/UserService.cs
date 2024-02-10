@@ -34,7 +34,7 @@
             ApplicationUser? user = await this.dbContext
                 .Users
                 .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
-            
+
             if (user == null)
             {
                 return string.Empty;
@@ -49,16 +49,17 @@
                 .Users
                 .Select(u => new UserViewModel()
                 {
-                    Id = u.Id.ToString(),
+                    Id = u.Id,
                     Email = u.Email,
-                    FullName = u.FirstName + " " + u.LastName
+                    FullName = u.FirstName + " " + u.LastName,
+                    IsSubscribed = u.IsSubscribed,
                 })
                 .ToListAsync();
             foreach (UserViewModel user in allUsers)
             {
                 Beekeeper? beekeeper = this.dbContext
                     .Beekeepers
-                    .FirstOrDefault(a => a.UserId.ToString() == user.Id);
+                    .FirstOrDefault(a => a.UserId == user.Id);
                 if (beekeeper != null)
                 {
                     user.PhoneNumber = beekeeper.PhoneNumber;
@@ -70,6 +71,38 @@
             }
 
             return allUsers;
+        }
+
+        public async Task<IEnumerable<UserViewModel>> GetSubscribedUsersAsync()
+        {
+            List<UserViewModel> subscribedUsers = await this.dbContext
+                .Users
+                .Where(u => u.IsSubscribed)
+                .Select(u => new UserViewModel()
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    FullName = u.FirstName + " " + u.LastName,
+                    IsSubscribed = u.IsSubscribed,
+                })
+                .ToListAsync();
+
+            foreach (UserViewModel user in subscribedUsers)
+            {
+                Beekeeper? beekeeper = this.dbContext
+                    .Beekeepers
+                    .FirstOrDefault(a => a.UserId == user.Id);
+                if (beekeeper != null)
+                {
+                    user.PhoneNumber = beekeeper.PhoneNumber;
+                }
+                else
+                {
+                    user.PhoneNumber = string.Empty;
+                }
+            }
+
+            return subscribedUsers;
         }
     }
 }

@@ -29,6 +29,6 @@
 
         Task DeletePropolisByIdAsync(string propolisId);
 
-        Task<StatisticsServiceModel> GetStatisticsAsync();
+        //Task<StatisticsServiceModel> GetStatisticsAsync();
     }
 }

@@ -29,8 +29,8 @@
                 StatisticsServiceModel serviceModel =
                     await honeyService.GetStatisticsAsync();
 
-                serviceModel = 
-                    await propolisService.GetStatisticsAsync();
+                //serviceModel = 
+                //    await propolisService.GetStatisticsAsync();
 
                 return Ok(serviceModel);
             }

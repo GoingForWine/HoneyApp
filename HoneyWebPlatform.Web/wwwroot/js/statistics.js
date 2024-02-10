@@ -1,13 +1,17 @@
-﻿function statistics() {
+﻿function statistics(statisticsUrl) {
     $('#statistics_btn').on('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
 
         // hasClass('d-none') -> Statistics are hidden
         if ($('#statistics_box').hasClass('d-none')) {
-            $.get('https://localhost:7180/api/statistics', function (data) {
-                $('#total_honeys').text("Общо имаме: " + data.totalHoneys + " Медове");
-                $('#total_propolises').text("Общо имаме: " + data.totalPropolises + " Прополиси");
+            $.get(statisticsUrl, function (data) {
+                $('#total_honeys').text("Общо медове: " + data.totalHoneys);
+                $('#total_active_honeys').text("Активни медове: " + data.totalActiveHoneys);
+                $('#total_propolises').text("Общо прополиси: " + data.totalPropolises);
+                $('#total_active_propolises').text("Активни прополиси: " + data.totalActivePropolises);
+                $('#total_posts').text("Общо публикации: " + data.totalPosts);
+                $('#total_active_posts').text("Активни публикации: " + data.totalActivePosts);
 
                 $('#statistics_box').removeClass('d-none');
 

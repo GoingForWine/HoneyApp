@@ -1,0 +1,41 @@
+﻿@model List<OrderItemViewModel>
+
+<tbody>
+    @if (Model != null && Model.Any())
+    {
+        int counter = 1;
+
+        foreach (var orderItem in Model)
+        {
+            <tr class="product-row" data-product-id="@orderItem.ProductId">
+                <th scope="row">@counter</th>
+                <td>
+                    <div class="media">
+                        <div class="media-body">
+                            <p>@orderItem.ProductName</p>
+                        </div>
+                    </div>
+                </td>
+                <td>@orderItem.Price лв</td>
+                @if (@orderItem.Quantity == 1)
+                {
+                    <td>@orderItem.Quantity брой</td>
+                }
+                else
+                {
+                    <td>@orderItem.Quantity броя</td>
+                }
+                <td class="total-price" data-product-id="@orderItem.ProductId" style="width: 110px" data-price="@orderItem.Price">
+                    @orderItem.TotalPrice.ToString("0.00") лв
+                </td>
+            </tr>
+            counter++;
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="4">Няма детайли за поръчката.</td>
+        </tr>
+    }
+</tbody>

@@ -6,6 +6,8 @@ namespace HoneyWebPlatform.Web
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
+    using HoneyWebPlatform.Services.Data.Models;
+    using HoneyWebPlatform.Web.Areas.Hubs;
     using Hubs;
     using Data;
     using Data.Models;
@@ -24,7 +26,7 @@ namespace HoneyWebPlatform.Web
 
             string connectionString =
                 builder.Configuration.GetConnectionString("DefaultConnection")
-                //builder.Configuration.GetConnectionString("AzureConnection") 
+                    //builder.Configuration.GetConnectionString("AzureConnection") 
                     ?? throw new InvalidOperationException
                     ("Connection string 'DefaultConnection' not found.");
 
@@ -47,7 +49,13 @@ namespace HoneyWebPlatform.Web
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<HoneyWebPlatformDbContext>();
 
+            // Add email settings configuration here
+            builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
             builder.Services.AddApplicationServices(typeof(IHoneyService));
+            // Print the list of added services
+            //PrintAddedServicesForEntities(builder.Services);
+
 
             builder.Services.AddRecaptchaService();
 
@@ -69,6 +77,8 @@ namespace HoneyWebPlatform.Web
                     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
                     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
                 });
+
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             WebApplication app = builder.Build();
 
@@ -119,10 +129,39 @@ namespace HoneyWebPlatform.Web
                 config.MapDefaultControllerRoute();
                 config.MapRazorPages();
                 config.MapHub<ChatHub>("/chatHub");
+                config.MapHub<CartHub>("/cartHub");
+                //for admin order panel
+                config.MapHub<OrderHub>("/orderHub");
             });
 
-           
+
             app.Run();
         }
+
+        /// Checking if all the services are added for each entity
+        private static void PrintAddedServicesForEntities(IServiceCollection services)
+        {
+            var entityNames = new[] { "Beekeeper", "Honey", "Post", "Flavour", "Category", "Propolis", "SubscribedEmail", "User" /* Add other entity names here */ };
+
+            Console.WriteLine("Added Services for Entities:");
+            foreach (var entityName in entityNames)
+            {
+                var matchingServices = services
+                    .Where(service => service.ServiceType.Name.Contains(entityName, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+
+                if (matchingServices.Any())
+                {
+                    Console.WriteLine($"- {entityName} Services:");
+                    foreach (var service in matchingServices)
+                    {
+                        Console.WriteLine($"  - {service.ServiceType.Name} | Implementation: {service.ImplementationType?.Name ?? "N/A"}");
+                    }
+                    Console.WriteLine();
+                }
+            }
+        }
+
     }
+
 }

@@ -8,6 +8,10 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
+<a asp-action="ExportSubscribedEmails" class="genric-btn primary e-large">Изкарай имейлите само на записаните за е-вестник </a>
+
+<hr />
+
 <table class="table table-striped">
     <thead>
     <tr>
@@ -16,6 +20,7 @@
         <th><label>Телефонен номер</label></th>
         <th><label>Потребителят е пчелар</label></th>
         <th><label>Потребителят е онлайн</label></th>
+        <th><label>Записан за е-вестник</label></th>
     </tr>
     </thead>
     <tbody>
@@ -36,8 +41,18 @@
                 }
             </td>
             <td>
-                @if (OnlineUsersMiddleware.CheckIfUserIsOnline(user.Id))
+                @if (OnlineUsersMiddleware.CheckIfUserIsOnline(user.Id.ToString()))
                 {
+                    <label>✔</label>
+                }
+                else
+                {
+                    <label class="text-center">❌</label>
+                }
+            </td>
+            <td>
+                @if(user.IsSubscribed)
+{
                     <label>✔</label>
                 }
                 else

@@ -35,6 +35,9 @@
     <span>  |   </span>
     <a asp-area="Admin" asp-controller="User" asp-action="All"
        class="btn btn-primary btn-lg">Всички Потребители</a>
+    <span>  |   </span>
+    <a asp-area="Admin" asp-controller="Orders" asp-action="All"
+       class="btn btn-primary btn-lg">Всички Поръчки</a>
 </div>
 
 
@@ -50,12 +53,19 @@
 <div class="mt-4 p-5 bg-light d-none" id="statistics_box">
     <div class="row">
         <h3 class="col-md-6 text-center" id="total_honeys"></h3>
+        <h3 class="col-md-6 text-center" id="total_active_honeys"></h3>
         <h3 class="col-md-6 text-center" id="total_propolises"></h3>
+        <h3 class="col-md-6 text-center" id="total_active_propolises"></h3>
+        <h3 class="col-md-6 text-center" id="total_posts"></h3>
+        <h3 class="col-md-6 text-center" id="total_active_posts"></h3>
     </div>
 </div>
 
 
 @section Scripts
 {
-    <script>statistics();</script>
+    <script>
+        var statisticsUrl = '@Url.Action("GetStatistics", "Home")';
+        statistics(statisticsUrl);
+    </script>
 }

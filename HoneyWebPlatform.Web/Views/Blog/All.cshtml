@@ -37,10 +37,21 @@
                             <button class="button rounded-0 primary-bg text-white w-100 btn_4" type="submit"> Създай Пост </button>
                         </form>
                     </aside>
+                    
+                    <aside class="single_sidebar_widget newsletter_widget">
+                        <h4 class="widget_title">Запишете се за е-вестник</h4>
+                        <form asp-controller="User" asp-action="SubscribeNewsletter" method="post">
+                            <div class="form-group">
+                                <input type="text" name ="email" class="form-control" onfocus="this.placeholder = ''" 
+                                       onblur="this.placeholder = 'Enter email'" placeholder="Въведи е-поща" required="">
+                            </div>
+                            <button class="button rounded-0 primary-bg text-white w-100 btn_4" type="submit">Запиши се</button>
+                        </form>
+                    </aside>
+
                 </div>
             </div>
-
-
+            
         </div>
     </div>
 </section>

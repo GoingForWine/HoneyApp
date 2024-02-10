@@ -1,28 +1,21 @@
-﻿using AutoMapper.QueryableExtensions;
-using HoneyWebPlatform.Services.Data.Models.Post;
-
-namespace HoneyWebPlatform.Web.Controllers
+﻿namespace HoneyWebPlatform.Web.Controllers
 {
-    using ViewModels.Blog;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using HoneyWebPlatform.Web.ViewModels.Blog.Old;
 
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
 
-    using HoneyWebPlatform.Common;
     using Infrastructure.Extensions;
 
-    using HoneyWebPlatform.Services.Data;
-    using HoneyWebPlatform.Web.ViewModels.Blog;
+    using HoneyWebPlatform.Services.Data.Models.Post;
     using HoneyWebPlatform.Services.Data.Interfaces;
+
+    using ViewModels.Blog;
+    using ViewModels.Blog.Old;
 
     using static Common.GeneralApplicationConstants;
     using static Common.NotificationMessagesConstants;
-    using HoneyWebPlatform.Web.ViewModels.Honey;
 
     [Authorize]
     public class BlogController : Controller
@@ -420,13 +413,13 @@ namespace HoneyWebPlatform.Web.Controllers
             }
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> Statistics()
-        {
-            var statistics = await postService.GetStatisticsAsync();
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> Statistics()
+        //{
+        //    var statistics = await postService.GetStatisticsAsync();
 
-            return View(statistics);
-        }
+        //    return View(statistics);
+        //}
     }
 }
