@@ -4,11 +4,19 @@
 }
 
 <h2 class="text-center">@ViewData["Title"]</h2>
-<hr/>
+<hr />
 
 <partial name="_HoneyFormPartial" model="@Model" />
 
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function updateFileName(input) {
+            var fileName = input.files[0].name;
+            document.getElementById('upload-file-info').value = fileName;
+        }
+    </script>
+
 }

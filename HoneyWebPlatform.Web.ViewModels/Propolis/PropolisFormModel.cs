@@ -6,6 +6,8 @@
     
     using Data.Models;
     using Flavour;
+    using Common;
+    using Microsoft.AspNetCore.Http;
     using Services.Mapping;
 
     using static Common.EntityValidationConstants.Propolis;
@@ -27,10 +29,12 @@
             ErrorMessage = "Описанието трябва да е текст с поне {2} символа и най-много {1}.")]
         public string Description { get; set; } = null!;
 
-        [Required(ErrorMessage = "Моля добавете линк към снимка.")]
-        [StringLength(ImageUrlMaxLength)]
-        [Display(Name = "Линк към снимка")]
-        public string ImageUrl { get; set; } = null!;
+        [Required(ErrorMessage = "Моля добавете снимка до 2MB.")]
+        [Display(Name = "Снимка")]
+        [MaxFileSize(PropolisPictureMaxSize, ErrorMessage = "Максималният размер на файла за снимка е 2 мегабайта.")]
+        public IFormFile? PropolisPicture { get; set; }
+
+        public string PropolisPicturePath { get; set; }
 
         [Required(ErrorMessage = "Полето Цена е задължително.")]
         [RegularExpression(@"^\d+(\.\d{1,2})?$",

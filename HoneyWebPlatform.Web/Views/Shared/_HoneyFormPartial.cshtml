@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label asp-for="Title"> Наименование</label>
                 <input asp-for="Title" class="form-control" placeholder="Липов мед на Иван...">
@@ -18,11 +18,20 @@
                 <textarea asp-for="Description" rows="4" class="form-control" placeholder="Как е бил направен..."></textarea>
                 <span asp-validation-for="Description" class="small text-danger"></span>
             </div>
+            @*picture upload field*@
             <div class="form-group">
-                <label asp-for="ImageUrl">Снимка</label> 
-                <input asp-for="ImageUrl" class="form-control" placeholder="Външен URL линк...">
-                <span asp-validation-for="ImageUrl" class="small text-danger"></span>
+                <label asp-for="HoneyPicture" class="form-label">Снимка на меда</label>
+                <div class="input-group">
+                    <label class="input-group-btn">
+                        <span class="btn btn-primary">
+                            Избери файл&hellip; <input asp-for="HoneyPicture" type="file" id="HoneyPicture" name="HoneyPicture" style="display: none;" accept="image/*" onchange="updateFileName(this)">
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" id="upload-file-info" readonly placeholder="Файл не е избран">
+                </div>
+                <span asp-validation-for="HoneyPicture" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Price">Цена</label>
                 <input type="number" asp-for="Price" class="form-control">
@@ -33,7 +42,7 @@
                 <select asp-for="CategoryId" class="form-control">
                     @foreach (var category in Model.Categories)
                     {
-                            <option value="@category.Id">@category.Name</option>
+                        <option value="@category.Id">@category.Name</option>
                     }
                 </select>
                 <span asp-validation-for="CategoryId" class="small text-danger"></span>

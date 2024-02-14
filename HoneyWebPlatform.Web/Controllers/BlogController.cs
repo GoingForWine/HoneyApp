@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
 
     using Infrastructure.Extensions;
 
@@ -16,6 +17,7 @@
 
     using static Common.GeneralApplicationConstants;
     using static Common.NotificationMessagesConstants;
+    using HoneyWebPlatform.Services.Data;
 
     [Authorize]
     public class BlogController : Controller
@@ -25,9 +27,13 @@
 
         private readonly IPostService postService;
 
-        public BlogController(IPostService postService)
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+
+        public BlogController(IPostService postService, IWebHostEnvironment webHostEnvironment)
         {
             this.postService = postService;
+            this.webHostEnvironment = webHostEnvironment;
         }
         public IActionResult ShowOld()
         {
@@ -103,14 +109,30 @@
                 return RedirectToAction("All");
             }
 
-            if (!ModelState.IsValid)
-            {
-                return View(input);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(input);
+            //}
 
             try
             {
                 var authorId = User.GetId();
+
+                // Picture saving logic
+                if (input.PostPicture != null && input.PostPicture.Length > 0)
+                {
+                    var uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "uploads", "PostPictures");
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + input.PostPicture.FileName;
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    await using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await input.PostPicture.CopyToAsync(fileStream);
+                    }
+
+                    input.PostPicturePath = "/uploads/PostPictures/" + uniqueFileName;
+                }
+
                 var postId = await postService.CreateAndReturnIdAsync(input, authorId!);
 
                 TempData[SuccessMessage] = "Успешно добавихте пост!";
@@ -226,9 +248,38 @@
                 return RedirectToAction("All", "Blog");
             }
 
-            if (!ModelState.IsValid)
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(input);
+            //}
+
+            // Retrieve the old honey data
+            var oldPost = await postService.GetPostForEditByIdAsync(id);
+            string oldPicturePath = oldPost.PostPicturePath;
+
+            // Picture saving logic
+            if (input.PostPicture != null && input.PostPicture.Length > 0)
             {
-                return View(input);
+                var uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "uploads", "PostPictures");
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + input.PostPicture.FileName;
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                await using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await input.PostPicture.CopyToAsync(fileStream);
+                }
+
+                input.PostPicturePath = "/uploads/PostPictures/" + uniqueFileName;
+            }
+
+            // Delete the old picture file
+            if (!string.IsNullOrEmpty(oldPicturePath))
+            {
+                var oldFilePath = Path.Combine(webHostEnvironment.WebRootPath, oldPicturePath.TrimStart('/'));
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
             }
 
             await postService.EditPostByIdAndFormModelAsync(id, input);
@@ -282,6 +333,21 @@
 
             try
             {
+                // Retrieve the old honey data
+                var oldPost = await postService.GetPostForEditByIdAsync(id);
+                string oldPicturePath = oldPost.PostPicturePath;
+
+
+                // Delete the old picture file
+                if (!string.IsNullOrEmpty(oldPicturePath))
+                {
+                    var oldFilePath = Path.Combine(webHostEnvironment.WebRootPath, oldPicturePath.TrimStart('/'));
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
+
                 await postService.DeletePostByIdAsync(id);
 
                 TempData[WarningMessage] = "Постът беше успешно изтрит!";

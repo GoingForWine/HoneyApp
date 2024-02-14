@@ -7,34 +7,47 @@
 
 <div class="row">
     <div class="col-md-4 offset-md-4">
-        <form id="registerForm" method="post">
+        <form id="registerForm" method="post" enctype="multipart/form-data">
             <h2>Създай нов потребителски профил.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating mb-2">
-                <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" />
                 <label asp-for="Email">Имейл</label>
+                <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-floating mb-2">
-                <input asp-for="Password" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="Password">Вашата парола</label>
+                <input asp-for="Password" class="form-control" autocomplete="new-password" aria-required="true" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-floating mb-2">
-                <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="ConfirmPassword">Потвърдете вашата парола</label>
+                <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-floating mb-2">
-                <input asp-for="FirstName" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="FirstName">Първо Име</label>
+                <input asp-for="FirstName" class="form-control" autocomplete="new-password" aria-required="true" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-floating mb-2">
-                <input asp-for="LastName" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="LastName">Фамилия</label>
+                <input asp-for="LastName" class="form-control" autocomplete="new-password" aria-required="true" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <!-- Profile picture upload field -->
+            <div class="form-group">
+                <label for="profilePicture" class="form-label">Профилна снимка</label>
+                <div class="input-group">
+                    <label class="input-group-btn">
+                        <span class="btn btn-primary">
+                            Избери файл&hellip; <input type="file" id="profilePicture" name="ProfilePicturePath" style="display: none;" accept="image/*" onchange="updateFileName(this)">
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" id="upload-file-info" readonly placeholder="Файл не е избран">
+                </div>
+                <span asp-validation-for="ProfilePicturePath" class="text-danger"></span>
             </div>
 
             <recaptcha-v3 form-id="registerForm" action="submit" class="w-100 btn btn-lg btn-primary">Регистрирай</recaptcha-v3>
@@ -45,4 +58,12 @@
 @section Scripts {
     <recaptcha-script />
     <partial name="_ValidationScriptsPartial" />
+    
+    <script>
+        function updateFileName(input) {
+            var fileName = input.files[0].name;
+            document.getElementById('upload-file-info').value = fileName;
+        }
+    </script>
+
 }

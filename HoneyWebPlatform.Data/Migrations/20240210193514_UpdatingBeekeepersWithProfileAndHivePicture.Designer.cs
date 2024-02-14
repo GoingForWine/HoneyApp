@@ -4,6 +4,7 @@ using HoneyWebPlatform.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HoneyWebPlatform.Data.Migrations
 {
     [DbContext(typeof(HoneyWebPlatformDbContext))]
-    partial class HoneyWebPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240210193514_UpdatingBeekeepersWithProfileAndHivePicture")]
+    partial class UpdatingBeekeepersWithProfileAndHivePicture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,6 +127,11 @@ namespace HoneyWebPlatform.Data.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<string>("ProfilePicturePath")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -184,9 +191,9 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4e2de865-f53b-4cea-96c3-3695c334d617"),
+                            Id = new Guid("dc344868-a470-43c6-8345-b3eb3bf0f019"),
                             BeekeeperId = new Guid("7adaf90e-fec8-492e-8760-fe3190f1d689"),
-                            CreatedOn = new DateTime(2024, 2, 10, 21, 4, 34, 306, DateTimeKind.Utc).AddTicks(5982),
+                            CreatedOn = new DateTime(2024, 2, 10, 19, 35, 12, 983, DateTimeKind.Utc).AddTicks(1597),
                             Description = "Asen Asenev's rich in vitamins and minerals bee pollen. It has the riches of bulgarian nature",
                             ImageUrl = "https://naturalvita.co.uk/wp-content/uploads/2018/03/bee-pollen-natruralvita-1024x1024.jpg",
                             IsActive = true,
@@ -319,10 +326,10 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b5a49de5-2118-4606-9aca-5eeff78a9b3a"),
+                            Id = new Guid("ffe52501-b3b5-4923-8a64-f11d93095949"),
                             AuthorId = new Guid("bd56fe08-bd10-4384-89be-63a211fbbc61"),
                             Content = "This is the first comment on the first post!",
-                            CreatedOn = new DateTime(2024, 2, 10, 23, 4, 34, 307, DateTimeKind.Local).AddTicks(887),
+                            CreatedOn = new DateTime(2024, 2, 10, 21, 35, 12, 983, DateTimeKind.Local).AddTicks(6736),
                             IsActive = true,
                             ParentPostId = new Guid("7b55a828-68be-45e8-9991-0f19cee32622")
                         });
@@ -425,7 +432,7 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("51cf4376-1f07-44e1-ac42-a2385d507d9d"),
+                            Id = new Guid("6ee1eb5c-6c78-427b-9d82-d71875c213c1"),
                             BeekeeperId = new Guid("7adaf90e-fec8-492e-8760-fe3190f1d689"),
                             CategoryId = 1,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -550,7 +557,7 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("804ef8e5-04e7-41a9-a7dd-50059b54466c"),
+                            Id = new Guid("b71cd41f-418e-480a-8cd8-3cc776baa10f"),
                             AuthorId = new Guid("bd56fe08-bd10-4384-89be-63a211fbbc61"),
                             Content = "Welcome to this new site, I am the first beekeeper hereenjoy your stay.",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -611,7 +618,7 @@ namespace HoneyWebPlatform.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6c0a02a3-460b-463a-9d40-f2c1fe40e10d"),
+                            Id = new Guid("57b23217-5e0b-480e-96ea-421e2903cc1d"),
                             BeekeeperId = new Guid("7adaf90e-fec8-492e-8760-fe3190f1d689"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "30% tincture that is good for the immune system with anti-inflammatory properties.",

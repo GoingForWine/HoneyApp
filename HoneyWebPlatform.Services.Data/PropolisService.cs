@@ -39,6 +39,7 @@
         {
             Propolis propolis = AutoMapperConfig.MapperInstance.Map<Propolis>(formModel);
             propolis.BeekeeperId = Guid.Parse(beekeeperId);
+            propolis.ImageUrl = formModel.PropolisPicturePath;
 
             await dbContext.Propolises.AddAsync(propolis);
             await dbContext.SaveChangesAsync();
@@ -83,8 +84,8 @@
 
             IEnumerable<PropolisAllViewModel> allPropolises = await propolisesQuery
                 .Where(h => h.IsActive)
-                .Skip((queryModel.CurrentPage - 1) * queryModel.PropolisesPerPage)
-                .Take(queryModel.PropolisesPerPage)
+                //.Skip((queryModel.CurrentPage - 1) * queryModel.PropolisesPerPage)
+                //.Take(queryModel.PropolisesPerPage)
                 .Select(h => new PropolisAllViewModel
                 {
                     Id = h.Id.ToString(),
@@ -168,7 +169,7 @@
             {
                 Title = propolis.Title,
                 Description = propolis.Description,
-                ImageUrl = propolis.ImageUrl,
+                PropolisPicturePath = propolis.ImageUrl,
                 Price = propolis.Price,
                 FlavourId = propolis.FlavourId,
             };
@@ -193,7 +194,7 @@
 
             propolis.Title = formModel.Title;
             propolis.Description = formModel.Description;
-            propolis.ImageUrl = formModel.ImageUrl;
+            propolis.ImageUrl = formModel.PropolisPicturePath;
             propolis.Price = formModel.Price;
             propolis.FlavourId = formModel.FlavourId;
 

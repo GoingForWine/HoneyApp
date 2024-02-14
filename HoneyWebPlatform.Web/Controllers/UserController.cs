@@ -1,23 +1,27 @@
 ﻿namespace HoneyWebPlatform.Web.Controllers
 {
     using Griesoft.AspNetCore.ReCaptcha;
+
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.AspNetCore.SignalR;
 
+    using Hubs;
     using Data.Models;
     using ViewModels.User;
     using HoneyWebPlatform.Services.Data.Interfaces;
     using static Common.GeneralApplicationConstants;
     using static Common.NotificationMessagesConstants;
-    using HoneyWebPlatform.Web.Hubs;
-    using Microsoft.AspNetCore.SignalR;
+    using Microsoft.AspNetCore.Hosting;
 
     public class UserController : Controller
     {
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IWebHostEnvironment webHostEnvironment;
+
         private readonly IMemoryCache memoryCache;
 
         private readonly ISubscribedEmailService subscribedEmailService;
@@ -32,10 +36,12 @@
                               ISubscribedEmailService subscribedEmailService,
                               ICartService cartService,
                               IOrderService orderService,
-                              IHubContext<CartHub> hubContext)
+                              IHubContext<CartHub> hubContext,
+                              IWebHostEnvironment webHostEnvironment)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.webHostEnvironment = webHostEnvironment;
 
             this.memoryCache = memoryCache;
 
@@ -66,10 +72,25 @@
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName
+                // Add more properties as needed
             };
 
             await userManager.SetEmailAsync(user, model.Email);
             await userManager.SetUserNameAsync(user, model.Email);
+
+            if (model.ProfilePicturePath != null && model.ProfilePicturePath.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "uploads", "UsersProfilePictures");
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProfilePicturePath.FileName;
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+               
+                await using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await model.ProfilePicturePath.CopyToAsync(fileStream);
+                }
+                user.ProfilePicturePath = "/uploads/UsersProfilePictures/" + uniqueFileName;
+            }
+
 
             IdentityResult result =
                 await userManager.CreateAsync(user, model.Password);
@@ -112,7 +133,8 @@
             }
 
             var result =
-                await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                await signInManager
+                    .PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
             if (!result.Succeeded)
             {
@@ -124,6 +146,21 @@
 
             return Redirect(model.ReturnUrl ?? "/Home/Index");
         }
+
+
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
+
+
+
+
+
 
 
         [HttpPost]
@@ -364,17 +401,6 @@
         }
 
 
-
-
-
-
-
-
-
-
-
-
-        // ... (other actions)
 
 
 

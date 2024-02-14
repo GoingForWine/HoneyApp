@@ -10,6 +10,8 @@
 
     using static Common.GeneralApplicationConstants;
     using static Common.NotificationMessagesConstants;
+    using Microsoft.AspNetCore.Hosting;
+    using HoneyWebPlatform.Services.Data;
 
 
     [Authorize]
@@ -19,12 +21,16 @@
         private readonly IBeekeeperService beekeeperService;
         private readonly IPropolisService propolisService;
 
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+
         public PropolisController(IFlavourService flavourService, IBeekeeperService beekeeperService,
-            IPropolisService propolisService)
+            IPropolisService propolisService, IWebHostEnvironment webHostEnvironment)
         {
             this.flavourService = flavourService;
             this.beekeeperService = beekeeperService;
             this.propolisService = propolisService;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
@@ -75,7 +81,7 @@
                 await beekeeperService.BeekeeperExistsByUserIdAsync(User.GetId()!);
             if (!isBeekeeper)
             {
-                TempData[ErrorMessage] = "You must become a Beekeeper in order to add new Propolises!";
+                TempData[ErrorMessage] = "Трябва да станете пчелар, за да добавяте прополиси!";
 
                 return RedirectToAction("Become", "Beekeeper");
             }
@@ -85,30 +91,51 @@
             if (!flavourExists)
             {
                 // Adding model error to ModelState automatically makes ModelState Invalid
-                ModelState.AddModelError(nameof(model.FlavourId), "Selected flavour does not exist!");
+                ModelState.AddModelError(nameof(model.FlavourId), "Няма такъв вкус!");
+                TempData[ErrorMessage] = "Няма такъв вкус!";
             }
 
-            if (!ModelState.IsValid)
-            {
-                model.Flavours = await flavourService.AllFlavoursAsync();
+            //if (!ModelState.IsValid)
+            //{
+            //    model.Flavours = await flavourService.AllFlavoursAsync();
 
-                return View(model);
-            }
+            //    return View(model);
+            //}
 
             try
             {
                 string? beekeeperId =
                     await beekeeperService.GetBeekeeperIdByUserIdAsync(User.GetId()!);
 
+                // Picture saving logic
+                if (model.PropolisPicture != null && model.PropolisPicture.Length > 0)
+                {
+                    var uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "uploads", "PropolisPictures");
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + model.PropolisPicture.FileName;
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    await using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await model.PropolisPicture.CopyToAsync(fileStream);
+                    }
+
+                    model.PropolisPicturePath = "/uploads/PropolisPictures/" + uniqueFileName;
+                }
+
                 string propolisId =
                     await propolisService.CreateAndReturnIdAsync(model, beekeeperId!);
 
-                TempData[SuccessMessage] = "The Propolis was added successfully!";
+                TempData[SuccessMessage] = "Успешно добавихте прополиса!";
                 return RedirectToAction("Details", "Propolis", new { id = propolisId });
             }
             catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add your new Propolis! Please try again later or contact administrator!");
+                ModelState.AddModelError(string.Empty, "Неочакван проблем стана докато опитвахме да добавим Вашия прополис! Моля опитайте пак след малко или се свържете с администратор!");
+
+                TempData[ErrorMessage] =
+                    "Неочакван проблем стана докато опитвахме да добавим Вашия прополис! Моля опитайте пак след малко или се свържете с администратор!";
+
+
                 model.Flavours = await flavourService.AllFlavoursAsync();
 
                 return View(model);
@@ -123,7 +150,7 @@
                 .ExistsByIdAsync(id);
             if (!propolisExists)
             {
-                TempData[ErrorMessage] = "Propolis with the provided id does not exist!";
+                TempData[ErrorMessage] = "Няма такъв прополис!";
 
                 return RedirectToAction("All", "Propolis");
             }
@@ -194,18 +221,18 @@
         [HttpPost]
         public async Task<IActionResult> Edit(string id, PropolisFormModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                model.Flavours = await flavourService.AllFlavoursAsync();
+            //if (!ModelState.IsValid)
+            //{
+            //    model.Flavours = await flavourService.AllFlavoursAsync();
 
-                return View(model);
-            }
+            //    return View(model);
+            //}
 
             bool propolisExists = await propolisService
                 .ExistsByIdAsync(id);
             if (!propolisExists)
             {
-                TempData[ErrorMessage] = "Propolis with the provided id does not exist!";
+                TempData[ErrorMessage] = "Няма такъв прополис!";
 
                 return RedirectToAction("All", "Propolis");
             }
@@ -214,7 +241,7 @@
                 .BeekeeperExistsByUserIdAsync(User.GetId()!);
             if (!isUserBeekeeper && !User.IsAdmin())
             {
-                TempData[ErrorMessage] = "You must become a Beekeeper in order to edit Propolis info!";
+                TempData[ErrorMessage] = "Трябва да сте пчелар, за да редактирате!";
 
                 return RedirectToAction("Become", "Beekeeper");
             }
@@ -225,25 +252,60 @@
                 .IsBeekeeperWithIdOwnerOfPropolisWithIdAsync(id, beekeeperId!);
             if (!isBeekeeperOwner && !User.IsAdmin())
             {
-                TempData[ErrorMessage] = "You must be the Beekeeper owner of the Propolis if you want to edit!";
+                TempData[ErrorMessage] = "Трябва да сте собственик на прополиса, за да го редактирате!";
 
                 return RedirectToAction("Mine", "Propolis");
             }
 
             try
             {
+                // Retrieve the old propolis data
+                var oldPropolis = await propolisService.GetPropolisForEditByIdAsync(id);
+                string oldPicturePath = oldPropolis.PropolisPicturePath;
+
+
+                // Picture saving logic
+                if (model.PropolisPicture != null && model.PropolisPicture.Length > 0)
+                {
+                    var uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "uploads", "PropolisPictures");
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + model.PropolisPicture.FileName;
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    await using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await model.PropolisPicture.CopyToAsync(fileStream);
+                    }
+
+                    model.PropolisPicturePath = "/uploads/PropolisPictures/" + uniqueFileName;
+                }
+
+                // Delete the old picture file
+                if (!string.IsNullOrEmpty(oldPicturePath))
+                {
+                    var oldFilePath = Path.Combine(webHostEnvironment.WebRootPath, oldPicturePath.TrimStart('/'));
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
+
                 await propolisService.EditPropolisByIdAndFormModelAsync(id, model);
             }
             catch (Exception)
             {
                 ModelState.AddModelError(string.Empty,
-                    "Unexpected error occurred while trying to update the Propolis. Please try again later or contact administrator!");
+                    "Неочакван проблем стана докато опитвахме да променим Вашия прополис! Моля опитайте пак след малко или се свържете с администратор!");
+
+                TempData[ErrorMessage] =
+                    "Неочакван проблем стана докато опитвахме да променим Вашия прополис! Моля опитайте пак след малко или се свържете с администратор!";
+
+
                 model.Flavours = await flavourService.AllFlavoursAsync();
 
                 return View(model);
             }
 
-            TempData[SuccessMessage] = "Propolis was edited successfully!";
+            TempData[SuccessMessage] = "Успешно редактирахте прополиса!";
             return RedirectToAction("Details", "Propolis", new { id });
         }
 
@@ -299,7 +361,7 @@
                 .ExistsByIdAsync(id);
             if (!propolisExists)
             {
-                TempData[ErrorMessage] = "The Propolis with the provided id does not exist!";
+                TempData[ErrorMessage] = "Няма такъв прополис!";
 
                 return RedirectToAction("All", "Propolis");
             }
@@ -308,7 +370,7 @@
                 .BeekeeperExistsByUserIdAsync(User.GetId()!);
             if (!isUserBeekeeper && !User.IsAdmin())
             {
-                TempData[ErrorMessage] = "You must become a Beekeeper in order to edit Propolis info!";
+                TempData[ErrorMessage] = "Трябва да сте пчелар, за да редактирате!";
 
                 return RedirectToAction("Become", "Beekeeper");
             }
@@ -319,20 +381,42 @@
                 .IsBeekeeperWithIdOwnerOfPropolisWithIdAsync(id, beekeeperId!);
             if (!isBeekeeperOwner && !User.IsAdmin())
             {
-                TempData[ErrorMessage] = "You must be the Beekeeper owner of the Propolis you want to edit!";
+                TempData[ErrorMessage] = "Трябва да сте собственик на прополиса, за да го изтривате!";
 
                 return RedirectToAction("Mine", "Propolis");
             }
 
             try
             {
+                // Retrieve the old propolis data
+                var oldPropolis = await propolisService.GetPropolisForEditByIdAsync(id);
+                string oldPicturePath = oldPropolis.PropolisPicturePath;
+
+
+                // Delete the old picture file
+                if (!string.IsNullOrEmpty(oldPicturePath))
+                {
+                    var oldFilePath = Path.Combine(webHostEnvironment.WebRootPath, oldPicturePath.TrimStart('/'));
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
+
+
                 await propolisService.DeletePropolisByIdAsync(id);
 
-                TempData[WarningMessage] = "The Propolis was successfully deleted!";
+                TempData[WarningMessage] = "Успешно изтрихте прополиса!";
                 return RedirectToAction("Mine", "Propolis");
             }
             catch (Exception)
             {
+                ModelState.AddModelError(string.Empty,
+                    "Неочакван проблем стана докато опитвахме да изтрием Вашия прополис! Моля опитайте пак след малко или се свържете с администратор!");
+
+                TempData[ErrorMessage] =
+                    "Неочакван проблем стана докато опитвахме да изтрием Вашия прополис! Моля опитайте пак след малко или се свържете с администратор!";
+
                 return GeneralError();
             }
         }
@@ -382,6 +466,12 @@
             }
             catch (Exception)
             {
+                ModelState.AddModelError(string.Empty,
+                    "Неочакван проблем стана докато опитвахме да изкараме Вашия прополис! Моля опитайте пак след малко или се свържете с администратор!");
+
+                TempData[ErrorMessage] =
+                    "Неочакван проблем стана докато опитвахме да изкараме Вашия прополис! Моля опитайте пак след малко или се свържете с администратор!";
+
                 return GeneralError();
             }
         }

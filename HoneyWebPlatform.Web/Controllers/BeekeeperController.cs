@@ -13,10 +13,12 @@
     public class BeekeeperController : Controller
     {
         private readonly IBeekeeperService beekeeperService;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public BeekeeperController(IBeekeeperService beekeeperService)
+        public BeekeeperController(IBeekeeperService beekeeperService, IWebHostEnvironment webHostEnvironment)
         {
             this.beekeeperService = beekeeperService;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
@@ -42,7 +44,6 @@
             if (isBeekeeper)
             {
                 TempData[ErrorMessage] = "You are already a Beekeeper!";
-
                 return RedirectToAction("Index", "Home");
             }
 
@@ -50,19 +51,30 @@
                 await beekeeperService.BeekeeperExistsByPhoneNumberAsync(model.PhoneNumber);
             if (isPhoneNumberTaken)
             {
-                ModelState.AddModelError(nameof(model.PhoneNumber), "A Beekeeper with the provided phone number already exists!");
+                ModelState.AddModelError(nameof(model.PhoneNumber),
+                    "A Beekeeper with the provided phone number already exists!");
             }
 
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            
             try
             {
+                // Picture saving logic
+                if (model.HivePicture != null && model.HivePicture.Length > 0)
+                {
+                    var uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "uploads", "HivePictures");
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + model.HivePicture.FileName;
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    await using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await model.HivePicture.CopyToAsync(fileStream);
+                    }
+
+                    model.HivePicturePath = "/uploads/HivePictures/" + uniqueFileName;
+                }
+
                 await beekeeperService.Create(userId!, model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 TempData[ErrorMessage] =
                     "Unexpected error occurred while registering you as a Beekeeper! Please try again later or contact administrator.";
@@ -70,7 +82,10 @@
                 return RedirectToAction("Index", "Home");
             }
 
+
             return RedirectToAction("All", "Honey");
         }
+
+
     }
 }

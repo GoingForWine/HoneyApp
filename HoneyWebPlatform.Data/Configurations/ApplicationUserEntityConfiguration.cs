@@ -16,6 +16,12 @@
             builder
                 .Property(u => u.LastName)
                 .HasDefaultValue("Testov");
+
+            // Add configurations for ApplicationUser properties
+            builder
+                .Property(u => u.ProfilePicturePath)
+                .HasMaxLength(255)
+                .IsRequired(false); // Depending on whether it's mandatory
         }
     }
 }

@@ -41,6 +41,7 @@ namespace HoneyWebPlatform.Services.Data
         {
             var newPost = AutoMapperConfig.MapperInstance.Map<Post>(formModel);
             newPost.AuthorId = Guid.Parse(authorId);
+            newPost.ImageUrl = formModel.PostPicturePath;
 
             await dbContext.Posts.AddAsync(newPost);
             await dbContext.SaveChangesAsync();
@@ -75,8 +76,8 @@ namespace HoneyWebPlatform.Services.Data
 
             IEnumerable<PostAllViewModel> allPosts = await postsQuery
                 .Where(p => p.IsActive)
-                .Skip((queryModel.CurrentPage - 1) * queryModel.PostsPerPage)
-                .Take(queryModel.PostsPerPage)
+                //.Skip((queryModel.CurrentPage - 1) * queryModel.PostsPerPage)
+                //.Take(queryModel.PostsPerPage)
                 .Select(p => new PostAllViewModel
                 {
                     CreatedOn = p.CreatedOn,
@@ -164,7 +165,7 @@ namespace HoneyWebPlatform.Services.Data
             return new PostFormModel()
             {
                 Title = postForEdit.Title,
-                ImageUrl = postForEdit.ImageUrl,
+                PostPicturePath = postForEdit.ImageUrl,
                 Content = postForEdit.Content,
             };
         }
@@ -184,7 +185,7 @@ namespace HoneyWebPlatform.Services.Data
 
             postToEdit.Title = formModel.Title;
             postToEdit.Content = formModel.Content;
-            postToEdit.ImageUrl = formModel.ImageUrl;
+            postToEdit.ImageUrl = formModel.PostPicturePath;
 
             await dbContext.SaveChangesAsync();
         }

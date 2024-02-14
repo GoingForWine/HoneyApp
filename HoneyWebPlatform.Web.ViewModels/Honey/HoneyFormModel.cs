@@ -4,8 +4,10 @@
 
     using AutoMapper;
 
+    using Common;
     using Category;
     using Data.Models;
+    using Microsoft.AspNetCore.Http;
     using Services.Mapping;
 
     using static Common.EntityValidationConstants.Honey;
@@ -33,10 +35,12 @@
             ErrorMessage = "Описанието трябва да е текст с поне {2} символа и най-много {1}.")]
         public string Description { get; set; } = null!;
 
-        [Required(ErrorMessage = "Моля добавете линк към снимка.")]
-        [StringLength(ImageUrlMaxLength)]
-        [Display(Name = "Линк към снимка")]
-        public string ImageUrl { get; set; } = null!;
+        [Required(ErrorMessage = "Моля добавете снимка до 2MB.")]
+        [Display(Name = "Снимка")]
+        [MaxFileSize(HoneyPictureMaxSize, ErrorMessage = "Максималният размер на файла за снимка е 2 мегабайта.")]
+        public IFormFile? HoneyPicture { get; set; }
+
+        public string HoneyPicturePath { get; set; }
 
         [Required(ErrorMessage = "Полето Цена е задължително.")]
         [RegularExpression(@"^\d+(\.\d{1,2})?$", 

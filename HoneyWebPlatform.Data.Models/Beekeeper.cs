@@ -20,6 +20,9 @@
         [Required]
         [MaxLength(PhoneNumberMaxLength)]
         public string PhoneNumber { get; set; } = null!;
+        
+        [MaxLength(255)]
+        public string HiveFarmPicturePaths { get; set; }
 
         public Guid UserId { get; set; }
 

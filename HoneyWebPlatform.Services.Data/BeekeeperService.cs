@@ -68,10 +68,12 @@
             Beekeeper newBeekeeper = new Beekeeper()
             {
                 PhoneNumber = model.PhoneNumber,
-                UserId = Guid.Parse(userId)
+                UserId = Guid.Parse(userId),
+                HiveFarmPicturePaths = model.HivePicturePath
             };
 
             await dbContext.Beekeepers.AddAsync(newBeekeeper);
+
             await dbContext.SaveChangesAsync();
         }
 

@@ -27,6 +27,10 @@
         [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; } = null!;
 
+
+        [MaxLength(255)] 
+        public string ProfilePicturePath { get; set; }
+
         public virtual ICollection<Post> OwnedPosts { get; set; }
 
         public virtual ICollection<Comment> OwnedComments { get; set; }

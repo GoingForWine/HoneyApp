@@ -5,6 +5,8 @@
     using AutoMapper;
     
     using Data.Models;
+    using Common;
+    using Microsoft.AspNetCore.Http;
     using Services.Mapping;
     
     using static Common.EntityValidationConstants.Post;
@@ -21,10 +23,12 @@
         [Required(ErrorMessage = "Моля, въведете съдържанието.")]
         public string Content { get; set; } = null!;
 
-        [Required(ErrorMessage = "Моля, добавете линк към изображение.")]
-        [StringLength(ImageUrlMaxLength)]
-        [Display(Name = "Линк към изображение")]
-        public string ImageUrl { get; set; } = null!;
+        [Required(ErrorMessage = "Моля добавете снимка до 2MB.")]
+        [Display(Name = "Снимка")]
+        [MaxFileSize(ProfilePictureMaxSize, ErrorMessage = "Максималният размер на файла за снимка е 2 мегабайта.")]
+        public IFormFile? PostPicture { get; set; }
+
+        public string PostPicturePath { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

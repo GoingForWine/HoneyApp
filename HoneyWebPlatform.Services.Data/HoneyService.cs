@@ -39,6 +39,7 @@
         {
             Honey newHoney = AutoMapperConfig.MapperInstance.Map<Honey>(formModel);
             newHoney.BeekeeperId = Guid.Parse(beekeeperId);
+            newHoney.ImageUrl = formModel.HoneyPicturePath;
 
             await dbContext.Honeys.AddAsync(newHoney);
             await dbContext.SaveChangesAsync();
@@ -84,8 +85,8 @@
 
             IEnumerable<HoneyAllViewModel> allHoneys = await honeysQuery
                 .Where(h => h.IsActive)
-                .Skip((queryModel.CurrentPage - 1) * queryModel.HoneysPerPage)
-                .Take(queryModel.HoneysPerPage)
+                //.Skip((queryModel.CurrentPage - 1) * queryModel.HoneysPerPage)
+                //.Take(queryModel.HoneysPerPage)
                 .Select(h => new HoneyAllViewModel
                 {
                     Id = h.Id.ToString(),
@@ -172,7 +173,7 @@
                 Title = honey.Title,
                 Origin = honey.Origin,
                 Description = honey.Description,
-                ImageUrl = honey.ImageUrl,
+                HoneyPicturePath = honey.ImageUrl,
                 Price = honey.Price,
                 CategoryId = honey.CategoryId,
             };
@@ -198,7 +199,7 @@
             honey.Title = formModel.Title;
             honey.Origin = formModel.Origin;
             honey.Description = formModel.Description;
-            honey.ImageUrl = formModel.ImageUrl;
+            honey.ImageUrl = formModel.HoneyPicturePath;
             honey.Price = formModel.Price;
             honey.CategoryId = formModel.CategoryId;
 

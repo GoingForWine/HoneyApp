@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Hosting;
 
     using Infrastructure.Extensions;
     using Services.Data.Interfaces;
@@ -18,12 +19,16 @@
         private readonly IBeekeeperService beekeeperService;
         private readonly IHoneyService honeyService;
 
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+
         public HoneyController(ICategoryService categoryService, IBeekeeperService beekeeperService,
-            IHoneyService honeyService)
+            IHoneyService honeyService, IWebHostEnvironment webHostEnvironment)
         {
             this.categoryService = categoryService;
             this.beekeeperService = beekeeperService;
             this.honeyService = honeyService;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
@@ -87,17 +92,32 @@
                 ModelState.AddModelError(nameof(model.CategoryId), "Тази категория не съществува!");
             }
 
-            if (!ModelState.IsValid)
-            {
-                model.Categories = await categoryService.AllCategoriesAsync();
+            //if (!ModelState.IsValid)
+            //{
+            //    model.Categories = await categoryService.AllCategoriesAsync();
 
-                return View(model);
-            }
+            //    return View(model);
+            //}
 
             try
             {
                 string? beekeeperId =
                     await beekeeperService.GetBeekeeperIdByUserIdAsync(User.GetId()!);
+
+                // Picture saving logic
+                if (model.HoneyPicture != null && model.HoneyPicture.Length > 0)
+                {
+                    var uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "uploads", "HoneyPictures");
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + model.HoneyPicture.FileName;
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    await using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await model.HoneyPicture.CopyToAsync(fileStream);
+                    }
+
+                    model.HoneyPicturePath = "/uploads/HoneyPictures/" + uniqueFileName;
+                }
 
                 string honeyId =
                     await honeyService.CreateAndReturnIdAsync(model, beekeeperId!);
@@ -196,12 +216,12 @@
         [HttpPost]
         public async Task<IActionResult> Edit(string id, HoneyFormModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                model.Categories = await categoryService.AllCategoriesAsync();
+            //if (!ModelState.IsValid)
+            //{
+            //    model.Categories = await categoryService.AllCategoriesAsync();
 
-                return View(model);
-            }
+            //    return View(model);
+            //}
 
             bool honeyExists = await honeyService
                 .ExistsByIdAsync(id);
@@ -236,6 +256,35 @@
 
             try
             {
+                // Retrieve the old honey data
+                var oldHoney = await honeyService.GetHoneyForEditByIdAsync(id);
+                string oldPicturePath = oldHoney.HoneyPicturePath;
+
+                // Picture saving logic for the new picture
+                if (model.HoneyPicture != null && model.HoneyPicture.Length > 0)
+                {
+                    var uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "uploads", "HoneyPictures");
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + model.HoneyPicture.FileName;
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    await using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await model.HoneyPicture.CopyToAsync(fileStream);
+                    }
+
+                    model.HoneyPicturePath = "/uploads/HoneyPictures/" + uniqueFileName;
+                }
+
+                // Delete the old picture file
+                if (!string.IsNullOrEmpty(oldPicturePath))
+                {
+                    var oldFilePath = Path.Combine(webHostEnvironment.WebRootPath, oldPicturePath.TrimStart('/'));
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
+
                 await honeyService.EditHoneyByIdAndFormModelAsync(id, model);
             }
             catch (Exception)
@@ -330,6 +379,21 @@
 
             try
             {
+                // Retrieve the old honey data to obtain the old picture path
+                var oldHoney = await honeyService.GetHoneyForEditByIdAsync(id);
+                string oldPicturePath = oldHoney.HoneyPicturePath;
+
+                // Delete the old picture file from the server if it exists
+                if (!string.IsNullOrEmpty(oldPicturePath))
+                {
+                    var oldFilePath = Path.Combine(webHostEnvironment.WebRootPath, oldPicturePath.TrimStart('/'));
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
+
+
                 await honeyService.DeleteHoneyByIdAsync(id);
 
                 TempData[WarningMessage] = "Медът беше успешно изтрит!";

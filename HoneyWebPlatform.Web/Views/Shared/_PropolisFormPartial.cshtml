@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label asp-for="Title"> Наименование</label>
                 <input asp-for="Title" class="form-control" placeholder="Домашен букетов прополис...">
@@ -13,11 +13,21 @@
                 <textarea asp-for="Description" rows="4" class="form-control" placeholder="Как е бил направен..."></textarea>
                 <span asp-validation-for="Description" class="small text-danger"></span>
             </div>
+
+            @*picture upload field*@
             <div class="form-group">
-                <label asp-for="ImageUrl"> Снимка</label>
-                <input asp-for="ImageUrl" class="form-control" placeholder="Външен URL линк на снимка...">
-                <span asp-validation-for="ImageUrl" class="small text-danger"></span>
+                <label asp-for="PropolisPicture" class="form-label">Снимка на прополиса</label>
+                <div class="input-group">
+                    <label class="input-group-btn">
+                        <span class="btn btn-primary">
+                            Избери файл&hellip; <input asp-for="PropolisPicture" type="file" id="PropolisPicture" name="PropolisPicture" style="display: none;" accept="image/*" onchange="updateFileName(this)">
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" id="upload-file-info" readonly placeholder="Файл не е избран">
+                </div>
+                <span asp-validation-for="PropolisPicture" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Price"> Цена</label>
                 <input type="number" asp-for="Price" class="form-control">
@@ -28,7 +38,7 @@
                 <select asp-for="FlavourId" class="form-control">
                     @foreach (var flavour in Model.Flavours)
                     {
-                            <option value="@flavour.Id">@flavour.Name</option>
+                        <option value="@flavour.Id">@flavour.Name</option>
                     }
                 </select>
                 <span asp-validation-for="FlavourId" class="small text-danger"></span>

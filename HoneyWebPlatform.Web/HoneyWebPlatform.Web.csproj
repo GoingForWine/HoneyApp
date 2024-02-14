@@ -45,6 +45,11 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Pages\" />
+    <Folder Include="wwwroot\Uploads\HivePictures\" />
+    <Folder Include="wwwroot\Uploads\HoneyPictures\" />
+    <Folder Include="wwwroot\Uploads\PostPictures\" />
+    <Folder Include="wwwroot\Uploads\PropolisPictures\" />
+    <Folder Include="wwwroot\Uploads\UsersProfilePictures\" />
     <Folder Include="wwwroot\exports\" />
   </ItemGroup>
 

@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HoneyWebPlatform.Common\HoneyWebPlatform.Common.csproj" />
     <ProjectReference Include="..\HoneyWebPlatform.Data.Models\HoneyWebPlatform.Data.Models.csproj" />
     <ProjectReference Include="..\HoneyWebPlatform.Services.Mapping\HoneyWebPlatform.Services.Mapping.csproj" />
