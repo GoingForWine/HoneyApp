@@ -13,7 +13,7 @@
     bool isUserBeekeeper = await BeekeeperService.BeekeeperExistsByUserIdAsync(User.GetId()!);
 }
 
-@if (!honeys.Any())
+@*@if (!honeys.Any())
 {
     <div class="mt-4 p-5 bg-light">
         <h1 class="display-4">Добре дошли на най-хубавото място за Пчелари!</h1>
@@ -35,7 +35,7 @@
             }
         </p>
     </div>
-}
+}*@
 
 
 <!-- banner part start-->

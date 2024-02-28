@@ -1,0 +1,27 @@
+﻿@page
+@model HoneyWebPlatform.Web.Areas.Identity.Pages.Account.Manage.PersonalDataModel
+@{
+    ViewData["Title"] = "Лични данни";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<h3>@ViewData["Title"]</h3>
+
+<div class="row">
+    <div class="col-md-9">
+        <p>Вашият акаунт съдържа лични данни, които сте ни предоставили. Тази страница ви позволява да изтеглите или изтриете тези данни.</p>
+        <p class="mb-2">
+            <strong>Изтриването на тези данни ще премахне акаунта ви перманентно и това не може да бъде възстановено.</strong>
+        </p>
+        <form id="download-data" asp-page="DownloadPersonalData" method="post">
+            <button class="btn btn-primary mb-2" type="submit">Изтегляне</button>
+        </form>
+        <p>
+            <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">Изтриване</a>
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

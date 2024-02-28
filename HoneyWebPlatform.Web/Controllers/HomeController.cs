@@ -6,6 +6,7 @@
 
     using ViewModels.Home;
     using static Common.GeneralApplicationConstants;
+    using static Common.NotificationMessagesConstants;
 
     public class HomeController : Controller
     {
@@ -57,22 +58,29 @@
             return View();
         }
 
+        public IActionResult Unsubscribe()
+        {
+            return View();
+        }
+
 
         [HttpPost]
-        public async Task<IActionResult> SendEmail(string name, string email, string subject, string message)
+        public async Task<IActionResult> SendEmail(string name, string email, string subject, string message, string number)
         {
             try
             {
                 // Construct the email message body
-                var emailMessage = $"Name: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}";
+                var emailMessage = $"Name: {name}\nEmail: {email}\nPhone Number: {number}\nSubject: {subject}\nMessage: {message}";
 
                 // Use the EmailSender service to send the email
-                await emailSender.SendEmailAsync("savethebee2024@gmail.com", subject, emailMessage);
+                await emailSender.SendEmailAsync("savethebee2024@gmail.com", subject, emailMessage, number);
+
+                TempData[SuccessMessage] = "Благодарим за имейла!";
 
                 // Optionally, redirect to a success page or return a success message
                 return RedirectToAction("Index", "Home");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Handle errors (e.g., log the error, display error message to user)
                 return RedirectToAction("Error", "Home");

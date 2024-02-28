@@ -1,0 +1,71 @@
+﻿@page
+@using Microsoft.AspNetCore.Http.Features
+@model HoneyWebPlatform.Web.Areas.Identity.Pages.Account.Manage.TwoFactorAuthenticationModel
+@{
+    ViewData["Title"] = "Двуфакторна аутентикация (2FA)";
+    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<h3>@ViewData["Title"]</h3>
+@{
+    var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
+    @if (consentFeature?.CanTrack ?? true)
+    {
+        @if (Model.Is2faEnabled)
+        {
+            if (Model.RecoveryCodesLeft == 0)
+            {
+                <div class="alert alert-danger">
+                    <strong>Нямате оставащи кодове за възстановяване.</strong>
+                    <p>Трябва да <a asp-page="./GenerateRecoveryCodes">генерирате нов набор кодове за възстановяване</a> преди да можете да влезете с код за възстановяване.</p>
+                </div>
+            }
+            else if (Model.RecoveryCodesLeft == 1)
+            {
+                <div class="alert alert-danger">
+                    <strong>Имате 1 оставащ код за възстановяване.</strong>
+                    <p>Можете да <a asp-page="./GenerateRecoveryCodes">генерирате нов набор кодове за възстановяване</a>.</p>
+                </div>
+            }
+            else if (Model.RecoveryCodesLeft <= 3)
+            {
+                <div class="alert alert-warning">
+                    <strong>Имате @Model.RecoveryCodesLeft оставащи кодове за възстановяване.</strong>
+                    <p>Трябва да <a asp-page="./GenerateRecoveryCodes">генерирате нов набор кодове за възстановяване</a>.</p>
+                </div>
+            }
+
+            if (Model.IsMachineRemembered)
+            {
+                <form method="post" style="display: inline-block">
+                    <button type="submit" class="btn btn-primary">Забрави този браузър</button>
+                </form>
+            }
+            <a asp-page="./Disable2fa" class="btn btn-primary">Изключване на 2FA</a>
+            <a asp-page="./GenerateRecoveryCodes" class="btn btn-primary">Нулиране на кодове за възстановяване</a>
+        }
+
+        <h4>Аутентикационно приложение</h4>
+        @if (!Model.HasAuthenticator)
+        {
+            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Добавяне на аутентикационно приложение</a>
+        }
+        else
+        {
+            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Настройка на аутентикационно приложение</a>
+            <a id="reset-authenticator" asp-page="./ResetAuthenticator" class="btn btn-primary">Нулиране на аутентикационно приложение</a>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            <strong>Политиката за поверителност и бисквитките не са приети.</strong>
+            <p>Трябва да приемете политиката преди да можете да активирате двуфакторната аутентикация.</p>
+        </div>
+    }
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

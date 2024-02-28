@@ -191,7 +191,7 @@
                     return Redirect(HttpContext.Request.Headers["Referer"].ToString());
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Handle exceptions
                 TempData[ErrorMessage] = "Грешка при записването за е-вестника.";
@@ -227,7 +227,7 @@
                     return Redirect(HttpContext.Request.Headers["Referer"].ToString());
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Handle exceptions
                 TempData[ErrorMessage] = "Грешка при отписването от е-вестника.";

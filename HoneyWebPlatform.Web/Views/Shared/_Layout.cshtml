@@ -48,7 +48,7 @@
 </head>
 <body>
     <!--::header part start::-->
-    <header class="main_menu @(controller.ToString() == "Home" && action.ToString() == "Index" ? "home_menu" : "")">
+    <header class="main_menu @((controller?.ToString() == "Home" && action?.ToString() == "Index") ? "home_menu" : "")">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-12">
@@ -172,17 +172,17 @@
                         <form asp-controller="User" asp-action="SubscribeNewsletter" method="post">
                             <div class="form-group">
                                 <div class="input-group mb-3">
-                                    <input type="text" name="email" class="form-control" placeholder='Email Address'
-                                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'">
+                                    <input type="text" name="email" class="form-control" placeholder='Имейл адрес'
+                                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'Имейл адрес'">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn"><i class="fas fa-paper-plane"></i></button>
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        <h4>Newsletter</h4>
-                        <p>unsub</p>
-                        <form asp-controller="User" asp-action="UnsubscribeNewsletter" method="post">
+                        @*<h4>Newsletter</h4>
+                        <p>unsub</p>*@
+                        @*<form asp-controller="User" asp-action="UnsubscribeNewsletter" method="post">
                             <div class="form-group">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" name="email" placeholder='Email Address'
@@ -192,7 +192,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </form>*@
                     </div>
                 </div>
 

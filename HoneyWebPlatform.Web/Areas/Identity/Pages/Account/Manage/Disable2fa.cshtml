@@ -1,0 +1,25 @@
+﻿@page
+@model HoneyWebPlatform.Web.Areas.Identity.Pages.Account.Manage.Disable2faModel
+@{
+    ViewData["Title"] = "Изключване на двуфакторна аутентикация (2FA)";
+    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<h3>@ViewData["Title"]</h3>
+
+<div class="alert alert-warning" role="alert">
+    <p>
+        <strong>Това действие само деактивира дву-факторното автентикиране.</strong>
+    </p>
+    <p>
+        Деактивирането на дву-факторното автентикиране не променя ключовете, използвани в приложения за аутентикация. Ако желаете да промените ключа,
+        използван в приложение за аутентикация, трябва да <a asp-page="./ResetAuthenticator">нулирате вашите ключове за аутентикация.</a>
+    </p>
+</div>
+
+<div>
+    <form method="post">
+        <button class="btn btn-danger" type="submit">Деактивиране на 2FA</button>
+    </form>
+</div>

@@ -9,30 +9,30 @@
     <div class="col-md-4 offset-md-4">
         <section>
             <form id="account" method="post">
-                <h2>Използвайте локален акаунт за вход.</h2>
+                <h2 class="text-center">Използвайте локален акаунт за вход.</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-floating mb-2">
-                    <label asp-for="Email" class="form-label">Вашият имейл</label>
-                    <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" />
+                <div class="form-floating text-center mb-4">
+                    <label asp-for="Email" class="form-label text-center">Вашият имейл</label>
+                    <input asp-for="Email" class="form-control text-center" autocomplete="username" aria-required="true" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
-                <div class="form-floating">
-                    <label asp-for="Password" class="form-label">Вашата парола</label>
-                    <input asp-for="Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                <div class="form-floating text-center mb-4">
+                    <label asp-for="Password" class="form-label text-center">Вашата парола</label>
+                    <input asp-for="Password" class="form-control text-center" autocomplete="current-password" aria-required="true" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div>
-                    <div class="checkbox">
+                    <div class="checkbox text-center">
                         <label asp-for="RememberMe" class="form-label">
-                            <input class="form-check-input" style="margin-left: 100px" asp-for="RememberMe" /> Запомни ме?
+                            <input class="form-check-input text-center" style="margin-left: 100px" asp-for="RememberMe" /> Запомни ме?
                         </label>
                     </div>
                 </div>
                 <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Вход</button>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary mb-4">Вход</button>
                 </div>
-                <div>
+                <div class="text-center mb-4">
                     <p>
                         <a asp-controller="User" asp-action="Register">Регистрирайте се като нов потребител</a>
                     </p>
@@ -40,7 +40,17 @@
             </form>
         </section>
     </div>
+    
+    
+
+    
+
 </div>
+
+<hr />
+<hr />
+<hr />
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

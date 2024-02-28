@@ -26,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var order in Model.OrderBy(o => o.OrderDate))
+            @foreach (var order in Model.OrderByDescending(o => o.OrderDate))
             {
                 <tr data-order-id="@order.OrderId" class="order-row">
                     <th scope="row">@i</th>

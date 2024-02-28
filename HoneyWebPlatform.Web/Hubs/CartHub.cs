@@ -9,7 +9,7 @@ namespace HoneyWebPlatform.Web.Hubs
 
         public CartHub(ICartService cartService)
         {
-            cartService = cartService;
+            this.cartService = cartService;
         }
 
         // todo i think this method should require cartId, productId, quantity
@@ -38,7 +38,7 @@ namespace HoneyWebPlatform.Web.Hubs
             if (success)
             {
                 // Broadcast the updated quantity to all connected clients
-                await Clients.All.SendAsync("CartItemQuantityUpdated", productId, quantity);
+                await Clients.All.SendAsync("CartItemQuantityUpdated", productId, quantity);                                                                                                                
             }
         }
     }

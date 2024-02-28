@@ -1,15 +1,11 @@
-﻿using HoneyWebPlatform.Data.Configurations;
-
-namespace HoneyWebPlatform.Data
+﻿namespace HoneyWebPlatform.Data
 {
-    using System.Collections.Generic;
-    using System.Reflection;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
     using Models;
+    using Configurations;
 
     public class HoneyWebPlatformDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {

@@ -8,36 +8,36 @@
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <form id="registerForm" method="post" enctype="multipart/form-data">
-            <h2>Създай нов потребителски профил.</h2>
+            <h2 class="text-center">Създай нов потребителски профил.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating mb-2">
+            <div class="form-floating mb-2 text-center">
                 <label asp-for="Email">Имейл</label>
                 <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-2">
+            <div class="form-floating mb-2 text-center">
                 <label asp-for="Password">Вашата парола</label>
                 <input asp-for="Password" class="form-control" autocomplete="new-password" aria-required="true" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-2">
-                <label asp-for="ConfirmPassword">Потвърдете вашата парола</label>
+            <div class="form-floating mb-2 text-center">
+                <label asp-for="ConfirmPassword">Потвърдете Вашата парола</label>
                 <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-2">
+            <div class="form-floating mb-2 text-center">
                 <label asp-for="FirstName">Първо Име</label>
                 <input asp-for="FirstName" class="form-control" autocomplete="new-password" aria-required="true" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-2">
+            <div class="form-floating mb-2 text-center">
                 <label asp-for="LastName">Фамилия</label>
                 <input asp-for="LastName" class="form-control" autocomplete="new-password" aria-required="true" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <!-- Profile picture upload field -->
-            <div class="form-group">
+            <div class="form-group text-center">
                 <label for="profilePicture" class="form-label">Профилна снимка</label>
                 <div class="input-group">
                     <label class="input-group-btn">
@@ -50,7 +50,7 @@
                 <span asp-validation-for="ProfilePicturePath" class="text-danger"></span>
             </div>
 
-            <recaptcha-v3 form-id="registerForm" action="submit" class="w-100 btn btn-lg btn-primary">Регистрирай</recaptcha-v3>
+            <recaptcha-v3 form-id="registerForm" action="submit" class="w-100 btn btn-lg btn-primary mb-4">Регистрирай</recaptcha-v3>
         </form>
     </div>
 </div>

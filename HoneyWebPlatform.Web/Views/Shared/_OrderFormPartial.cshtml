@@ -3,7 +3,7 @@
 <!-- Add the Place Order button here -->
 <form asp-controller="User" asp-action="PlaceOrder" method="post">
     <div class="mt-10">
-        <input asp-for="FullName" placeholder="Пълно Име" class="single-input" readonly style="cursor: not-allowed;" />
+        <input asp-for="FullName" placeholder="Пълно Име" class="single-input"/>
     </div>
 
     @if (!string.IsNullOrEmpty(Model.PhoneNumber))
@@ -22,7 +22,7 @@
     }
 
     <div class="mt-10">
-        <input asp-for="Email" placeholder="Имейл" class="single-input" readonly style="cursor: not-allowed;" />
+        <input asp-for="Email" placeholder="Имейл" class="single-input"/>
     </div>
 
     <div class="mt-10">

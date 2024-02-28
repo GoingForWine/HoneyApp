@@ -1,0 +1,31 @@
+﻿@page
+@model HoneyWebPlatform.Web.Areas.Identity.Pages.Account.Manage.ResetAuthenticatorModel
+@{
+    ViewData["Title"] = "Нулиране на ключа за аутентикация";
+    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div class="row">
+    <div class="col-md-9">
+
+        <h3>@ViewData["Title"]</h3>
+        <div class="alert alert-warning" role="alert">
+            <p>
+                <span class="glyphicon glyphicon-warning-sign"></span>
+                <strong>Ако нулирате вашия ключ за аутентикация, вашето приложение за аутентикация няма да работи, докато го преконфигурирате отново.</strong>
+            </p>
+            <p>
+                Този процес деактивира 2FA, докато не потвърдите вашето приложение за аутентикация.
+                Ако не завършите конфигурацията на вашето приложение за аутентикация, може да загубите достъп до вашия акаунт.
+            </p>
+        </div>
+        <div>
+            <form id="reset-authenticator-form" method="post">
+                <button id="reset-authenticator-button" class="btn btn-danger" type="submit">Нулиране на ключа за аутентикация</button>
+            </form>
+        </div>
+
+    </div>
+</div>

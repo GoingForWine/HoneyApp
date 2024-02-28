@@ -1,0 +1,39 @@
+﻿@page
+@model HoneyWebPlatform.Web.Areas.Identity.Pages.Account.Manage.DeletePersonalDataModel
+@{
+    ViewData["Title"] = "Изтрий личните данни";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<h3>@ViewData["Title"]</h3>
+<hr />
+
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="alert alert-warning" role="alert">
+            <p>
+                <strong>Ако изтриете тези данни, после никога няма да можете да си ползвате пак профила.</strong>
+            </p>
+        </div>
+
+        <div>
+            <form id="delete-user" method="post">
+                @if (Model.RequirePassword)
+                {
+                    <div class="form-floating mb-4">
+                        <label asp-for="Input.Password" class="form-label">Моля въведете си паролата</label>
+                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    </div>
+                }
+                <button class="w-100 btn btn-lg btn-danger mb-4" type="submit">Изтрий данните и закрий профила</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

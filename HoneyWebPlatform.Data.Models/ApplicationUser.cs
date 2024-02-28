@@ -29,7 +29,7 @@
 
 
         [MaxLength(255)] 
-        public string ProfilePicturePath { get; set; }
+        public string? ProfilePicturePath { get; set; }
 
         public virtual ICollection<Post> OwnedPosts { get; set; }
 

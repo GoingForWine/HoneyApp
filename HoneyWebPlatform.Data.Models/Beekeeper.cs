@@ -33,8 +33,5 @@
         public virtual ICollection<Propolis> OwnedPropolis { get; set; }
 
         public virtual ICollection<BeePollen> OwnedBeePollen { get; set; }
-
-
-
     }
 }

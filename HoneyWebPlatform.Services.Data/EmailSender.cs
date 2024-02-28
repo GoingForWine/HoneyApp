@@ -15,7 +15,7 @@ public class EmailSender : IEmailSender
         _emailSettings = emailSettings.Value;
     }
 
-    public async Task SendEmailAsync(string email, string subject, string message)
+    public async Task SendEmailAsync(string email, string subject, string message, string number)
     {
         var client = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort)
         {
@@ -26,8 +26,8 @@ public class EmailSender : IEmailSender
 
         await client.SendMailAsync(
             new MailMessage(from: _emailSettings.SmtpUsername,
-                to: email,
-                subject,
+                to: email, 
+                subject, 
                 message
             ));
     }
