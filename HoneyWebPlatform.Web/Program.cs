@@ -80,6 +80,20 @@ namespace HoneyWebPlatform.Web
 
             builder.Services.AddTransient<IEmailSender, EmailSender>();
 
+            //todo
+            builder.Services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.ClientId = "YOUR_GOOGLE_CLIENT_ID";
+                    options.ClientSecret = "YOUR_GOOGLE_CLIENT_SECRET";
+                })
+                .AddFacebook(options =>
+                {
+                    options.AppId = "YOUR_FACEBOOK_APP_ID";
+                    options.AppSecret = "YOUR_FACEBOOK_APP_SECRET";
+                });
+
+
             WebApplication app = builder.Build();
 
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);

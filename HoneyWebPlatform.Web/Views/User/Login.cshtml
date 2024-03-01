@@ -33,6 +33,18 @@
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary mb-4">Вход</button>
                 </div>
                 <div class="text-center mb-4">
+                    <a class="btn_1 d-none d-sm-block" asp-area="Identity"
+                       asp-page="/Account/ExternalLogin" asp-route-provider="Google"
+                       asp-route-returnUrl="@Context.Request.Path">
+                        Влез с Google   <span class="fab fa-google fa-lg"></span>
+                    </a>
+
+                    <a class="btn_1 d-none d-sm-block mt-3 mb-3" asp-area="Identity"
+                       asp-page="/Account/ExternalLogin" asp-route-provider="Facebook"
+                       asp-route-returnUrl="@Context.Request.Path">
+                        Влез с Facebook   <span class="fab fa-facebook-f fa-lg"></span>
+                    </a>
+
                     <p>
                         <a asp-controller="User" asp-action="Register">Регистрирайте се като нов потребител</a>
                     </p>
@@ -40,10 +52,8 @@
             </form>
         </section>
     </div>
-    
-    
 
-    
+
 
 </div>
 
