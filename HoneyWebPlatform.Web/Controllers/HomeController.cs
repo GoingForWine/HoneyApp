@@ -1,4 +1,6 @@
-﻿namespace HoneyWebPlatform.Web.Controllers
+﻿using System.Text.RegularExpressions;
+
+namespace HoneyWebPlatform.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
 
@@ -65,17 +67,25 @@
 
 
         [HttpPost]
-        public async Task<IActionResult> SendEmail(string name, string email, string subject, string message, string number)
+        public async Task<IActionResult> SendEmail(ContactViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                // Validation failed, return the same view with validation errors
+                TempData[ErrorMessage] = "Имейлът не беше изпратен! Проверете въведените данни и опитайте отново.";
+                return View("Contact", model);
+            }
+
             try
             {
                 // Construct the email message body
-                var emailMessage = $"Name: {name}\nEmail: {email}\nPhone Number: {number}\nSubject: {subject}\nMessage: {message}";
+                var emailMessage = 
+                    $"Name: {model.Name}\nEmail: {model.Email}\nPhone Number: {model.Number}\nSubject: {model.Subject}\nMessage: {model.Message}";
 
                 // Use the EmailSender service to send the email
-                await emailSender.SendEmailAsync("savethebee2024@gmail.com", subject, emailMessage, number);
+                await emailSender.SendEmailAsync("savethebee2024@gmail.com", model.Subject, emailMessage, model.Number);
 
-                TempData[SuccessMessage] = "Благодарим за имейла!";
+                TempData[SuccessMessage] = "Благодарим Ви за имейла!";
 
                 // Optionally, redirect to a success page or return a success message
                 return RedirectToAction("Index", "Home");
@@ -86,6 +96,7 @@
                 return RedirectToAction("Error", "Home");
             }
         }
+
 
 
 
