@@ -150,31 +150,39 @@
         }
 
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> AddComment(string postId, string content)
         {
-            bool isUser = User.Identity.IsAuthenticated;
-
-            if (!isUser)
-            {
-                TempData[ErrorMessage] = "Трябва да влезете във вашият профил, за да направите пост!";
-                return RedirectToAction("Details", new { id = postId });
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction("Details", "Blog", new { id = postId });
-            }
-
-
             try
             {
-                var authorId = User.GetId(); // Get the ID of the current user
+                string authorId;
+
+                if (User.Identity.IsAuthenticated)
+                {
+                    authorId = User.GetId(); // Get the ID of the current user
+                }
+                else
+                {
+                    // For anonymous comments, set the authorId to a default value (e.g., "Guest")
+                    authorId = "347239C3-DAA6-4579-9980-44147F44A3C3";
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return RedirectToAction("Details", "Blog", new { id = postId });
+                }
 
                 await postService.AddCommentAsync(postId, content, authorId);
 
-                TempData[SuccessMessage] = "Успешно добавихте коментар!";
-                Console.WriteLine("____________________________________________________________________________123");
+                if (User.Identity.IsAuthenticated)
+                {
+                    TempData[SuccessMessage] = "Успешно добавихте коментар!";
+                }
+                else
+                {
+                    TempData[SuccessMessage] = "Успешно добавихте анонимен коментар!";
+                }
 
                 // Redirect back to the post details page with the added comment
                 return RedirectToAction("Details", "Blog", new { id = postId });
@@ -188,6 +196,8 @@
                 return RedirectToAction("Details", new { id = postId, error = e.Message });
             }
         }
+
+
 
         [HttpGet]
         [AllowAnonymous]

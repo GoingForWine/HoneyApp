@@ -41,5 +41,8 @@
         [Display(Name = "Профилна снимка")]
         [MaxFileSize(ProfilePictureMaxSize, ErrorMessage = "Максималният размер на файла за профилната снимка е 2 мегабайта.")]
         public IFormFile? ProfilePicturePath { get; set; }
+
+        public string? ReturnUrl { get; set; }
+
     }
 }

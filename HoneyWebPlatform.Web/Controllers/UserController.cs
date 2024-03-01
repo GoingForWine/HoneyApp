@@ -53,9 +53,16 @@
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register(string? returnUrl = null)
         {
-            return View();
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            RegisterFormModel model = new RegisterFormModel()
+            {
+                ReturnUrl = returnUrl
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -83,7 +90,7 @@
                 var uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "uploads", "UsersProfilePictures");
                 var uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProfilePicturePath.FileName;
                 var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-               
+
                 await using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await model.ProfilePicturePath.CopyToAsync(fileStream);
@@ -108,7 +115,7 @@
             await signInManager.SignInAsync(user, false);
             this.memoryCache.Remove(UsersCacheKey);
 
-            return RedirectToAction("Index", "Home");
+            return Redirect(model.ReturnUrl ?? "/Home/Index");
         }
 
         [HttpGet]
@@ -350,7 +357,7 @@
             cart.UserInformation = model;
             cart.UserInformation.Id = Guid.Parse(userId);
 
-            Guid orderId = await orderService.CreateOrderAsync(cart); 
+            Guid orderId = await orderService.CreateOrderAsync(cart);
 
             if (orderId == Guid.Empty)
             {

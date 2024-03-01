@@ -93,7 +93,14 @@
                                             <div class="d-flex justify-content-between">
                                                 <div class="d-flex align-items-center">
                                                     <h5>
-                                                        <p>Автор: @comment.Author.FirstName @comment.Author.LastName</p>
+                                                        @if (comment.Author.FirstName == "Guest" && comment.Author.LastName == "Guest")
+                                                        {
+                                                            <p>Автор: Анонимен Гост</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p>Автор: @comment.Author.FirstName @comment.Author.LastName</p>
+                                                        }
                                                     </h5>
                                                     <p class="date">Създаден на: @comment.CreatedOn</p>
 
@@ -140,11 +147,40 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="button button-contactForm">Изпрати</button>
+                                        <button type="submit" class="btn_1" name="submitType" value="authenticated">Изпрати</button>
                                     </div>
                                 </form>
                             </div>
                         }
+                        else
+                        {
+                            <div class="comment-form">
+                                <h4>Сподели мнение</h4>
+                                <p class="mb-2">За да коментирате, моля, влезте в своя профил или се регистрирайте. Ако не желаете да се регистрирате, можете да оставите коментар като анонимен потребител.</p>
+                                <div>
+                                    <a class="button button-contactForm btn_1" asp-area="" asp-controller="User" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">Влез в профила си</a>
+                                    <a class="button button-contactForm btn_1" asp-area="" asp-controller="User" asp-action="Register" asp-route-returnUrl="@Context.Request.Path">Регистрирай се</a>
+                                    <a class="button button-contactForm btn_1" onclick="showAnonymousCommentForm()">Коментирай анонимно</a>
+                                </div>
+                                <form asp-controller="Blog" asp-action="AddComment" method="post" class="form-contact comment_form" id="anonymousCommentForm" style="display: none;">
+                                    <div class="row mt-2">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="hidden" name="postId" value="@Model.Id" />
+                                                <partial name="_CommentFormPartial" model="new CommentFormModel { }" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn_1" name="submitType" value="anonymous">Изпрати</button>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+
+
+
+
                     </div>
                 </div>
 
@@ -174,5 +210,10 @@
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial" />
-
+    <script>
+        function showAnonymousCommentForm() {
+            var anonymousCommentForm = document.getElementById("anonymousCommentForm");
+            anonymousCommentForm.style.display = "block";
+        }
+    </script>
 }

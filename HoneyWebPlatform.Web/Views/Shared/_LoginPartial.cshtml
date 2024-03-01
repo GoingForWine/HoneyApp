@@ -40,10 +40,10 @@
     else
     {
         <li class="menu_btn">
-            <a class="btn_1 d-none d-sm-block" asp-area="" asp-controller="User" asp-action="Register">Регистрирай</a>
+            <a class="btn_1 d-none d-sm-block" asp-area="" asp-controller="User" asp-action="Register" asp-route-returnUrl="@Context.Request.Path">Регистрирай</a>
         </li>
         <li class="menu_btn">
-            <a class="btn_1 d-none d-sm-block" asp-area="" asp-controller="User" asp-action="Login">Влез</a>
+            <a class="btn_1 d-none d-sm-block" asp-area="" asp-controller="User" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">Влез</a>
         </li>
     }
 </ul>
