@@ -2,14 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+
 namespace HoneyWebPlatform.Web.Areas.Identity.Pages.Account.Manage
 {
-
+    using HoneyWebPlatform.Services.Data.Interfaces;
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
-    using HoneyWebPlatform.Data.Models;
-    using HoneyWebPlatform.Web;
+    using Data.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -23,15 +23,18 @@ namespace HoneyWebPlatform.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
+        private readonly IUserService _userService;
 
         public DeletePersonalDataModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger, 
+            IUserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _userService = userService;
         }
 
         /// <summary>
@@ -91,6 +94,9 @@ namespace HoneyWebPlatform.Web.Areas.Identity.Pages.Account.Manage
                     return Page();
                 }
             }
+
+            await _userService.DeleteUserAndRelatedEntitiesAsync
+                (Guid.Parse(await _userManager.GetUserIdAsync(user)));
 
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);

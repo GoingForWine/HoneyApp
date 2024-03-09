@@ -12,5 +12,7 @@
 
         Task<IEnumerable<UserViewModel>> GetSubscribedUsersAsync();
 
+        Task<bool> DeleteUserAndRelatedEntitiesAsync(Guid userId);
+
     }
 }
