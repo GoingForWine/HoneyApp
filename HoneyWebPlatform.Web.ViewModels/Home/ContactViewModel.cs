@@ -5,8 +5,6 @@
     public class ContactViewModel
     {
         [Required(ErrorMessage = "Името е задължително.")]
-        [RegularExpression(@"^[a-zA-Z\s'-]+$",
-            ErrorMessage = "Името може да съдържа само букви, интервали, тирета и апострофи.")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Името трябва да бъде между 3 и 50 символа.")]
         public string Name { get; set; } = null!;
 
@@ -17,7 +15,6 @@
         public string Email { get; set; } = null!;
 
         [Required(ErrorMessage = "Темата е задължителна.")]
-        [RegularExpression(@"^[a-zA-Z0-9\s-_]+$", ErrorMessage = "Темата може да съдържа само букви, цифри, интервали, тирета и подчертавки.")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "Темата трябва да бъде между 3 и 100 символа.")]
         public string Subject { get; set; } = null!;
 
