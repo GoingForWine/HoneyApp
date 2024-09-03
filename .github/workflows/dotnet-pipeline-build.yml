@@ -26,3 +26,18 @@ jobs:
       run: dotnet build HoneyWebPlatform.Web/HoneyWebPlatform.Web.csproj --no-restore
     - name: Test
       run: dotnet test HoneyWebPlatform.Web/HoneyWebPlatform.Web.csproj --no-build --verbosity normal
+      
+    - name: Deploy to Server
+      if: success()  # Only run deployment if the previous steps were successful
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SSH_HOST: vpulegal.com
+        SSH_USER: vpulegal
+        TARGET_DIR: home/vpulegal/domains/vpulegal.com/public_html  # The directory on your server where the site is hosted
+      run: |
+        echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+        mkdir -p ~/.ssh
+        chmod 700 ~/.ssh
+        ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+        rsync -avz --exclude='**/obj/**' --exclude='**/bin/**' ./HoneyWebPlatform.Web/ $SSH_USER@$SSH_HOST:$TARGET_DIR/
+        ssh $SSH_USER@$SSH_HOST 'sudo systemctl restart nginx'
