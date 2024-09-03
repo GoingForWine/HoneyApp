@@ -35,6 +35,13 @@
                 <a asp-area="" asp-controller="Honey" asp-action="Delete" asp-route-id="@Model.Id"
                    class="btn btn-danger">Изтрий</a>
             }
+
+            @if (User.IsAdmin())
+            {
+                <form method="post" asp-area="Admin" asp-controller="Honey" asp-action="Promote" asp-route-id="@Model.Id">
+                    <button type="submit" class="genric-btn primary e-large mt-2">Промотирай/Демотирай</button>
+                </form>
+            }
             <p></p>
         }
     </div>

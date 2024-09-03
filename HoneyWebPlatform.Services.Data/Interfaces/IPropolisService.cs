@@ -7,7 +7,7 @@
 
     public interface IPropolisService
     {
-        Task<IEnumerable<PropolisIndexViewModel>> LastThreePropolisеsAsync();
+        Task<IEnumerable<PropolisAllViewModel>> LastThreePropolisеsAsync();
 
         Task<string> CreateAndReturnIdAsync(PropolisFormModel formModel, string beekeeperId);
 
@@ -28,6 +28,9 @@
         Task<PropolisPreDeleteDetailsViewModel> GetPropolisForDeleteByIdAsync(string propolisId);
 
         Task DeletePropolisByIdAsync(string propolisId);
+
+        Task TogglePromotionAsync(string propolisId);
+
 
         //Task<StatisticsServiceModel> GetStatisticsAsync();
     }

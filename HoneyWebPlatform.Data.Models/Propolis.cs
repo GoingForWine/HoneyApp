@@ -9,6 +9,7 @@
         public Propolis()
         {
             Id = Guid.NewGuid();
+            IsPromoted = false;
         }
 
         [Key]
@@ -42,5 +43,8 @@
         public virtual Beekeeper Beekeeper { get; set; } = null!;
 
         //todo questionable if we should have a count of honeys available, maybe after 10 are bought, we run out
+
+        public bool IsPromoted { get; set; }
+
     }
 }

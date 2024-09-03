@@ -14,28 +14,28 @@
 }
 
 @*@if (!honeys.Any())
-{
-    <div class="mt-4 p-5 bg-light">
-        <h1 class="display-4">Добре дошли на най-хубавото място за Пчелари!</h1>
-        <p class="lead">
-            В момента няма налични медове и прополиси.
-            Защо не добавите някой?
-        </p>
-        <hr class="my-4">
-        <p class="lead">
-            @if (User.Identity?.IsAuthenticated ?? false)
-            {
-                @if (isUserBeekeeper)
+    {
+        <div class="mt-4 p-5 bg-light">
+            <h1 class="display-4">Добре дошли на най-хубавото място за Пчелари!</h1>
+            <p class="lead">
+                В момента няма налични медове и прополиси.
+                Защо не добавите някой?
+            </p>
+            <hr class="my-4">
+            <p class="lead">
+                @if (User.Identity?.IsAuthenticated ?? false)
                 {
-                    <a asp-controller="Honey" asp-action="Add" class="btn btn-primary btn-lg"
-                       role="button">Добави Мед</a>
-                    <a asp-controller="Propolis" asp-action="Add" class="btn btn-primary btn-lg"
-                       role="button">Добави Прополис</a>
+                    @if (isUserBeekeeper)
+                    {
+                        <a asp-controller="Honey" asp-action="Add" class="btn btn-primary btn-lg"
+                           role="button">Добави Мед</a>
+                        <a asp-controller="Propolis" asp-action="Add" class="btn btn-primary btn-lg"
+                           role="button">Добави Прополис</a>
+                    }
                 }
-            }
-        </p>
-    </div>
-}*@
+            </p>
+        </div>
+    }*@
 
 
 <!-- banner part start-->
@@ -191,307 +191,35 @@
             </div>
             <div class="col-lg-6">
                 <div class="nav nav-tabs food_menu_nav" id="myTab" role="tablist">
-                    <a class="active" id="Special-tab" data-toggle="tab" href="#Special" role="tab"
-                       aria-controls="Special" aria-selected="false">
-                        Special <img src="dingo-master/dingo-master/img/icon/play.svg"
-                                     alt="play">
+                    <a class="active" id="Honey-tab" data-toggle="tab" href="#Honey" role="tab" aria-controls="Honey" aria-selected="true">
+                        Мед
+                        <img src="dingo-master/dingo-master/img/icon/play.svg" alt="play">
                     </a>
-                    <a id="Breakfast-tab" data-toggle="tab" href="#Breakfast" role="tab" aria-controls="Breakfast"
-                       aria-selected="false">Breakfast <img src="dingo-master/dingo-master/img/icon/play.svg" alt="play"></a>
-                    <a id="Launch-tab" data-toggle="tab" href="#Launch" role="tab" aria-controls="Launch"
-                       aria-selected="false">Launch <img src="dingo-master/dingo-master/img/icon/play.svg" alt="play"></a>
-                    <a id="Dinner-tab" data-toggle="tab" href="#Dinner" role="tab" aria-controls="Dinner"
-                       aria-selected="false">Dinner <img src="dingo-master/dingo-master/img/icon/play.svg" alt="play"> </a>
-                    <a id="Sneaks-tab" data-toggle="tab" href="#Sneaks" role="tab" aria-controls="Sneaks"
-                       aria-selected="false">Sneaks <img src="dingo-master/dingo-master/img/icon/play.svg" alt="play"></a>
+                    <a id="Propolis-tab" data-toggle="tab" href="#Propolis" role="tab" aria-controls="Propolis" aria-selected="false">
+                        Прополис
+                        <img src="dingo-master/dingo-master/img/icon/play.svg" alt="play">
+                    </a>
                 </div>
             </div>
             <div class="col-lg-12">
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active single-member" id="Special" role="tabpanel"
-                         aria-labelledby="Special-tab">
+                    <div class="tab-pane fade show active" id="Honey" role="tabpanel" aria-labelledby="Honey-tab">
                         <div class="row">
                             <div class="col-sm-6 col-lg-6">
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_1.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Pork Sandwich</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_2.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Roasted Marrow</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_3.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Summer Cooking</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
+                                <partial name="_HoneyIndexPartial" model="honeys.Take(3)" />
                             </div>
                             <div class="col-sm-6 col-lg-6">
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_4.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Easter Delight</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_5.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Tiener Schnitze</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_6.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Chicken Roast</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
+                                <partial name="_HoneyIndexPartial" model="honeys.Skip(3)" />
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade single-member" id="Breakfast" role="tabpanel"
-                         aria-labelledby="Breakfast-tab">
+                    <div class="tab-pane fade" id="Propolis" role="tabpanel" aria-labelledby="Propolis-tab">
                         <div class="row">
                             <div class="col-sm-6 col-lg-6">
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_4.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Easter Delight</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_5.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Tiener Schnitze</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_6.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Chicken Roast</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
+                                <partial name="_PropolisIndexPartial" model="propolises.Take(3)" />
                             </div>
                             <div class="col-sm-6 col-lg-6">
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_1.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Pork Sandwich</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_2.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Roasted Marrow</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_3.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Summer Cooking</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade single-member" id="Launch" role="tabpanel"
-                         aria-labelledby="Launch-tab">
-                        <div class="row">
-                            <div class="col-sm-6 col-lg-6">
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_1.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Pork Sandwich</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_2.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Roasted Marrow</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_3.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Summer Cooking</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-6">
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_4.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Easter Delight</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_5.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Tiener Schnitze</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_6.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Chicken Roast</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="tab-pane fade single-member" id="Dinner" role="tabpanel"
-                         aria-labelledby="Dinner-tab">
-                        <div class="row">
-                            <div class="col-sm-6 col-lg-6">
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_4.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Easter Delight</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_5.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Tiener Schnitze</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_6.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Chicken Roast</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-6">
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_1.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Pork Sandwich</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_2.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Roasted Marrow</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_3.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Summer Cooking</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="tab-pane fade single-member" id="Sneaks" role="tabpanel"
-                         aria-labelledby="Sneaks-tab">
-                        <div class="row">
-                            <div class="col-sm-6 col-lg-6">
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_1.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Pork Sandwich</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_2.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Roasted Marrow</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_3.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Summer Cooking</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-6">
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_4.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Easter Delight</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_5.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Tiener Schnitze</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
-                                <div class="single_food_item media">
-                                    <img src="dingo-master/dingo-master/img/food_menu/single_food_6.png" class="mr-3" alt="...">
-                                    <div class="media-body align-self-center">
-                                        <h3>Chicken Roast</h3>
-                                        <p>They're wherein heaven seed hath nothing</p>
-                                        <h5>$40.00</h5>
-                                    </div>
-                                </div>
+                                <partial name="_PropolisIndexPartial" model="propolises.Skip(3)" />
                             </div>
                         </div>
                     </div>
@@ -500,6 +228,8 @@
         </div>
     </div>
 </section>
+
+
 <!-- food_menu part end-->
 <!--::chefs_part start::-->
 <section class="chefs_part blog_item_section section_padding">
@@ -734,7 +464,7 @@
             @foreach (var post in posts)
             {
                 <div class="col-sm-6 col-lg-4">
-                    <partial name="_HomePostPartial" model="post"/>
+                    <partial name="_HomePostPartial" model="post" />
                 </div>
             }
 

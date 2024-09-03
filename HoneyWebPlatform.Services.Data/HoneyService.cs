@@ -22,14 +22,15 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<HoneyIndexViewModel>> LastThreeHoneysAsync()
+        public async Task<IEnumerable<HoneyAllViewModel>> LastThreeHoneysAsync()
         {
-            IEnumerable<HoneyIndexViewModel> lastThreeHoneys = await dbContext
+            IEnumerable<HoneyAllViewModel> lastThreeHoneys = await dbContext
                 .Honeys
                 .Where(h => h.IsActive)
+                .Where(h => h.IsPromoted)
                 .OrderByDescending(h => h.CreatedOn)
-                .Take(3)
-                .To<HoneyIndexViewModel>()
+                .Take(6)
+                .To<HoneyAllViewModel>()
                 .ToArrayAsync();
 
             return lastThreeHoneys;
@@ -232,6 +233,28 @@
 
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task TogglePromotionAsync(string honeyId)
+        {
+            // Retrieve the honey from the database
+            Honey honey = await dbContext.Honeys.FirstOrDefaultAsync(h => h.Id.ToString() == honeyId);
+
+            // Check if the honey exists and is active
+            if (honey != null && honey.IsActive)
+            {
+                // Toggle the promotion status
+                honey.IsPromoted = !honey.IsPromoted;
+                
+                // Update the honey entity in the database
+                dbContext.Update(honey);
+                await dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                throw new ArgumentException("Invalid honey ID or honey is not active.");
+            }
+        }
+
 
         public async Task<StatisticsServiceModel> GetStatisticsAsync()
         {

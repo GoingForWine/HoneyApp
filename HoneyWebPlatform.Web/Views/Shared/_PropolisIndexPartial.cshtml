@@ -1,0 +1,14 @@
+﻿@model IEnumerable<PropolisAllViewModel>
+
+@foreach (var item in Model)
+{
+    <a asp-area="" asp-controller="Propolis" asp-action="Details" asp-route-id="@item.Id">
+        <div class="single_food_item media">
+            <img src="@item.ImageUrl" class="mr-3" alt="..." style="width: 150px; height: 150px;">
+            <div class="media-body align-self-center">
+                <h3>@item.Title</h3>
+                <h5>@item.Price лв</h5>
+            </div>
+        </div>
+    </a>
+}

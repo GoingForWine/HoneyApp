@@ -7,7 +7,7 @@
 
     public interface IHoneyService
     {
-        Task<IEnumerable<HoneyIndexViewModel>> LastThreeHoneysAsync();
+        Task<IEnumerable<HoneyAllViewModel>> LastThreeHoneysAsync();
 
         Task<string> CreateAndReturnIdAsync(HoneyFormModel formModel, string beekeeperId);
 
@@ -28,6 +28,8 @@
         Task<HoneyPreDeleteDetailsViewModel> GetHoneyForDeleteByIdAsync(string honeyId);
 
         Task DeleteHoneyByIdAsync(string honeyId);
+
+        Task TogglePromotionAsync(string honeyId);
 
         Task<StatisticsServiceModel> GetStatisticsAsync();
     }

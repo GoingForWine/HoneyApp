@@ -22,14 +22,15 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<PropolisIndexViewModel>> LastThreePropolisеsAsync()
+        public async Task<IEnumerable<PropolisAllViewModel>> LastThreePropolisеsAsync()
         {
-            IEnumerable<PropolisIndexViewModel> lastThreePropolises = await dbContext
+            IEnumerable<PropolisAllViewModel> lastThreePropolises = await dbContext
                 .Propolises
                 .Where(h => h.IsActive)
+                .Where(h => h.IsPromoted)
                 .OrderByDescending(h => h.CreatedOn)
-                .Take(3)
-                .To<PropolisIndexViewModel>()
+                .Take(6)
+                .To<PropolisAllViewModel>()
                 .ToArrayAsync();
 
             return lastThreePropolises;
@@ -225,6 +226,27 @@
             propolisToDelete.IsActive = false;
 
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task TogglePromotionAsync(string propolisId)
+        {
+            // Retrieve the honey from the database
+            Propolis propolis = await dbContext.Propolises.FirstOrDefaultAsync(p => p.Id.ToString() == propolisId);
+
+            // Check if the honey exists and is active
+            if (propolis != null && propolis.IsActive)
+            {
+                // Toggle the promotion status
+                propolis.IsPromoted = !propolis.IsPromoted;
+
+                // Update the honey entity in the database
+                dbContext.Update(propolis);
+                await dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                throw new ArgumentException("Invalid propolis ID or propolis is not active.");
+            }
         }
 
         public async Task<StatisticsServiceModel> GetStatisticsAsync()

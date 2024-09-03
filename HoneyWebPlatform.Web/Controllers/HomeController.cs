@@ -1,4 +1,6 @@
 ﻿using System.Text.RegularExpressions;
+using HoneyWebPlatform.Web.ViewModels.Honey;
+using HoneyWebPlatform.Web.ViewModels.Propolis;
 
 namespace HoneyWebPlatform.Web.Controllers
 {
@@ -35,10 +37,10 @@ namespace HoneyWebPlatform.Web.Controllers
                 return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
             }
 
-            IEnumerable<HoneyIndexViewModel> honeyIndexViewModel =
+            IEnumerable<HoneyAllViewModel> honeyIndexViewModel =
                 await honeyService.LastThreeHoneysAsync();
 
-            IEnumerable<PropolisIndexViewModel> propolisIndexViewModel =
+            IEnumerable<PropolisAllViewModel> propolisIndexViewModel =
                await propolisService.LastThreePropolisеsAsync();
 
             IEnumerable<PostIndexViewModel> postIndexViewModel =

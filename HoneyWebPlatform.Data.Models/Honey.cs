@@ -9,6 +9,7 @@
         public Honey()
         {
             Id = Guid.NewGuid();
+            IsPromoted = false; //default value
         }
 
         [Key]
@@ -52,5 +53,7 @@
         public virtual Beekeeper Beekeeper { get; set; } = null!;
 
         //todo questionable if we should have a count of honeys available, maybe after 10 are bought, we run out
+
+        public bool IsPromoted { get; set; }
     }
 }

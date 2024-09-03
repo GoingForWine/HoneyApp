@@ -1,8 +1,10 @@
 ﻿namespace HoneyWebPlatform.Web.ViewModels.Honey
 {
+    using Services.Mapping;
     using System.ComponentModel.DataAnnotations;
+    using Data.Models;
 
-    public class HoneyAllViewModel
+    public class HoneyAllViewModel : IMapFrom<Honey>
     {
         public string Id { get; set; } = null!;
 
