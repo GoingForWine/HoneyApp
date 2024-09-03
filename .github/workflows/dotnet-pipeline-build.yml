@@ -21,8 +21,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore HoneyWebPlatform.Web/HoneyWebPlatform.Web.csproj
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build HoneyWebPlatform.Web/HoneyWebPlatform.Web.csproj --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test HoneyWebPlatform.Web/HoneyWebPlatform.Web.csproj --no-build --verbosity normal
