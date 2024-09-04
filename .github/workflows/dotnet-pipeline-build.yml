@@ -37,7 +37,7 @@ jobs:
     - name: Deploy to Server
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        SSH_HOST: vpulegal.com
+        SSH_HOST: zen5.coolice.host
         SSH_USER: vpulegal
         TARGET_DIR: /home/vpulegal/domains/vpulegal.com/public_html
       run: |
