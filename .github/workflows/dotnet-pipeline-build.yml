@@ -31,7 +31,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build  # Ensures the deploy job only runs if the build job succeeds
+    needs: build
 
     steps:
     - name: Deploy to Server
@@ -45,7 +45,7 @@ jobs:
         eval $(ssh-agent -s)
 
         # Add the private key, ensuring it's properly formatted
-        echo "$SSH_PRIVATE_KEY" | sed 's/\\r$//' | ssh-add -
+        echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
 
         # Ensure the SSH directory and known_hosts file exist with the right permissions
         mkdir -p ~/.ssh
