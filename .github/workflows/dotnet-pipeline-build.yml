@@ -47,4 +47,4 @@ jobs:
           port: ${{ secrets.FTP_PORT }}
           local-dir: ./ # Directory to deploy (./ for root)
           server-dir: /home/vpulegal/domains/vpulegal.com/ # Replace with your target FTP directory
-          protocol: ftp # Change to 'ftps' if using secure FTP
+          protocol: ftps # Change to 'ftps' if using secure FTP
