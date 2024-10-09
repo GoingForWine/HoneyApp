@@ -1,0 +1,50 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET CI/CD
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore HoneyWebPlatform.Web/HoneyWebPlatform.Web.csproj
+
+    - name: Build
+      run: dotnet build HoneyWebPlatform.Web/HoneyWebPlatform.Web.csproj --no-restore
+
+    - name: Test
+      run: dotnet test HoneyWebPlatform.Web/HoneyWebPlatform.Web.csproj --no-build --verbosity normal
+
+
+  ftp-deploy:
+    name: FTP Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}
+          local-dir: ./ # Directory to deploy (./ for root)
+          server-dir: /honeyTest/ # Replace with your target FTP directory
+          protocol: ftps # Change to 'ftps' if using secure FTP
