@@ -23,7 +23,7 @@
                 .HasForeignKey(c => c.ParentPostId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasData(SeedComments());
+            //builder.HasData(SeedComments());
         }
 
         private Comment[] SeedComments()

@@ -20,8 +20,4 @@
     <ProjectReference Include="..\HoneyWebPlatform.Data.Models\HoneyWebPlatform.Data.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

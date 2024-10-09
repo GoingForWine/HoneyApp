@@ -24,7 +24,7 @@
                 .HasForeignKey(h => h.AuthorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasData(SeedPosts());
+            //builder.HasData(SeedPosts());
         }
 
         private Post[] SeedPosts()

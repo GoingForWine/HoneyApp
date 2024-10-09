@@ -23,7 +23,7 @@
                 .HasForeignKey(h => h.BeekeeperId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasData(GenerateBeePollens());
+            //builder.HasData(GenerateBeePollens());
         }
 
         private BeePollen[] GenerateBeePollens()

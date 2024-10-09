@@ -47,7 +47,17 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //initdb
+            var adminRoleId = Guid.NewGuid();
+            builder.Entity<IdentityRole<Guid>>().HasData(new IdentityRole<Guid>
+            {
+                Id = adminRoleId,
+                Name = "Administrator",
+                NormalizedName = "ADMINISTRATOR",
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+            });
+
             builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
+
             //after creating two users through the app - continue with seeding these 4
             builder.ApplyConfiguration(new CategoryEntityConfiguration());
             builder.ApplyConfiguration(new FlavourEntityConfiguration());
@@ -57,6 +67,7 @@
             builder.ApplyConfiguration(new HoneyEntityConfiguration());
             builder.ApplyConfiguration(new PropolisEntityConfiguration());
             builder.ApplyConfiguration(new CommentEntityConfiguration());
+
 
             builder.ApplyConfiguration(new CartEntityConfiguration());
 

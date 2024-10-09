@@ -29,7 +29,7 @@
                 .HasForeignKey(h => h.BeekeeperId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasData(GeneratePropolises());
+            //builder.HasData(GeneratePropolises());
         }
 
         private Propolis[] GeneratePropolises()

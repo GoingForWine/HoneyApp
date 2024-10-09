@@ -9,7 +9,7 @@
     {
         public void Configure(EntityTypeBuilder<Flavour> builder)
         {
-            builder.HasData(GenerateFlavours());
+            //builder.HasData(GenerateFlavours());
         }
 
         private Flavour[] GenerateFlavours()
